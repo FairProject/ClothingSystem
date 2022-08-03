@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  * para acceder al Servlet Home utilizando la siguiente Url: la del sitio web
  * mas /Home
  */
-@WebServlet(name = "HomeServlet", urlPatterns = {"/Home"})
+@WebServlet(name = "HomeServlet", urlPatterns = {"/"})
 public class HomeServlet extends HttpServlet {
 
     /**
