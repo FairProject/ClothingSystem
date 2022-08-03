@@ -19,9 +19,9 @@ public class ComunDB {
             + "password=12345;"
             + "loginTimeout=30;encrypt=false;trustServerCertificate=false";*/
     
-     static String connectionUrl = "jdbc:sqlserver://M17-C1:1433;"
-            + "database=SeguridadWebdb;"
-            + "user=java;"
+     static String connectionUrl = "jdbc:sqlserver://169.254.186.120:1433;"
+            + "database=ClothingSystemdb;"
+            + "user=Adonay1B;"
             + "password=12345;"
             + "loginTimeout=30;encrypt=false;trustServerCertificate=false";
     // Documentacion para entender por que se esta utilizando throws SQLException
