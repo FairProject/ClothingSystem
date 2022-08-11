@@ -15,11 +15,11 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.mssql-jdbc-10.2.1.jre17.jar}</file>
+                    <file>${reference.ClothingSystem_AccesoADatos.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${reference.ClothingSystem_AccesoADatos.jar}</file>
+                    <file>${file.reference.mssql-jdbc-10.2.1.jre17.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
