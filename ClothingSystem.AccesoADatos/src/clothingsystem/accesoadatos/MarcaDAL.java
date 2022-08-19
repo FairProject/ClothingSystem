@@ -8,7 +8,7 @@ public class MarcaDAL { // Clase para poder realizar consulta de Insertar, modif
 
     // Metodo para obtener los campos a utilizar en la consulta SELECT de la tabla de Marca
     static String obtenerCampos() {
-        return "M.Id,m.Nombre";
+        return "m.Id, m.Nombre, m.Estatus, m.Descripcion, m.PaisOrigen";
     }
 
     // Metodo para obtener el SELECT a la tabla Marca y el TOP en el caso que se utilice una base de datos SQL SERVER
@@ -25,7 +25,7 @@ public class MarcaDAL { // Clase para poder realizar consulta de Insertar, modif
 
     // Metodo para obtener Order by a la consulta SELECT de la tabla Marca y ordene los registros de mayor a menor 
     private static String agregarOrderBy(Marca pMarca) {
-        String sql = " ORDER BY r.Id DESC";
+        String sql = " ORDER BY m.Id DESC";
         if (pMarca.getTop_aux() > 0 && ComunDB.TIPODB == ComunDB.TipoDB.MYSQL) {
             // Agregar el LIMIT a la consulta SELECT de la tabla de Marca en el caso que getTop_aux() sea mayor a cero y el gestor de base de datos
             // sea MYSQL
@@ -39,9 +39,12 @@ public class MarcaDAL { // Clase para poder realizar consulta de Insertar, modif
         int result;
         String sql;
         try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
-            sql = "INSERT INTO Marca(Nombre) VALUES(?)"; // Definir la consulta INSERT a la tabla de Rol utilizando el simbolo ? para enviar parametros
+            sql = "INSERT INTO Marca(Nombre, Estatus, Descripcion, PaisOrigen) VALUES(?,?,?,?)"; // Definir la consulta INSERT a la tabla de Rol utilizando el simbolo ? para enviar parametros
             try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                 ps.setString(1, pMarca.getNombre()); // Agregar el parametro a la consulta donde estan el simbolo ? #1  
+                ps.setByte(2, pMarca.getEstatus());
+                ps.setString(3, pMarca.getDescripcion());
+                ps.setString(4, pMarca.getPaisOrigen());
                 result = ps.executeUpdate(); // Ejecutar la consulta INSERT en la base de datos
                 ps.close(); // Cerrar el PreparedStatement
             } catch (SQLException ex) {
@@ -59,10 +62,13 @@ public class MarcaDAL { // Clase para poder realizar consulta de Insertar, modif
         int result;
         String sql;
         try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
-            sql = "UPDATE Marca SET Nombre=? WHERE Id=?"; // Definir la consulta UPDATE a la tabla de Marca utilizando el simbolo ? para enviar parametros
+            sql = "UPDATE Marca SET Nombre=?, Estatus=?, Descripcion=?, PaisOrigen=? WHERE Id=?"; // Definir la consulta UPDATE a la tabla de Marca utilizando el simbolo ? para enviar parametros
             try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                 ps.setString(1, pMarca.getNombre()); // Agregar el parametro a la consulta donde estan el simbolo ? #1  
-                ps.setInt(2, pMarca.getId()); // Agregar el parametro a la consulta donde estan el simbolo ? #2  
+                ps.setByte(2, pMarca.getEstatus());
+                ps.setString(3, pMarca.getDescripcion());
+                ps.setString(4, pMarca.getPaisOrigen());
+                ps.setInt(5, pMarca.getId()); // Agregar el parametro a la consulta donde estan el simbolo ? #2  
                 result = ps.executeUpdate(); // Ejecutar la consulta UPDATE en la base de datos
                 ps.close(); // Cerrar el PreparedStatement
             } catch (SQLException ex) {
@@ -103,6 +109,12 @@ public class MarcaDAL { // Clase para poder realizar consulta de Insertar, modif
         pMarca.setId(pResultSet.getInt(pIndex)); // index 1
         pIndex++;
         pMarca.setNombre(pResultSet.getString(pIndex)); // index 2
+        pIndex++;
+        pMarca.setEstatus(pResultSet.getByte(pIndex));
+        pIndex++;
+        pMarca.setDescripcion(pResultSet.getString(pIndex));
+        pIndex++;
+        pMarca.setPaisOrigen(pResultSet.getString(pIndex));
         return pIndex;
     }
 
