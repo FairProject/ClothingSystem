@@ -4,6 +4,8 @@
  */
 package clothingsystem.entidadesdenegocio;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author moise
@@ -23,6 +25,9 @@ public class Ropa {
    private String Estilo;
    private String Description;
    private String TipoTela;
+   
+   //Metodos no mapeados
+   private ArrayList<Marca> marca;
    private int Top_aux;
 
     public Ropa() {
@@ -148,6 +153,14 @@ public class Ropa {
         this.TipoTela = TipoTela;
     }
 
+    public ArrayList<Marca> getMarca() {
+        return marca;
+    }
+
+    public void setMarca(ArrayList<Marca> marca) {
+        this.marca = marca;
+    }
+
     public int getTop_aux() {
         return Top_aux;
     }
@@ -155,7 +168,9 @@ public class Ropa {
     public void setTop_aux(int Top_aux) {
         this.Top_aux = Top_aux;
     }
+    
+    
 
-   
-   
+    
+
 }
