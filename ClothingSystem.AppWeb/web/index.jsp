@@ -8,7 +8,8 @@
 <html>
     <head>        
         <jsp:include page="/Views/Shared/title.jsp" />
-        <title>Home</title>
+        <title>Clothing</title>
+        <link rel="icon" type="image/png" href="images/Logo.png">
 
     </head>
     <body>
@@ -21,8 +22,8 @@
                     </div></center>
             </div>  
             <br>
-
-
+            
+    
             <div class="row">
 
                 <!-- Card 1 -->
