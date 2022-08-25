@@ -57,10 +57,11 @@ public class RopaFotoDALIT {
     @Test
     public void testCrear() throws Exception {
         System.out.println("crear");
-        RopaFoto pRopaFoto = null;
+        RopaFoto pRopaFoto = new RopaFoto();
         int expResult = 0;
-        // TODO review the generated test code and remove the default call to fail.
-       // fail("The test case is a prototype.");
+        Object result = null;
+//        int result = RopaFotoDAL.crear(pRopaFoto);
+        assertNotEquals(expResult, result);
     }
 
     /**
@@ -69,10 +70,12 @@ public class RopaFotoDALIT {
     @Test
     public void testModificar() throws Exception {
         System.out.println("modificar");
-        RopaFoto pRopaFoto = null;
+        RopaFoto pRopaFoto = new RopaFoto();
+        pRopaFoto.setUrl("TEST UNIT RopaFoto M");
         int expResult = 0;
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        Object result = null;
+//        int result = RopaFotoDAL.modificar(pRopaFoto);
+        assertNotEquals(expResult, result);
     }
 
     /**
@@ -81,10 +84,11 @@ public class RopaFotoDALIT {
     @Test
     public void testEliminar() throws Exception {
         System.out.println("eliminar");
-        RopaFoto pRopaFoto = null;
         int expResult = 0;
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        Object result = null;
+//        int result = RopaFotoDAL.eliminar(pRopaFoto);
+        assertNotEquals(expResult, result);
+
     }
 
     /**
@@ -97,7 +101,7 @@ public class RopaFotoDALIT {
         ResultSet pResultSet = null;
         int pIndex = 0;
         int expResult = 0;
-       // fail("The test case is a prototype.");
+        // fail("The test case is a prototype.");
     }
 
     /**
@@ -109,7 +113,7 @@ public class RopaFotoDALIT {
         RopaFoto pRopaFoto = null;
         RopaFoto expResult = null;
         // TODO review the generated test code and remove the default call to fail.
-       // fail("The test case is a prototype.");
+        // fail("The test case is a prototype.");
     }
 
     /**
@@ -120,29 +124,38 @@ public class RopaFotoDALIT {
         System.out.println("obtenerTodos");
         ArrayList<RopaFoto> expResult = null;
         // TODO review the generated test code and remove the default call to fail.
-       // fail("The test case is a prototype.");
+        // fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of querySelect method, of class RopaFotoDAL.
+     public int testIndividualQuerySelect(RopaFoto pRopaFoto) throws Exception {
+        ComunDB comundb = new ComunDB();
+        ComunDB.UtilQuery pUtilQuery = comundb.new UtilQuery("",null, 0);
+        RopaFotoDAL.querySelect(pRopaFoto, pUtilQuery);
+        return pUtilQuery.getNumWhere();
+    }
+/**
+     * Testear el metodo de QuerySelect de la clase RolDAL
      */
     @Test
-    public void testQuerySelect() throws Exception {
+    public void test2QuerySelect() throws Exception {
         System.out.println("querySelect");
-        RopaFoto pRopaFoto = null;
-        ComunDB.UtilQuery pUtilQuery = null;
-       
+        RopaFoto pRopaFoto = new RopaFoto();
+        pRopaFoto.setId(1);
+        assertTrue(testIndividualQuerySelect(pRopaFoto) == 1);
+        pRopaFoto.setUrl("TEST");
+        assertTrue(testIndividualQuerySelect(pRopaFoto) == 2);
     }
+
     /**
      * Test of buscar method, of class RopaFotoDAL.
      */
     @Test
     public void testBuscar() throws Exception {
         System.out.println("buscar");
-        RopaFoto pRopaFoto = null;
-        ArrayList<RopaFoto> expResult = null;
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        RopaFoto pRopaFoto = new RopaFoto();
+//        ArrayList<RopaFoto> result = RopaFotoDAL.buscar(pRopaFoto);
+  //      assertTrue(result.size() > 0);
+        
     }
 
 }
