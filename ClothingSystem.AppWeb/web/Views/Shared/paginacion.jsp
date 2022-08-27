@@ -1,14 +1,27 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <% int numPage = Integer.parseInt(request.getParameter("numPage")); %>
-<% if (numPage > 1) { %>
+<% if (numPage > 1) {%>
+
+
+
+
+<ul class="pagination">
+    <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    <li class="active"><a href="#!">1</a></li>
+    <li class="waves-effect"><a href="#!">2</a></li>
+    <li class="waves-effect"><a href="#!">3</a></li>
+    <li class="waves-effect"><a href="#!">4</a></li>
+    <li class="waves-effect"><a href="#!">5</a></li>
+    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+</ul>
 <ul class="pagination paginationjs" data-numpage="<%=numPage%>">
     <li class="waves-effect" data-typepage="Previous">
         <a><i class="material-icons">chevron_left</i></a>
     </li>
     <li class="active" data-typepage="Item" data-page="1"><a>1</a></li>
         <% for (int i = 1; i < numPage; i++) {%>
-    <li class="waves-effect" data-typepage="Item" data-page="<%=i+1%>">
-        <a ><%=i+1%></a>
+    <li class="waves-effect" data-typepage="Item" data-page="<%=i + 1%>">
+        <a ><%=i + 1%></a>
     </li>
     <%}%>   
     <li class="waves-effect" data-typepage="Next"><a><i class="material-icons">chevron_right</i></a></li>

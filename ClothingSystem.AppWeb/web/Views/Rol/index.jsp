@@ -73,7 +73,7 @@
                                     <td>
                                         <div style="display:flex">
                                             <a href="Rol?accion=edit&id=<%=rol.getId()%>" title="Modificar" class="waves-effect waves-light btn green">
-                                                <i class="material-icons">edit</i>
+                                                <i class="material-icons ">edit</i>
                                             </a>
                                             <a href="Rol?accion=details&id=<%=rol.getId()%>" title="Ver" class="waves-effect waves-light btn blue">
                                                 <i class="material-icons">description</i>
@@ -98,6 +98,6 @@
                 </div>
             </div>
         </main>
-        <jsp:include page="/Views/Shared/footerBody.jsp" />        
+              
     </body>
 </html>

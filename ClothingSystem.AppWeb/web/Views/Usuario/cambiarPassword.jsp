@@ -43,7 +43,7 @@
                 </div>
             </form>          
         </main>
-        <jsp:include page="/Views/Shared/footerBody.jsp" />   
+           
         <script>
             function validarFormulario() {
                 var result = true;
