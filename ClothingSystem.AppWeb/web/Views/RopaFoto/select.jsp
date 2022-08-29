@@ -1,17 +1,15 @@
-<%-- 
-    Document   : select
-    Created on : 16 ago 2022, 9:21:04
-    Author     : HP
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<%@page import="clothingsystem.entidadesdenegocio.RopaFoto"%>
+<%@page import="clothingsystem.accesoadatos.RopaFotoDAL"%>
+<%@page import="java.util.ArrayList"%>
+<% ArrayList<RopaFoto> ropafotos = RopaFotoDAL.obtenerTodos();
+    int id = Integer.parseInt(request.getParameter("id"));
+%>
+<select id="slRopaFoto" name="idRopa">
+    <option <%=(id == 0) ? "selected" : ""%>  value="0">SELECCIONAR</option>
+    <% for (RopaFoto ropafoto : ropafotos) {%>
+    <option <%=(id == ropafoto.getId()) ? "selected" : ""%>  value="<%=ropafoto.getId()%>"><%= ropafoto.getUrl()%></option>
+    <%}%>
+</select>
+<label for="idRopa">RopaFoto</label>
