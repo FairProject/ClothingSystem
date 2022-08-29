@@ -10,52 +10,52 @@ package clothingsystem.entidadesdenegocio;
  */
 public class RopaFoto {
 
-    private int id;
-    private int idRopa;
-    private String url;
-    private byte estatus;
+    private int Id;
+    private int IdRopa;
+    private String Url;
+    private byte Estatus;
     private int top_aux;
 
     public RopaFoto() {
     }
 
-    public RopaFoto(int id, int idRopa, String url, byte estatus) {
-        this.id = id;
-        this.idRopa = idRopa;
-        this.url = url;
-        this.estatus = estatus;
+    public RopaFoto(int Id, int IdRopa, String url, byte Estatus) {
+        this.Id = Id;
+        this.IdRopa = IdRopa;
+        this.Url = url;
+        this.Estatus = Estatus;
     }
 
     public int getId() {
-        return id;
+        return Id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int Id) {
+        this.Id = Id;
     }
 
     public int getIdRopa() {
-        return idRopa;
+        return IdRopa;
     }
 
-    public void setIdRopa(int idRopa) {
-        this.idRopa = idRopa;
+    public void setIdRopa(int IdRopa) {
+        this.IdRopa = IdRopa;
     }
 
     public String getUrl() {
-        return url;
+        return Url;
     }
 
     public void setUrl(String url) {
-        this.url = url;
+        this.Url = url;
     }
 
     public byte getEstatus() {
-        return estatus;
+        return Estatus;
     }
 
-    public void setEstatus(byte estatus) {
-        this.estatus = estatus;
+    public void setEstatus(byte Estatus) {
+        this.Estatus = Estatus;
     }
 
     public int getTop_aux() {
@@ -64,6 +64,12 @@ public class RopaFoto {
 
     public void setTop_aux(int top_aux) {
         this.top_aux = top_aux;
+    }
+
+    public class EstatusRopaFoto {
+
+        public static final byte ACTIVO = 1;
+        public static final byte INACTIVO = 2;
     }
 
 }
