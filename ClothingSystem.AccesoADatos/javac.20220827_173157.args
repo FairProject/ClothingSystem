@@ -1,0 +1,18 @@
+-d
+C:\\Users\\HP\\OneDrive\\Documentos\\ropa\\ClothingSystem\\ClothingSystem.AccesoADatos\\build\\test\\classes
+-classpath
+"C:\\Users\\HP\\OneDrive\\Documentos\\ropa\\ClothingSystem\\ClothingSystem.AccesoADatos\\build\\test\\classes;C:\\Users\\HP\\OneDrive\\Documentos\\ropa\\ClothingSystem\\ClothingSystem.EntidadesDeNegocio\\dist\\ClothingSystem.EntidadesDeNegocio.jar;C:\\Users\\HP\\Downloads\\mssql-jdbc-10.2.1.jre17.jar;C:\\Users\\HP\\OneDrive\\Documentos\\ropa\\ClothingSystem\\ClothingSystem.AccesoADatos\\build\\classes;C:\\Program Files\\NetBeans-14\\netbeans\\platform\\modules\\ext\\junit-4.13.2.jar;C:\\Program Files\\NetBeans-14\\netbeans\\platform\\modules\\ext\\hamcrest-core-1.3.jar"
+-sourcepath
+C:\\Users\\HP\\OneDrive\\Documentos\\ropa\\ClothingSystem\\ClothingSystem.AccesoADatos\\test
+-target
+17
+-encoding
+UTF-8
+-g
+-processorpath
+"C:\\Users\\HP\\OneDrive\\Documentos\\ropa\\ClothingSystem\\ClothingSystem.EntidadesDeNegocio\\dist\\ClothingSystem.EntidadesDeNegocio.jar;C:\\Users\\HP\\Downloads\\mssql-jdbc-10.2.1.jre17.jar;C:\\Users\\HP\\OneDrive\\Documentos\\ropa\\ClothingSystem\\ClothingSystem.AccesoADatos\\build\\classes;C:\\Program Files\\NetBeans-14\\netbeans\\platform\\modules\\ext\\junit-4.13.2.jar;C:\\Program Files\\NetBeans-14\\netbeans\\platform\\modules\\ext\\hamcrest-core-1.3.jar;C:\\Users\\HP\\OneDrive\\Documentos\\ropa\\ClothingSystem\\ClothingSystem.AccesoADatos\\build\\empty"
+-s
+C:\\Users\\HP\\OneDrive\\Documentos\\ropa\\ClothingSystem\\ClothingSystem.AccesoADatos\\build\\test\\classes
+-source
+17
+C:\\Users\\HP\\OneDrive\\Documentos\\ropa\\ClothingSystem\\ClothingSystem.AccesoADatos\\test\\clothingsystem\\accesoadatos\\RopaFotoDALIT.java

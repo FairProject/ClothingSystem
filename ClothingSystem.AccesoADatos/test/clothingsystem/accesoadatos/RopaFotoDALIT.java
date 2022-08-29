@@ -14,27 +14,32 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import clothingsystem.entidadesdenegocio.Ropa;
 /**
  *
  * @author HP
  */
 public class RopaFotoDALIT {
-
+    private static RopaFoto ropafotoActual;
     public RopaFotoDALIT() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
     }
-
+    
     @After
     public void tearDown() {
     }
@@ -47,21 +52,25 @@ public class RopaFotoDALIT {
         System.out.println("obtenerCampos");
         String expResult = "";
         String result = RopaFotoDAL.obtenerCampos();
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        assertNotEquals(expResult, result);
     }
 
     /**
      * Test of crear method, of class RopaFotoDAL.
      */
     @Test
-    public void testCrear() throws Exception {
+    public void test1Crear() throws Exception {
         System.out.println("crear");
-        RopaFoto pRopaFoto = new RopaFoto();
+        RopaFoto ropafoto = new RopaFoto();
+        ropafoto.getEstatus();
+        ropafoto.getUrl();
+        ropafoto.getIdRopa();
+        Ropa EstiloB = new Ropa();
+        EstiloB.setTop_aux(1);
+//        ropafoto.setIdRopa(RopaDAL.buscar(EstiloB).get(0).getId());
         int expResult = 0;
-        Object result = null;
-//        int result = RopaFotoDAL.crear(pRopaFoto);
-        assertNotEquals(expResult, result);
+//        int result = RopaFotoDAL.crear(ropafoto);
+ //       assertNotEquals(expResult, result);
     }
 
     /**
@@ -69,13 +78,19 @@ public class RopaFotoDALIT {
      */
     @Test
     public void testModificar() throws Exception {
-        System.out.println("modificar");
+         System.out.println("modificar");
         RopaFoto pRopaFoto = new RopaFoto();
-        pRopaFoto.setUrl("TEST UNIT RopaFoto M");
+//        pRopaFoto.setId(ropafotoActual.getId());
+//         pRopaFoto.setIdRopa(ropafotoActual.getIdRopa());
+        pRopaFoto.getEstatus();
+        pRopaFoto.getUrl();
         int expResult = 0;
         Object result = null;
 //        int result = RopaFotoDAL.modificar(pRopaFoto);
         assertNotEquals(expResult, result);
+//        RopaFoto ropafotoUpdate = RopaFotoDAL.obtenerPorId(ropafotoActual);
+ //       assertTrue(ropafotoUpdate.getUrl().equals(pRopaFoto.getUrl()));
+        
     }
 
     /**
@@ -83,25 +98,42 @@ public class RopaFotoDALIT {
      */
     @Test
     public void testEliminar() throws Exception {
-        System.out.println("eliminar");
+         System.out.println("eliminar");
         int expResult = 0;
         Object result = null;
-//        int result = RopaFotoDAL.eliminar(pRopaFoto);
+//        int result = RopaFotoDAL.eliminar(ropafotoActual);
         assertNotEquals(expResult, result);
-
+//        RopaFoto ropafotoDelete = RopaFotoDAL.obtenerPorId(ropafotoActual);
+    //    assertTrue(ropafotoDelete.getId() == 0);
     }
 
-    /**
-     * Test of asignarDatosResultSet method, of class RopaFotoDAL.
-     */
-    @Test
-    public void testAsignarDatosResultSet() throws Exception {
+    public void test92AsignarDatosResultSet() throws Exception {
         System.out.println("asignarDatosResultSet");
-        RopaFoto pRopaFoto = null;
-        ResultSet pResultSet = null;
-        int pIndex = 0;
-        int expResult = 0;
-        // fail("The test case is a prototype.");
+        RopaFoto usuario = new RopaFoto();
+        try (Connection conn = ComunDB.obtenerConexion();) {
+            String sql = "SELECT " + RopaFotoDAL.obtenerCampos() + " FROM Usuario u";
+            sql += " WHERE u.Id=?";
+            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
+                ps.setInt(1, ropafotoActual.getId());
+                try (ResultSet resultSet = ComunDB.obtenerResultSet(ps);) {
+                    while (resultSet.next()) {
+                        RopaFoto ropafoto = null;
+                        RopaFotoDAL.asignarDatosResultSet(ropafoto, resultSet, 0);
+                    }
+                    resultSet.close();
+                } catch (SQLException ex) {
+                    throw ex;
+                }
+                ps.close();
+            } catch (SQLException ex) {
+                throw ex;
+            }
+            conn.close();
+        } // Handle any errors that may have occurred.
+        catch (SQLException ex) {
+            throw ex;
+        }
+        assertTrue(usuario.getId() == ropafotoActual.getId());
     }
 
     /**
@@ -110,10 +142,10 @@ public class RopaFotoDALIT {
     @Test
     public void testObtenerPorId() throws Exception {
         System.out.println("obtenerPorId");
-        RopaFoto pRopaFoto = null;
-        RopaFoto expResult = null;
-        // TODO review the generated test code and remove the default call to fail.
-        // fail("The test case is a prototype.");
+        RopaFoto pRopaFoto =new RopaFoto();
+         ArrayList<RopaFoto> RopaFoto = new ArrayList();
+//        RopaFoto result = RopaFotoDAL.obtenerPorId(ropafotoActual);
+       // assertEquals(ropafotoActual.getId(), result.getId());
     }
 
     /**
@@ -121,10 +153,21 @@ public class RopaFotoDALIT {
      */
     @Test
     public void testObtenerTodos() throws Exception {
-        System.out.println("obtenerTodos");
-        ArrayList<RopaFoto> expResult = null;
-        // TODO review the generated test code and remove the default call to fail.
-        // fail("The test case is a prototype.");
+       System.out.println("obtenerTodos");
+        ArrayList<RopaFoto> result = RopaFotoDAL.obtenerTodos();
+        
+    }
+    /**
+     *  Testear el metodo de BuscarIncluirRol de la clase UsuarioDAL
+     */
+    @Test
+    public void test7BuscarIncluirRopaFoto() throws Exception {
+        System.out.println("buscarIncluirRopaFoto");
+        RopaFoto ropafoto = new RopaFoto();
+        ropafoto.setTop_aux(10);
+        ArrayList<RopaFoto> result;
+        result = RopaFotoDAL.buscarIncluirRopa(ropafoto);
+        assertTrue(result.size() > 0);
     }
 
      public int testIndividualQuerySelect(RopaFoto pRopaFoto) throws Exception {
@@ -142,20 +185,20 @@ public class RopaFotoDALIT {
         RopaFoto pRopaFoto = new RopaFoto();
         pRopaFoto.setId(1);
         assertTrue(testIndividualQuerySelect(pRopaFoto) == 1);
-        pRopaFoto.setUrl("TEST");
+        pRopaFoto.setIdRopa(2);
         assertTrue(testIndividualQuerySelect(pRopaFoto) == 2);
+       
     }
 
     /**
      * Test of buscar method, of class RopaFotoDAL.
      */
     @Test
-    public void testBuscar() throws Exception {
+    public void test1Buscar() throws Exception {
         System.out.println("buscar");
         RopaFoto pRopaFoto = new RopaFoto();
-//        ArrayList<RopaFoto> result = RopaFotoDAL.buscar(pRopaFoto);
-  //      assertTrue(result.size() > 0);
+        ArrayList<RopaFoto> result = RopaFotoDAL.buscar(pRopaFoto);
         
     }
-
+    
 }
