@@ -12,165 +12,168 @@ import java.util.ArrayList;
  */
 public class Ropa {
 
-   private int Id;
-   private int IdMarca;
-   private String CodigoBarra;
-   private String Nombre;
-   private double PrecioCompra;
-   private double PrecioVenta;
-   private int Existencia;
-   private byte Estatus;
-   private String Talla;
-   private String Color;
-   private String Estilo;
-   private String Description;
-   private String TipoTela;
-   
-   //Metodos no mapeados
-   private ArrayList<Marca> marca;
-   private int Top_aux;
+    private int id;
+    private int idMarca;
+    private String codigoBarra;
+    private String nombre;
+    private double precioCompra;
+    private double precioVenta;
+    private int existencia;
+    private byte estatus;
+    private String talla;
+    private String color;
+    private String estilo;
+    private String descripcion;
+    private String tipoTela;
+    private Marca marca;
+    
+    private int top_aux;
 
     public Ropa() {
     }
 
-    public Ropa(int Id, int IdMarca, String CodigoBarra, String Nombre, double PrecioCompra, double PrecioVenta, int Existencia, byte Estatus, String Talla, String Color, String Estilo, String Description, String TipoTela) {
-        this.Id = Id;
-        this.IdMarca = IdMarca;
-        this.CodigoBarra = CodigoBarra;
-        this.Nombre = Nombre;
-        this.PrecioCompra = PrecioCompra;
-        this.PrecioVenta = PrecioVenta;
-        this.Existencia = Existencia;
-        this.Estatus = Estatus;
-        this.Talla = Talla;
-        this.Color = Color;
-        this.Estilo = Estilo;
-        this.Description = Description;
-        this.TipoTela = TipoTela;
+    public Ropa(int id, int idMarca, String codigoBarra, String nombre, double precioCompra, double precioVenta, int existencia, byte estatus, String talla, String color, String estilo, String descripcion, String tipoTela, Marca marca) {
+        this.id = id;
+        this.idMarca = idMarca;
+        this.codigoBarra = codigoBarra;
+        this.nombre = nombre;
+        this.precioCompra = precioCompra;
+        this.precioVenta = precioVenta;
+        this.existencia = existencia;
+        this.estatus = estatus;
+        this.talla = talla;
+        this.color = color;
+        this.estilo = estilo;
+        this.descripcion = descripcion;
+        this.tipoTela = tipoTela;
+        this.marca = marca;
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(int Id) {
-        this.Id = Id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getIdMarca() {
-        return IdMarca;
+        return idMarca;
     }
 
-    public void setIdMarca(int IdMarca) {
-        this.IdMarca = IdMarca;
+    public void setIdMarca(int idMarca) {
+        this.idMarca = idMarca;
     }
 
     public String getCodigoBarra() {
-        return CodigoBarra;
+        return codigoBarra;
     }
 
-    public void setCodigoBarra(String CodigoBarra) {
-        this.CodigoBarra = CodigoBarra;
+    public void setCodigoBarra(String codigoBarra) {
+        this.codigoBarra = codigoBarra;
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public double getPrecioCompra() {
-        return PrecioCompra;
+        return precioCompra;
     }
 
-    public void setPrecioCompra(double PrecioCompra) {
-        this.PrecioCompra = PrecioCompra;
+    public void setPrecioCompra(double precioCompra) {
+        this.precioCompra = precioCompra;
     }
 
     public double getPrecioVenta() {
-        return PrecioVenta;
+        return precioVenta;
     }
 
-    public void setPrecioVenta(double PrecioVenta) {
-        this.PrecioVenta = PrecioVenta;
+    public void setPrecioVenta(double precioVenta) {
+        this.precioVenta = precioVenta;
     }
 
     public int getExistencia() {
-        return Existencia;
+        return existencia;
     }
 
-    public void setExistencia(int Existencia) {
-        this.Existencia = Existencia;
+    public void setExistencia(int existencia) {
+        this.existencia = existencia;
     }
 
     public byte getEstatus() {
-        return Estatus;
+        return estatus;
     }
 
-    public void setEstatus(byte Estatus) {
-        this.Estatus = Estatus;
+    public void setEstatus(byte estatus) {
+        this.estatus = estatus;
     }
 
     public String getTalla() {
-        return Talla;
+        return talla;
     }
 
-    public void setTalla(String Talla) {
-        this.Talla = Talla;
+    public void setTalla(String talla) {
+        this.talla = talla;
     }
 
     public String getColor() {
-        return Color;
+        return color;
     }
 
-    public void setColor(String Color) {
-        this.Color = Color;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getEstilo() {
-        return Estilo;
+        return estilo;
     }
 
-    public void setEstilo(String Estilo) {
-        this.Estilo = Estilo;
+    public void setEstilo(String estilo) {
+        this.estilo = estilo;
     }
 
-    public String getDescription() {
-        return Description;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescription(String Description) {
-        this.Description = Description;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public String getTipoTela() {
-        return TipoTela;
+        return tipoTela;
     }
 
-    public void setTipoTela(String TipoTela) {
-        this.TipoTela = TipoTela;
+    public void setTipoTela(String tipoTela) {
+        this.tipoTela = tipoTela;
     }
 
-    public ArrayList<Marca> getMarca() {
+    public Marca getMarca() {
         return marca;
     }
 
-    public void setMarca(ArrayList<Marca> marca) {
+    public void setMarca(Marca marca) {
         this.marca = marca;
     }
 
     public int getTop_aux() {
-        return Top_aux;
+        return top_aux;
     }
 
-    public void setTop_aux(int Top_aux) {
-        this.Top_aux = Top_aux;
+    public void setTop_aux(int top_aux) {
+        this.top_aux = top_aux;
     }
-    
-    
 
-    
+
+    public class EstatusRopa {
+
+        public static final byte ACTIVO = 1;
+        public static final byte INACTIVO = 2;
+    }
 
 }
