@@ -51,6 +51,7 @@ public class UsuarioServlet extends HttpServlet {
         usuario.setIdRol(Integer.parseInt(Utilidad.getParameter(request, "idRol", "0")));
         // Obtener el parámetro estatus del request  y asignar ese valor a la propiedad Estatus de Usuario.
         usuario.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
+        
         if (accion.equals("index")) {
             // Obtener el parámetro top_aux del request  y asignar ese valor a la propiedad Top_aux de Usuario.
             usuario.setTop_aux(Integer.parseInt(Utilidad.getParameter(request, "top_aux", "10")));

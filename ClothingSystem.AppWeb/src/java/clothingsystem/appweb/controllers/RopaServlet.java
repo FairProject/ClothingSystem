@@ -1,25 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package clothingsystem.appweb.controllers;
 
-import clothingsystem.accesoadatos.RopaDAL;
-import clothingsystem.appweb.utils.SessionUser;
-import clothingsystem.appweb.utils.Utilidad;
-import clothingsystem.entidadesdenegocio.Ropa;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.ArrayList;  // Importar la clase ArrayList
+import clothingsystem.accesoadatos.RopaDAL;
+import clothingsystem.entidadesdenegocio.Ropa;
+import clothingsystem.appweb.utils.*;
+
+; // Importar la clase Usuario de la capa de entidades de negocio
+
 /**
- *
- * @author moise
+ * En este Servlet, vamos a recibir todas las peticiones get y post que se
+ * realice al Servlet Rol. Aprender conceptos básicos de servlets
+ * http://www.jtech.ua.es/j2ee/2002-2003/modulos/servlets/apuntes/apuntes1_1.htm
+ * Actualizamos la anotación WebServlet para cambiar el atributo urlPatterns
+ * para acceder al Servlet Rol utilizando la siguiente Url: la del sitio web mas
+ * /Rol
  */
 @WebServlet(name = "RopaServlet", urlPatterns = {"/Ropa"})
 public class RopaServlet extends HttpServlet {
@@ -40,41 +41,63 @@ public class RopaServlet extends HttpServlet {
         // Obtener el parámetro accion del request
         String accion = Utilidad.getParameter(request, "accion", "index");
         Ropa ropa = new Ropa();
-        if (accion.equals("create") == false) { // Si la accion no es create.
-            // Obtener el parámetro id del request  y asignar ese valor a la propiedad Id de Rol.
-            ropa.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
-        }
+        // Obtener el parámetro nombre del request   y asignar ese valor a la propiedad Nombre de Rol.
+        ropa.setCodigoBarra(Utilidad.getParameter(request, "codigobarra", ""));
         // Obtener el parámetro nombre del request   y asignar ese valor a la propiedad Nombre de Rol.
         ropa.setNombre(Utilidad.getParameter(request, "nombre", ""));
+        // Obtener el parámetro nombre del request   y asignar ese valor a la propiedad Nombre de Rol.
+        ropa.setPrecioCompra(Double.parseDouble(Utilidad.getParameter(request, "preciocompra", "0")));
+        // Obtener el parámetro nombre del request   y asignar ese valor a la propiedad Nombre de Rol.
+        ropa.setPrecioVenta(Double.parseDouble(Utilidad.getParameter(request, "precioventa", "0")));
+
+        ropa.setExistencia(Integer.parseInt(Utilidad.getParameter(request, "existencia", "0")));
+
+        ropa.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
+
+        ropa.setTalla(Utilidad.getParameter(request, "talla", ""));
+
+        ropa.setColor(Utilidad.getParameter(request, "color", ""));
+
+        ropa.setEstilo(Utilidad.getParameter(request, "estilo", ""));
+
+        ropa.setDescripcion(Utilidad.getParameter(request, "descripcion", ""));
+
+        ropa.setTipoTela(Utilidad.getParameter(request, "tipotela", ""));
+
         if (accion.equals("index")) {  // Si accion es index.
             // Obtener el parámetro top_aux del request  y asignar ese valor a la propiedad Top_aux de Rol.
             ropa.setTop_aux(Integer.parseInt(Utilidad.getParameter(request, "top_aux", "10")));
+            ropa.setTop_aux(ropa.getTop_aux() == 0 ? Integer.MAX_VALUE : ropa.getTop_aux());
             // Utilizando un operador ternario, colocar en el Top_aux, si  es igual a cero enviar en el Top_aux, el valor maximo de un entero 
             // en java, para obtener todos los registro, en el caso contrario obtener la cantidad de registros
             // que se obtiene en el parámetro top_aux del request.
             ropa.setTop_aux(ropa.getTop_aux() == 0 ? Integer.MAX_VALUE : ropa.getTop_aux());
         }
-        // Devolver la instancia de la entidad Rol con los valores obtenidos del request.
-        return ropa;
+        else {
+            // Obtener el parámetro id del request  y asignar ese valor a la propiedad Id de Usuario.
+            ropa.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
     }
+    // Devolver la instancia de la entidad Rol con los valores obtenidos del request.
+    return ropa ;
+}
 
-    /**
-     * En este método se ejecutara cuando se envie una peticion get al servlet
-     * Rol, y el parámetro accion sea igual index. Este método se encargara de
-     * enviar los datos de los roles al jsp de index de Rol.
-     *
-     * @param request en este parámetro vamos a recibir el request de la
-     * peticion get enviada al servlet Rol
-     * @param response en este parámetro vamos a recibir el response de la
-     * peticion get enviada al servlet Rol que utlizaremos para enviar el jsp
-     * @throws javax.servlet.ServletException
-     * @throws java.io.IOException
-     */
-    private void doGetRequestIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+/**
+ * En este método se ejecutara cuando se envie una peticion get al servlet Rol,
+ * y el parámetro accion sea igual index. Este método se encargara de enviar los
+ * datos de los roles al jsp de index de Rol.
+ *
+ * @param request en este parámetro vamos a recibir el request de la peticion
+ * get enviada al servlet Rol
+ * @param response en este parámetro vamos a recibir el response de la peticion
+ * get enviada al servlet Rol que utlizaremos para enviar el jsp
+ * @throws javax.servlet.ServletException
+ * @throws java.io.IOException
+ */
+private void doGetRequestIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Ropa ropa = new Ropa(); // Crear una instancia  de la entidad de Rol.
             ropa.setTop_aux(10); // Agregar el Top_aux con el valor de 10 a la propiedad Top_aux de rol.
-            ArrayList<Ropa> ropas = RopaDAL.buscar(ropa); // Ir a la capa de acceso a datos y buscar los registros de Rol.
+            ArrayList<Ropa> ropas = RopaDAL.buscarIncluirMarca(ropa); // Ir a la capa de acceso a datos y buscar los registros de Rol.
             // El request.setAttribute se utiliza para enviar datos desde un servlet a un jsp.
             request.setAttribute("ropas", ropas); // Enviar los roles al jsp utilizando el request.setAttribute con el nombre del atributo roles.
             // Enviar el Top_aux de Rol al jsp utilizando el request.setAttribute con el nombre del atributo top_aux.
@@ -100,7 +123,7 @@ public class RopaServlet extends HttpServlet {
     private void doPostRequestIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Ropa ropa = obtenerRopa(request); // Llenar la instancia de Rol con los parámetros enviados en el request 
-            ArrayList<Ropa> ropas = RopaDAL.buscar(ropa); // Buscar los roles que cumple con los datos enviados en el request
+            ArrayList<Ropa> ropas = RopaDAL.buscarIncluirMarca(ropa); // Buscar los roles que cumple con los datos enviados en el request
             request.setAttribute("ropas", ropas); // Enviar los roles al jsp utilizando el request.setAttribute con el nombre del atributo roles
             // Enviar el Top_aux de Rol al jsp utilizando el request.setAttribute con el nombre del atributo top_aux
             request.setAttribute("top_aux", ropa.getTop_aux());
@@ -308,7 +331,7 @@ public class RopaServlet extends HttpServlet {
      * @throws IOException devolver una exception al leer o escribir un archivo
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Utilizar el método authorize de la clase SessionUser para validar que solo usuario con permiso
         // puedan acceder al servlet de Rol. Todo el codigo que este dentro  expresion Lambda, se ejecutara si el usuario tiene permitido
@@ -364,7 +387,7 @@ public class RopaServlet extends HttpServlet {
      * @throws IOException devolver una exception al leer o escribir un archivo
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Utilizar el método authorize de la clase SessionUser para validar que solo usuario con permiso
         // puedan acceder al servlet de Rol. Todo el codigo que este dentro  expresion Lambda,  se ejecutara si el usuario tiene permitido
