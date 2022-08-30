@@ -8,7 +8,7 @@ public class RopaDAL { // Clase para poder realizar consulta de Insertar, modifi
 
     // Metodo para obtener los campos a utilizar en la consulta SELECT de la tabla de Rol
     static String obtenerCampos() {
-        return "r.Id, r.IdMarca, r.CodigoBarra, r.Nombre, r.PrecioCompra, r.PrecioVenta, r.Existencia, r.Estatus, r.Talla, r.Color, r.Estilo, r.Description, r.TipoTela";
+        return "r.Id, r.IdMarca, r.CodigoBarra, r.Nombre, r.PrecioCompra, r.PrecioVenta, r.Existencia, r.Estatus, r.Talla, r.Color, r.Estilo, r.Descripcion, r.TipoTela";
     }
 
     // Metodo para obtener el SELECT a la tabla Rol y el TOP en el caso que se utilice una base de datos SQL SERVER
@@ -39,22 +39,20 @@ public class RopaDAL { // Clase para poder realizar consulta de Insertar, modifi
         int result;
         String sql;
         try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
-            sql = "INSERT INTO Ropa(Nombre) VALUES(?)"; // Definir la consulta INSERT a la tabla de Rol utilizando el simbolo ? para enviar parametros
+            sql = "INSERT INTO Ropa(IdMarca,CodigoBarra,Nombre,PrecioCompra,PrecioVenta,Existencia,Estatus,Talla,Color,Estilo,Descripcion,TipoTela) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)"; // Definir la consulta INSERT a la tabla de Rol utilizando el simbolo ? para enviar parametros
             try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
-                ps.setInt(1, pRopa.getId());
-                ps.setInt(2, pRopa.getIdMarca());
-                ps.setString(3, pRopa.getCodigoBarra());
-                ps.setString(4, pRopa.getNombre());
-                ps.setDouble(5, pRopa.getPrecioCompra());
-                ps.setDouble(6, pRopa.getPrecioVenta());
-                ps.setInt(7, pRopa.getExistencia());
-                ps.setByte(8, pRopa.getEstatus());
-                ps.setString(9, pRopa.getTalla());
-                ps.setString(10, pRopa.getColor());
-                ps.setString(11, pRopa.getEstilo());
-                ps.setString(12, pRopa.getDescription());
-                ps.setString(13, pRopa.getTipoTela());
-                // Agregar el parametro a la consulta donde estan el simbolo ? #1  
+                ps.setInt(1, pRopa.getIdMarca());
+                ps.setString(2, pRopa.getCodigoBarra());
+                ps.setString(3, pRopa.getNombre());
+                ps.setDouble(4, pRopa.getPrecioCompra());
+                ps.setDouble(5, pRopa.getPrecioVenta());
+                ps.setInt(6, pRopa.getExistencia());
+                ps.setByte(7, pRopa.getEstatus());
+                ps.setString(8, pRopa.getTalla());
+                ps.setString(9, pRopa.getColor());
+                ps.setString(10, pRopa.getEstilo());
+                ps.setString(11, pRopa.getDescripcion());
+                ps.setString(12, pRopa.getTipoTela());
                 result = ps.executeUpdate(); // Ejecutar la consulta INSERT en la base de datos
                 ps.close(); // Cerrar el PreparedStatement
             } catch (SQLException ex) {
@@ -72,21 +70,21 @@ public class RopaDAL { // Clase para poder realizar consulta de Insertar, modifi
         int result;
         String sql;
         try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
-            sql = "UPDATE Ropa SET Nombre=? WHERE Id=?"; // Definir la consulta UPDATE a la tabla de Rol utilizando el simbolo ? para enviar parametros
+            sql = "UPDATE Ropa SET IdMarca=?, CodigoBarra=?, Nombre=?, PrecioCompra=?, PrecioVenta=?, Existencia=?, Estatus=?, Talla=?, Color=?, Estilo=?, Descripcion=?, TipoTela=? WHERE Id=?"; // Definir la consulta UPDATE a la tabla de Rol utilizando el simbolo ? para enviar parametros
             try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
-                ps.setInt(1, pRopa.getId());
-                ps.setInt(2, pRopa.getIdMarca());
-                ps.setString(3, pRopa.getCodigoBarra());
-                ps.setString(4, pRopa.getNombre());
-                ps.setDouble(5, pRopa.getPrecioCompra());
-                ps.setDouble(6, pRopa.getPrecioVenta());
-                ps.setInt(7, pRopa.getExistencia());
-                ps.setByte(8, pRopa.getEstatus());
-                ps.setString(9, pRopa.getTalla());
-                ps.setString(10, pRopa.getColor());
-                ps.setString(11, pRopa.getEstilo());
-                ps.setString(12, pRopa.getDescription());
-                ps.setString(13, pRopa.getTipoTela()); // Agregar el parametro a la consulta donde estan el simbolo ? #2  
+                ps.setInt(1, pRopa.getIdMarca());
+                ps.setString(2, pRopa.getCodigoBarra());
+                ps.setString(3, pRopa.getNombre());
+                ps.setDouble(4, pRopa.getPrecioCompra());
+                ps.setDouble(5, pRopa.getPrecioVenta());
+                ps.setInt(6, pRopa.getExistencia());
+                ps.setByte(7, pRopa.getEstatus());
+                ps.setString(8, pRopa.getTalla());
+                ps.setString(9, pRopa.getColor());
+                ps.setString(10, pRopa.getEstilo());
+                ps.setString(11, pRopa.getDescripcion());
+                ps.setString(12, pRopa.getTipoTela());
+                ps.setInt(13, pRopa.getId());
                 result = ps.executeUpdate(); // Ejecutar la consulta UPDATE en la base de datos
                 ps.close(); // Cerrar el PreparedStatement
             } catch (SQLException ex) {
@@ -104,21 +102,9 @@ public class RopaDAL { // Clase para poder realizar consulta de Insertar, modifi
         int result;
         String sql;
         try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
-            sql = "DELETE FROM Rol WHERE Id=?";  // Definir la consulta DELETE a la tabla de Rol utilizando el simbolo ? para enviar parametros
+            sql = "DELETE FROM Ropa WHERE Id=?";  // Definir la consulta DELETE a la tabla de Rol utilizando el simbolo ? para enviar parametros
             try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                 ps.setInt(1, pRopa.getId());
-                ps.setInt(2, pRopa.getIdMarca());
-                ps.setString(3, pRopa.getCodigoBarra());
-                ps.setString(4, pRopa.getNombre());
-                ps.setDouble(5, pRopa.getPrecioCompra());
-                ps.setDouble(6, pRopa.getPrecioVenta());
-                ps.setInt(7, pRopa.getExistencia());
-                ps.setByte(8, pRopa.getEstatus());
-                ps.setString(9, pRopa.getTalla());
-                ps.setString(10, pRopa.getColor());
-                ps.setString(11, pRopa.getEstilo());
-                ps.setString(12, pRopa.getDescription());
-                ps.setString(13, pRopa.getTipoTela()); // Agregar el parametro a la consulta donde estan el simbolo ? #1 
                 result = ps.executeUpdate();  // Ejecutar la consulta DELETE en la base de datos
                 ps.close(); // Cerrar el PreparedStatement
             } catch (SQLException ex) {
@@ -154,28 +140,53 @@ public class RopaDAL { // Clase para poder realizar consulta de Insertar, modifi
         pIndex++;
         pRopa.setTalla(pResultSet.getString(pIndex)); // index 9
         pIndex++;
-        pRopa.setColor(pResultSet.getString(pIndex)); // index 10
+        pRopa.setColor(pResultSet.getString(pIndex)); // index 10       
         pIndex++;
-        pRopa.setEstilo(pResultSet.getString(pIndex)); // index 11
+        pRopa.setEstilo(pResultSet.getString(pIndex)); // index 11     
         pIndex++;
-        pRopa.setDescription(pResultSet.getString(pIndex)); // index 12
+        pRopa.setDescripcion(pResultSet.getString(pIndex)); // index 12    
         pIndex++;
-        pRopa.setTipoTela(pResultSet.getString(pIndex)); // index 13
-
+        pRopa.setTipoTela(pResultSet.getString(pIndex)); // index 13     
         return pIndex;
     }
 
     // Metodo para  ejecutar el ResultSet de la consulta SELECT a la tabla de Rol 
-    private static void obtenerDatos(PreparedStatement pPS, ArrayList<Ropa> pRopas) throws Exception {
+    private static void obtenerDatos(PreparedStatement pPS, ArrayList<Ropa> pRopa) throws Exception {
         try ( ResultSet resultSet = ComunDB.obtenerResultSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
             while (resultSet.next()) { // Recorrer cada una de la fila que regresa la consulta  SELECT de la tabla Rol
                 Ropa ropa = new Ropa();
                 asignarDatosResultSet(ropa, resultSet, 0); // Llenar las propiedaddes de la Entidad Rol con los datos obtenidos de la fila en el ResultSet
-                pRopas.add(ropa); // Agregar la entidad Rol al ArrayList de Rol
+                pRopa.add(ropa); // Agregar la entidad Rol al ArrayList de Rol
             }
             resultSet.close(); // Cerrar el ResultSet
         } catch (SQLException ex) {
             throw ex; // Enviar al siguiente metodo el error al obtener ResultSet de la clase ComunDB   en el caso que suceda 
+        }
+    }
+    
+    // Metodo para  ejecutar el ResultSet de la consulta SELECT a la tabla de Usuario y JOIN a la tabla de Rol
+    private static void obtenerDatosIncluirMarca(PreparedStatement pPS, ArrayList<Ropa> pRopa) throws Exception {
+        try (ResultSet resultSet = ComunDB.obtenerResultSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
+            HashMap<Integer, Marca> marcaMap = new HashMap(); //crear un HashMap para automatizar la creacion de instancias de la clase Rol
+            while (resultSet.next()) { // Recorrer cada una de la fila que regresa la consulta  SELECT de la tabla Usuario JOIN a la tabla de Rol
+                Ropa ropa = new Ropa();
+                 // Llenar las propiedaddes de la Entidad Usuario con los datos obtenidos de la fila en el ResultSet
+                int index = asignarDatosResultSet(ropa, resultSet, 0);
+                if (marcaMap.containsKey(ropa.getIdMarca()) == false) { // verificar que el HashMap aun no contenga el Rol actual
+                    Marca marca = new Marca();
+                    // en el caso que el Rol no este en el HashMap se asignara
+                    MarcaDAL.asignarDatosResultSet(marca, resultSet, index);
+                    marcaMap.put(marca.getId(), marca); // agregar el Rol al  HashMap
+                    ropa.setMarca(marca); // agregar el Rol al Usuario
+                } else {
+                    // En el caso que el Rol existe en el HashMap se agregara automaticamente al Usuario
+                   ropa.setMarca(marcaMap.get(ropa.getIdMarca())); 
+                }
+                pRopa.add(ropa); // Agregar el Usuario de la fila actual al ArrayList de Usuario
+            }
+            resultSet.close(); // cerrar el ResultSet
+        } catch (SQLException ex) {
+            throw ex; // enviar al siguiente metodo el error al obtener ResultSet de la clase ComunDB   en el caso que suceda 
         }
     }
 
@@ -188,7 +199,6 @@ public class RopaDAL { // Clase para poder realizar consulta de Insertar, modifi
             sql += " WHERE r.Id=?"; // Concatenar a la consulta SELECT de la tabla Rol el WHERE 
             try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                 ps.setInt(1, pRopa.getId()); // Agregar el parametro a la consulta donde estan el simbolo ? #1 
-                ps.setInt(2, pRopa.getIdMarca());
                 obtenerDatos(ps, ropas); // Llenar el ArrayList de Rol con las fila que devolvera la consulta SELECT a la tabla de Rol
                 ps.close(); // Cerrar el PreparedStatement
             } catch (SQLException ex) {
@@ -198,7 +208,7 @@ public class RopaDAL { // Clase para poder realizar consulta de Insertar, modifi
         } catch (SQLException ex) {
             throw ex; // Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
         }
-        if (ropas.size() > 1) { // Verificar si el ArrayList de Rol trae mas de un registro en tal caso solo debe de traer uno
+        if (ropas.size() > 0) { // Verificar si el ArrayList de Rol trae mas de un registro en tal caso solo debe de traer uno
             ropa = ropas.get(0); // Si el ArrayList de Rol trae un registro o mas obtenemos solo el primero 
         }
         return ropa; // Devolver el rol encontrado por Id 
@@ -234,8 +244,8 @@ public class RopaDAL { // Clase para poder realizar consulta de Insertar, modifi
                 statement.setInt(pUtilQuery.getNumWhere(), pRopa.getId());
             }
         }
-        
-         if (pRopa.getIdMarca() > 0) { // Verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Rol
+
+        if (pRopa.getIdMarca() > 0) { // Verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Rol
             pUtilQuery.AgregarWhereAnd(" r.IdMarca=? "); // Agregar el campo Id al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                 // Agregar el parametro del campo Id a la consulta SELECT de la tabla de Rol
@@ -250,120 +260,151 @@ public class RopaDAL { // Clase para poder realizar consulta de Insertar, modifi
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pRopa.getCodigoBarra() + "%");
             }
         }
-        
-          if (pRopa.getNombre() != null && pRopa.getNombre().trim().isEmpty() == false) {
+
+        if (pRopa.getNombre() != null && pRopa.getNombre().trim().isEmpty() == false) {
             pUtilQuery.AgregarWhereAnd(" r.Nombre LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                 // Agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Rol
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pRopa.getNombre() + "%");
             }
         }
-          
-           if (pRopa.getPrecioCompra() > 0) { // Verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Rol
+
+        if (pRopa.getPrecioCompra() > 0) { // Verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Rol
             pUtilQuery.AgregarWhereAnd(" r.PrecioCompra=? "); // Agregar el campo Id al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                 // Agregar el parametro del campo Id a la consulta SELECT de la tabla de Rol
                 statement.setDouble(pUtilQuery.getNumWhere(), pRopa.getPrecioCompra());
             }
         }
-          
-            if (pRopa.getPrecioVenta() > 0) { // Verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Rol
+
+        if (pRopa.getPrecioVenta() > 0) { // Verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Rol
             pUtilQuery.AgregarWhereAnd(" r.PrecioVenta=? "); // Agregar el campo Id al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                 // Agregar el parametro del campo Id a la consulta SELECT de la tabla de Rol
                 statement.setDouble(pUtilQuery.getNumWhere(), pRopa.getPrecioVenta());
             }
         }
-            
-             if (pRopa.getExistencia() > 0) { // Verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Rol
+
+        if (pRopa.getExistencia() > 0) { // Verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Rol
             pUtilQuery.AgregarWhereAnd(" r.Existencia=? "); // Agregar el campo Id al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                 // Agregar el parametro del campo Id a la consulta SELECT de la tabla de Rol
                 statement.setInt(pUtilQuery.getNumWhere(), pRopa.getExistencia());
             }
         }
-             
-             
-              if (pRopa.getEstatus() > 0) { // Verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Rol
+
+        if (pRopa.getEstatus() > 0) { // Verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Rol
             pUtilQuery.AgregarWhereAnd(" r.Estatus=? "); // Agregar el campo Id al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                 // Agregar el parametro del campo Id a la consulta SELECT de la tabla de Rol
                 statement.setByte(pUtilQuery.getNumWhere(), pRopa.getEstatus());
             }
         }
-              
-              
-          if (pRopa.getTalla() != null && pRopa.getTalla().trim().isEmpty() == false) {
+
+        if (pRopa.getTalla() != null && pRopa.getTalla().trim().isEmpty() == false) {
             pUtilQuery.AgregarWhereAnd(" r.Talla LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                 // Agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Rol
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pRopa.getTalla() + "%");
             }
         }
-          
-          
-          if (pRopa.getColor() != null && pRopa.getColor().trim().isEmpty() == false) {
+
+        if (pRopa.getColor() != null && pRopa.getColor().trim().isEmpty() == false) {
             pUtilQuery.AgregarWhereAnd(" r.Color LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                 // Agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Rol
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pRopa.getColor() + "%");
             }
         }
-          
-          
-          if (pRopa.getEstilo() != null && pRopa.getEstilo().trim().isEmpty() == false) {
+
+        if (pRopa.getEstilo() != null && pRopa.getEstilo().trim().isEmpty() == false) {
             pUtilQuery.AgregarWhereAnd(" r.Estilo LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
-                // Agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Rol
+//                // Agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Rol
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pRopa.getEstilo() + "%");
             }
         }
-          
-          
-          if (pRopa.getDescription() != null && pRopa.getDescription().trim().isEmpty() == false) {
-            pUtilQuery.AgregarWhereAnd(" r.Description LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
+
+        if (pRopa.getDescripcion() != null && pRopa.getDescripcion().trim().isEmpty() == false) {
+            pUtilQuery.AgregarWhereAnd(" r.Descripcion LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                 // Agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Rol
-                statement.setString(pUtilQuery.getNumWhere(), "%" + pRopa.getDescription() + "%");
+                statement.setString(pUtilQuery.getNumWhere(), "%" + pRopa.getDescripcion() + "%");
             }
         }
-          
-          
-          if (pRopa.getTipoTela() != null && pRopa.getTipoTela().trim().isEmpty() == false) {
+
+        if (pRopa.getTipoTela() != null && pRopa.getTipoTela().trim().isEmpty() == false) {
             pUtilQuery.AgregarWhereAnd(" r.TipoTela LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                 // Agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Rol
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pRopa.getTipoTela() + "%");
             }
         }
-          
+
+    }
+    
+     // Metodo para obtener todos los registro de la tabla de Usuario que cumplan con los filtros agregados 
+     // a la consulta SELECT de la tabla de Usuario 
+    public static ArrayList<Ropa> buscar(Ropa pRopa) throws Exception {
+        ArrayList<Ropa> ropas = new ArrayList();
+        try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+            String sql = obtenerSelect(pRopa); // obtener la consulta SELECT de la tabla Usuario
+            ComunDB comundb = new ComunDB();
+            ComunDB.UtilQuery utilQuery = comundb.new UtilQuery(sql, null, 0);
+            querySelect(pRopa, utilQuery); // Asignar el filtro a la consulta SELECT de la tabla de Usuario 
+            sql = utilQuery.getSQL();
+            sql += agregarOrderBy(pRopa); // Concatenar a la consulta SELECT de la tabla Usuario el ORDER BY por Id
+            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // obtener el PreparedStatement desde la clase ComunDB
+                utilQuery.setStatement(ps);
+                utilQuery.setSQL(null);
+                utilQuery.setNumWhere(0);
+                querySelect(pRopa, utilQuery); // Asignar los parametros al PreparedStatement de la consulta SELECT de la tabla de Usuario
+                obtenerDatos(ps, ropas); // Llenar el ArrayList de Usuario con las fila que devolvera la consulta SELECT a la tabla de Usuario
+                ps.close(); // Cerrar el PreparedStatement
+            } catch (SQLException ex) {
+                throw ex; // Enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda
+            }
+            conn.close(); // Cerrar la conexion a la base de datos
+        } 
+        catch (SQLException ex) {
+            throw ex; // Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
+        }
+        return ropas; // Devolver el ArrayList de Usuario
     }
 
     // Metodo para obtener todos los registro de la tabla de Rol que cumplan con los filtros agregados 
     // a la consulta SELECT de la tabla de Rol 
-    public static ArrayList<Ropa> buscar(Ropa pRopa) throws Exception {
+   public static ArrayList<Ropa> buscarIncluirMarca(Ropa pRopa) throws Exception {
         ArrayList<Ropa> ropas = new ArrayList();
-        try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
-            String sql = obtenerSelect(pRopa); // Obtener la consulta SELECT de la tabla Rol
+        try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+            String sql = "SELECT "; // Iniciar la variables para el String de la consulta SELECT
+            if (pRopa.getTop_aux() > 0 && ComunDB.TIPODB == ComunDB.TipoDB.SQLSERVER) {
+                sql += "TOP " + pRopa.getTop_aux() + " "; // Agregar el TOP en el caso que se este utilizando SQL SERVER
+            }
+            sql += obtenerCampos(); // Obtener los campos de la tabla de Usuario que iran en el SELECT
+            sql += ",";
+            sql += RolDAL.obtenerCampos(); // Obtener los campos de la tabla de Rol que iran en el SELECT
+            sql += " FROM Ropa r";
+            sql += " JOIN Marca m on (r.IdMarca=r.Id)"; // agregar el join para unir la tabla de Usuario con Rol
             ComunDB comundb = new ComunDB();
             ComunDB.UtilQuery utilQuery = comundb.new UtilQuery(sql, null, 0);
-            querySelect(pRopa, utilQuery); // Asignar el filtro a la consulta SELECT de la tabla de Rol 
+            querySelect(pRopa, utilQuery); // Asignar el filtro a la consulta SELECT de la tabla de Usuario 
             sql = utilQuery.getSQL();
-            sql += agregarOrderBy(pRopa); // Concatenar a la consulta SELECT de la tabla Rol el ORDER BY por Id
-            try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
+            sql += agregarOrderBy(pRopa); // Concatenar a la consulta SELECT de la tabla Usuario el ORDER BY por Id
+            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                 utilQuery.setStatement(ps);
                 utilQuery.setSQL(null);
                 utilQuery.setNumWhere(0);
-                querySelect(pRopa, utilQuery);  // Asignar los parametros al PreparedStatement de la consulta SELECT de la tabla de Rol
-                obtenerDatos(ps, ropas); // Llenar el ArrayList de Rol con las fila que devolvera la consulta SELECT a la tabla de Rol
+                querySelect(pRopa, utilQuery); // Asignar los parametros al PreparedStatement de la consulta SELECT de la tabla de Usuario
+                obtenerDatosIncluirMarca(ps, ropas);// Llenar el ArrayList de Usuario con las fila que devolvera la consulta SELECT a la tabla de Usuario
                 ps.close(); // Cerrar el PreparedStatement
             } catch (SQLException ex) {
-                throw ex;  // Enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda
+                throw ex;// Enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda
             }
             conn.close(); // Cerrar la conexion a la base de datos
         } catch (SQLException ex) {
-            throw ex; // Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
+            throw ex;// Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
         }
-        return ropas; // Devolver el ArrayList de Rol
+        return ropas; // Devolver el ArrayList de Usuario
     }
 }

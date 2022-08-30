@@ -194,6 +194,24 @@ public class MarcaDAL { // Clase para poder realizar consulta de Insertar, modif
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pMarca.getNombre() + "%");
             }
         }
+        
+        // Verificar si se va incluir el campo Nombre en el filtro de la consulta SELECT de la tabla de Marca
+        if (pMarca.getDescripcion() != null && pMarca.getDescripcion().trim().isEmpty() == false) {
+            pUtilQuery.AgregarWhereAnd(" r.Descripcion LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
+            if (statement != null) {
+                // Agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Marca
+                statement.setString(pUtilQuery.getNumWhere(), "%" + pMarca.getDescripcion() + "%");
+            }
+        }
+        
+        // Verificar si se va incluir el campo Nombre en el filtro de la consulta SELECT de la tabla de Marca
+        if (pMarca.getPaisOrigen() != null && pMarca.getPaisOrigen().trim().isEmpty() == false) {
+            pUtilQuery.AgregarWhereAnd(" r.PaisOrigen LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
+            if (statement != null) {
+                // Agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Marca
+                statement.setString(pUtilQuery.getNumWhere(), "%" + pMarca.getPaisOrigen() + "%");
+            }
+        }
     }
 
     // Metodo para obtener todos los registro de la tabla de Marca que cumplan con los filtros agregados 
