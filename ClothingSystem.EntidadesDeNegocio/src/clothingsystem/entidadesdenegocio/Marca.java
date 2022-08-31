@@ -4,6 +4,8 @@
  */
 package clothingsystem.entidadesdenegocio;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author edwin
@@ -74,6 +76,12 @@ public class Marca {
 
     public void setTop_aux(int top_aux) {
         this.top_aux = top_aux;
+    }
+    
+    public class EstatusMarca {
+
+        public static final byte ACTIVO = 1;
+        public static final byte INACTIVO = 2;
     }
     
     
