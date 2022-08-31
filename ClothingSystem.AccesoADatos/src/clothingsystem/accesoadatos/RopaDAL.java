@@ -151,12 +151,12 @@ public class RopaDAL { // Clase para poder realizar consulta de Insertar, modifi
     }
 
     // Metodo para  ejecutar el ResultSet de la consulta SELECT a la tabla de Rol 
-    private static void obtenerDatos(PreparedStatement pPS, ArrayList<Ropa> pRopa) throws Exception {
+    private static void obtenerDatos(PreparedStatement pPS, ArrayList<Ropa> pRopas) throws Exception {
         try ( ResultSet resultSet = ComunDB.obtenerResultSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
             while (resultSet.next()) { // Recorrer cada una de la fila que regresa la consulta  SELECT de la tabla Rol
                 Ropa ropa = new Ropa();
                 asignarDatosResultSet(ropa, resultSet, 0); // Llenar las propiedaddes de la Entidad Rol con los datos obtenidos de la fila en el ResultSet
-                pRopa.add(ropa); // Agregar la entidad Rol al ArrayList de Rol
+                pRopas.add(ropa); // Agregar la entidad Rol al ArrayList de Rol
             }
             resultSet.close(); // Cerrar el ResultSet
         } catch (SQLException ex) {
@@ -165,7 +165,7 @@ public class RopaDAL { // Clase para poder realizar consulta de Insertar, modifi
     }
     
     // Metodo para  ejecutar el ResultSet de la consulta SELECT a la tabla de Usuario y JOIN a la tabla de Rol
-    private static void obtenerDatosIncluirMarca(PreparedStatement pPS, ArrayList<Ropa> pRopa) throws Exception {
+    private static void obtenerDatosIncluirMarca(PreparedStatement pPS, ArrayList<Ropa> pRopas) throws Exception {
         try (ResultSet resultSet = ComunDB.obtenerResultSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
             HashMap<Integer, Marca> marcaMap = new HashMap(); //crear un HashMap para automatizar la creacion de instancias de la clase Rol
             while (resultSet.next()) { // Recorrer cada una de la fila que regresa la consulta  SELECT de la tabla Usuario JOIN a la tabla de Rol
@@ -182,7 +182,7 @@ public class RopaDAL { // Clase para poder realizar consulta de Insertar, modifi
                     // En el caso que el Rol existe en el HashMap se agregara automaticamente al Usuario
                    ropa.setMarca(marcaMap.get(ropa.getIdMarca())); 
                 }
-                pRopa.add(ropa); // Agregar el Usuario de la fila actual al ArrayList de Usuario
+                pRopas.add(ropa); // Agregar el Usuario de la fila actual al ArrayList de Usuario
             }
             resultSet.close(); // cerrar el ResultSet
         } catch (SQLException ex) {

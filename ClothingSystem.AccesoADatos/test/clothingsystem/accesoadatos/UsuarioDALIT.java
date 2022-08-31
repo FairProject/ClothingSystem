@@ -1,10 +1,10 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package clothingsystem.accesoadatos;
 
-import static clothingsystem.accesoadatos.UsuarioDAL.login;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import org.junit.After;
@@ -21,15 +21,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import clothingsystem.entidadesdenegocio.Rol;
 import java.time.LocalDate;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 
 /**
  *
- * @author HP
+ * @author Dev3hc01
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UsuarioDALIT {
 
-    private Usuario usuarioActual;
-    private String login;
+    private static Usuario usuarioActual;
+    private static String login;
 
     public UsuarioDALIT() {
     }
@@ -51,12 +54,12 @@ public class UsuarioDALIT {
     }
 
     /**
-     * Testear el metodo de Crear de la clase UsuarioDAL
+     *  Testear el metodo de Crear de la clase UsuarioDAL
      */
     @Test
     public void test1Crear() throws Exception {
         int randomNum = (int) (Math.random() * 1000);
-        String login = "UNITTEST" + randomNum;
+        login = "UNITTEST" + randomNum;
         System.out.println("crear");
         Usuario usuario = new Usuario();
         usuario.setNombre("Nombre UNIT TEST");
@@ -67,7 +70,10 @@ public class UsuarioDALIT {
         usuario.setFechaRegistro(LocalDate.now());
         Rol rolB = new Rol();
         rolB.setTop_aux(1);
-
+        usuario.setIdRol(RolDAL.buscar(rolB).get(0).getId());
+        int expResult = 0;
+        int result = UsuarioDAL.crear(usuario);
+        assertNotEquals(expResult, result);
     }
 
     public int testIndividualQuerySelect(Usuario pUsuario) throws Exception {
@@ -77,8 +83,8 @@ public class UsuarioDALIT {
         return pUtilQuery.getNumWhere();
     }
 
-    /**
-     * Testear el metodo de QuerySelect de la clase UsuarioDAL
+     /**
+     *  Testear el metodo de QuerySelect de la clase UsuarioDAL
      */
     @Test
     public void test2QuerySelect() throws Exception {
@@ -106,7 +112,7 @@ public class UsuarioDALIT {
     }
 
     /**
-     * Testear el metodo de Buscar de la clase UsuarioDAL
+     *  Testear el metodo de Buscar de la clase UsuarioDAL
      */
     @Test
     public void test3Buscar() throws Exception {
@@ -117,58 +123,70 @@ public class UsuarioDALIT {
         usuario.setLogin(login);
         usuario.setEstatus(Usuario.EstatusUsuario.INACTIVO);
         usuario.setTop_aux(10);
-
+        ArrayList<Usuario> result = UsuarioDAL.buscar(usuario);
+        assertTrue(result.size() > 0);
+        usuarioActual = result.get(0);
     }
 
-    /**
-     * Testear el metodo de ObtenerPorId de la clase UsuarioDAL
+     /**
+     *  Testear el metodo de ObtenerPorId de la clase UsuarioDAL
      */
     @Test
     public void test4ObtenerPorId() throws Exception {
         System.out.println("obtenerPorId");
-
+        Usuario result = UsuarioDAL.obtenerPorId(usuarioActual);
+        assertEquals(usuarioActual.getId(), result.getId());
     }
 
-    /**
-     * Testear el metodo de Modificar de la clase UsuarioDAL
+     /**
+     *  Testear el metodo de Modificar de la clase UsuarioDAL
      */
     @Test
     public void test5Modificar() throws Exception {
         System.out.println("modificar");
         Usuario usuario = new Usuario();
+        usuario.setId(usuarioActual.getId());
         usuario.setNombre("Nombre UNIT TEST M");
         usuario.setApellido("Apellido UNIT TEST M");
-        login += "_MOD";
+        login+="_MOD";
         usuario.setLogin(login);
         usuario.setEstatus(Usuario.EstatusUsuario.ACTIVO);
         Rol rolB = new Rol();
         rolB.setTop_aux(2);
+        usuario.setIdRol(RolDAL.buscar(rolB).get(0).getId());
         int expResult = 0;
-
+        int result = UsuarioDAL.modificar(usuario);
+        assertNotEquals(expResult, result);
+        Usuario usuarioUpdate = UsuarioDAL.obtenerPorId(usuarioActual);
+        assertTrue(usuarioUpdate.getLogin().equals(usuario.getLogin()));
     }
 
-    /**
-     * Testear el metodo de ObtenerTodos de la clase UsuarioDAL
+     /**
+     *  Testear el metodo de ObtenerTodos de la clase UsuarioDAL
      */
     @Test
     public void test6ObtenerTodos() throws Exception {
         System.out.println("obtenerTodos");
-
+        ArrayList<Usuario> result = UsuarioDAL.obtenerTodos();
+        assertTrue(result.size() > 0);
     }
 
-    /**
-     * Testear el metodo de BuscarIncluirRol de la clase UsuarioDAL
+     /**
+     *  Testear el metodo de BuscarIncluirRol de la clase UsuarioDAL
      */
     @Test
     public void test7BuscarIncluirRol() throws Exception {
         System.out.println("buscarIncluirRol");
         Usuario usuario = new Usuario();
         usuario.setTop_aux(10);
-
+        ArrayList<Usuario> result = UsuarioDAL.buscarIncluirRol(usuario);
+        assertTrue(result.size() > 0);
+        Usuario usuarioConRol = result.get(0);
+        assertTrue(usuarioConRol.getIdRol() == usuarioConRol.getRol().getId());
     }
 
     /**
-     * Testear el metodo de ObtenerCampos de la clase UsuarioDAL
+     *  Testear el metodo de ObtenerCampos de la clase UsuarioDAL
      */
     @Test
     public void test8ObtenerCampos() {
@@ -178,20 +196,24 @@ public class UsuarioDALIT {
         assertNotEquals(expResult, result);
     }
 
-    /**
-     * Testear el metodo de CambiarPassword de la clase UsuarioDAL
+     /**
+     *  Testear el metodo de CambiarPassword de la clase UsuarioDAL
      */
     @Test
     public void test90CambiarPassword() throws Exception {
         System.out.println("cambiarPassword");
         Usuario usuario = new Usuario();
+        usuario.setId(usuarioActual.getId());
+        usuario.setLogin(login);
         usuario.setPassword("UNODOSTRES");
         String pPasswordAnt = "12345";
-
+        int expResult = 0;
+        int result = UsuarioDAL.cambiarPassword(usuario, pPasswordAnt);
+        assertNotEquals(expResult, result);
     }
 
     /**
-     * Testear el metodo de Login de la clase UsuarioDAL
+     *  Testear el metodo de Login de la clase UsuarioDAL
      */
     @Test
     public void test91Login() throws Exception {
@@ -199,17 +221,52 @@ public class UsuarioDALIT {
         Usuario usuario = new Usuario();
         usuario.setLogin(login);
         usuario.setPassword("UNODOSTRES");
-
+        Usuario result = UsuarioDAL.login(usuario);
+        assertTrue(result.getId() > 0);
+        assertEquals(usuario.getLogin(), result.getLogin());
     }
-
-    /**
-     * Testear el metodo de Eliminar de la clase UsuarioDAL
+     /**
+     *  Testear el metodo de AsignarDatosResultSet de la clase UsuarioDAL
+     */
+    @Test
+    public void test92AsignarDatosResultSet() throws Exception {
+        System.out.println("asignarDatosResultSet");
+        Usuario usuario = new Usuario();
+        try (Connection conn = ComunDB.obtenerConexion();) {
+            String sql = "SELECT " + UsuarioDAL.obtenerCampos() + " FROM Usuario u";
+            sql += " WHERE u.Id=?";
+            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
+                ps.setInt(1, usuarioActual.getId());
+                try (ResultSet resultSet = ComunDB.obtenerResultSet(ps);) {
+                    while (resultSet.next()) {
+                        UsuarioDAL.asignarDatosResultSet(usuario, resultSet, 0);
+                    }
+                    resultSet.close();
+                } catch (SQLException ex) {
+                    throw ex;
+                }
+                ps.close();
+            } catch (SQLException ex) {
+                throw ex;
+            }
+            conn.close();
+        } // Handle any errors that may have occurred.
+        catch (SQLException ex) {
+            throw ex;
+        }
+        assertTrue(usuario.getId() == usuarioActual.getId());
+    }
+     /**
+     *  Testear el metodo de Eliminar de la clase UsuarioDAL
      */
     @Test
     public void test93Eliminar() throws Exception {
         System.out.println("eliminar");
         int expResult = 0;
-
+        int result = UsuarioDAL.eliminar(usuarioActual);
+        assertNotEquals(expResult, result);
+        Usuario usuarioDelete = UsuarioDAL.obtenerPorId(usuarioActual);
+        assertTrue(usuarioDelete.getId() == 0);
     }
 
 }
