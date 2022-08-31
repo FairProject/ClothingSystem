@@ -138,7 +138,7 @@ public class MarcaDAL { // Clase para poder realizar consulta de Insertar, modif
         ArrayList<Marca> marcas = new ArrayList();
         try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
             String sql = obtenerSelect(pMarca); // Obtener la consulta SELECT de la tabla Marca
-            sql += " WHERE r.Id=?"; // Concatenar a la consulta SELECT de la tabla Rol el WHERE 
+            sql += " WHERE m.Id=?"; // Concatenar a la consulta SELECT de la tabla Rol el WHERE 
             try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                 ps.setInt(1, pMarca.getId()); // Agregar el parametro a la consulta donde estan el simbolo ? #1 
                 obtenerDatos(ps, marcas); // Llenar el ArrayList de Rol con las fila que devolvera la consulta SELECT a la tabla de Marca
