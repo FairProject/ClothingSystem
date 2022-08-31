@@ -57,12 +57,14 @@ public class RopaServlet extends HttpServlet {
         ropa.setTalla(Utilidad.getParameter(request, "talla", ""));
 
         ropa.setColor(Utilidad.getParameter(request, "color", ""));
-
+                
         ropa.setEstilo(Utilidad.getParameter(request, "estilo", ""));
 
         ropa.setDescripcion(Utilidad.getParameter(request, "descripcion", ""));
 
         ropa.setTipoTela(Utilidad.getParameter(request, "tipotela", ""));
+        
+        ropa.setIdMarca(Integer.parseInt(Utilidad.getParameter(request, "idMarca", "0")));
 
         if (accion.equals("index")) {  // Si accion es index.
             // Obtener el parámetro top_aux del request  y asignar ese valor a la propiedad Top_aux de Rol.
