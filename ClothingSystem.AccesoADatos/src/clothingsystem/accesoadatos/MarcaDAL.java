@@ -180,7 +180,7 @@ public class MarcaDAL { // Clase para poder realizar consulta de Insertar, modif
     static void querySelect(Marca pMarca, ComunDB.UtilQuery pUtilQuery) throws SQLException {
         PreparedStatement statement = pUtilQuery.getStatement(); // Obtener el PreparedStatement al cual aplicar los parametros
         if (pMarca.getId() > 0) { // Verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Marca
-            pUtilQuery.AgregarWhereAnd(" r.Id=? "); // Agregar el campo Id al filtro de la consulta SELECT y agregar en el WHERE o AND
+            pUtilQuery.AgregarWhereAnd(" m.Id=? "); // Agregar el campo Id al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                 // Agregar el parametro del campo Id a la consulta SELECT de la tabla de Marca
                 statement.setInt(pUtilQuery.getNumWhere(), pMarca.getId());
@@ -188,7 +188,7 @@ public class MarcaDAL { // Clase para poder realizar consulta de Insertar, modif
         }
         // Verificar si se va incluir el campo Nombre en el filtro de la consulta SELECT de la tabla de Marca
         if (pMarca.getNombre() != null && pMarca.getNombre().trim().isEmpty() == false) {
-            pUtilQuery.AgregarWhereAnd(" r.Nombre LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
+            pUtilQuery.AgregarWhereAnd(" m.Nombre LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                 // Agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Marca
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pMarca.getNombre() + "%");
@@ -197,7 +197,7 @@ public class MarcaDAL { // Clase para poder realizar consulta de Insertar, modif
         
         // Verificar si se va incluir el campo Nombre en el filtro de la consulta SELECT de la tabla de Marca
         if (pMarca.getDescripcion() != null && pMarca.getDescripcion().trim().isEmpty() == false) {
-            pUtilQuery.AgregarWhereAnd(" r.Descripcion LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
+            pUtilQuery.AgregarWhereAnd(" m.Descripcion LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                 // Agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Marca
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pMarca.getDescripcion() + "%");
@@ -206,7 +206,7 @@ public class MarcaDAL { // Clase para poder realizar consulta de Insertar, modif
         
         // Verificar si se va incluir el campo Nombre en el filtro de la consulta SELECT de la tabla de Marca
         if (pMarca.getPaisOrigen() != null && pMarca.getPaisOrigen().trim().isEmpty() == false) {
-            pUtilQuery.AgregarWhereAnd(" r.PaisOrigen LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
+            pUtilQuery.AgregarWhereAnd(" m.PaisOrigen LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
                 // Agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Marca
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pMarca.getPaisOrigen() + "%");
