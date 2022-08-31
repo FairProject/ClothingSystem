@@ -40,7 +40,7 @@ public class MarcaServlet extends HttpServlet {
         String accion = Utilidad.getParameter(request, "accion", "index");
         Marca marca = new Marca();
         // Obtener el parámetro nombre del request   y asignar ese valor a la propiedad Nombre de Rol.
-        marca.setDescripcion(Utilidad.getParameter(request, "nombre", ""));
+        marca.setNombre(Utilidad.getParameter(request, "nombre", ""));
         
          marca.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
 
@@ -145,9 +145,9 @@ public class MarcaServlet extends HttpServlet {
      */
     private void doPostRequestCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Marca rol = obtenerMarca(request); // Llenar la instancia de Marca con los parámetros enviados en el request.
+            Marca marca = obtenerMarca(request); // Llenar la instancia de Marca con los parámetros enviados en el request.
             // Enviar los datos de Marca a la capa de accesoa a datos para que lo almacene en la base de datos el registro.
-            int result = MarcaDAL.crear(rol);
+            int result = MarcaDAL.crear(marca);
             if (result != 0) { // Si el result es diferente a cero significa que los datos fueron ingresados correctamente.
                 // Enviar el atributo accion con el valor index al jsp de index
                 request.setAttribute("accion", "index");
