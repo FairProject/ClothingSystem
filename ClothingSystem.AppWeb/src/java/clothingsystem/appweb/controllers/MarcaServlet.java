@@ -36,31 +36,33 @@ public class MarcaServlet extends HttpServlet {
      * obtenidos del request
      */
     private Marca obtenerMarca(HttpServletRequest request) {
-        // Obtener el parámetro accion del request
+           // Obtener el parámetro accion del request
         String accion = Utilidad.getParameter(request, "accion", "index");
         Marca marca = new Marca();
-        if (accion.equals("create") == false) { // Si la accion no es create.
-            // Obtener el parámetro id del request  y asignar ese valor a la propiedad Id de Rol.
-            marca.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
-        }
-        // Obtener el parámetro nombre del request   y asignar ese valor a la propiedad Nombre de Marca.
-        marca.setNombre(Utilidad.getParameter(request, "nombre", ""));
-        // Obtener el parámetro estatus del request   y asignar ese valor a la propiedad Nombre de Marca.
-        marca.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
-        // Obtener el parámetro descripcion del request   y asignar ese valor a la propiedad Nombre de Marca.
+        // Obtener el parámetro nombre del request   y asignar ese valor a la propiedad Nombre de Rol.
+        marca.setDescripcion(Utilidad.getParameter(request, "nombre", ""));
+        
+         marca.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
+
         marca.setDescripcion(Utilidad.getParameter(request, "descripcion", ""));
-        // Obtener el parámetro paisorigen del request   y asignar ese valor a la propiedad Nombre de Marca.
+        
         marca.setPaisOrigen(Utilidad.getParameter(request, "paisorigen", ""));
+
         if (accion.equals("index")) {  // Si accion es index.
             // Obtener el parámetro top_aux del request  y asignar ese valor a la propiedad Top_aux de Rol.
             marca.setTop_aux(Integer.parseInt(Utilidad.getParameter(request, "top_aux", "10")));
+            marca.setTop_aux(marca.getTop_aux() == 0 ? Integer.MAX_VALUE : marca.getTop_aux());
             // Utilizando un operador ternario, colocar en el Top_aux, si  es igual a cero enviar en el Top_aux, el valor maximo de un entero 
             // en java, para obtener todos los registro, en el caso contrario obtener la cantidad de registros
             // que se obtiene en el parámetro top_aux del request.
             marca.setTop_aux(marca.getTop_aux() == 0 ? Integer.MAX_VALUE : marca.getTop_aux());
         }
-        // Devolver la instancia de la entidad Rol con los valores obtenidos del request.
-        return marca;
+        else {
+            // Obtener el parámetro id del request  y asignar ese valor a la propiedad Id de Usuario.
+            marca.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
+    }
+    // Devolver la instancia de la entidad Rol con los valores obtenidos del request.
+    return marca ;
     }
 
     /**
@@ -106,7 +108,7 @@ public class MarcaServlet extends HttpServlet {
         try {
             Marca marca = obtenerMarca(request); // Llenar la instancia de Rol con los parámetros enviados en el request 
             ArrayList<Marca> marcas = MarcaDAL.buscar(marca); // Buscar los roles que cumple con los datos enviados en el request
-            request.setAttribute("roles", marcas); // Enviar los roles al jsp utilizando el request.setAttribute con el nombre del atributo marcas
+            request.setAttribute("marcas", marcas); // Enviar los roles al jsp utilizando el request.setAttribute con el nombre del atributo marcas
             // Enviar el Top_aux de Marca al jsp utilizando el request.setAttribute con el nombre del atributo top_aux
             request.setAttribute("top_aux", marca.getTop_aux());
             request.getRequestDispatcher("Views/Marca/index.jsp").forward(request, response); // Direccionar al jsp index de Marca
