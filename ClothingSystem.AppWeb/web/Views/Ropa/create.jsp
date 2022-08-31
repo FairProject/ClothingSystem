@@ -10,7 +10,7 @@
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
             <h5>Crear Ropa</h5>
-            <form action="Ropa" method="post" onsubmit="return  validarFormulario()">
+            <form action="Ropa" method="post">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>">                
                 <div class="row">
 
@@ -69,12 +69,7 @@
 
                 </div>
 
-                <div class="input-field col l4 s12">   
-                    <jsp:include page="/Views/Marca/select.jsp">                           
-                        <jsp:param name="id" value="0" />  
-                    </jsp:include>  
-                    <span id="slMarca_error" style="color:red" class="helper-text"></span>
-                </div>
+               
 
                 <div class="row">
                     <div class="col l12 s12">

@@ -31,6 +31,7 @@
             <form action="Ropa" method="post">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
                 <div class="row">
+
                     <div class="input-field col l6 s12">
                         <input  id="txtCodigoBarra" type="text" name="codigobarra">
                         <label for="txtCodigoBarra">CodigoBarra</label>
@@ -55,8 +56,8 @@
                         <input  id="txtExistencia" type="text" name="existencia">
                         <label for="txtExistencia">Existencia</label>
                     </div> 
-                    
-                     <div class="input-field col l4 s12">   
+
+                    <div class="input-field col l4 s12">   
                         <select id="slEstatus" name="estatus">
                             <option value="0">SELECCIONAR</option>
                             <option value="<%=Ropa.EstatusRopa.ACTIVO%>">ACTIVO</option>
@@ -89,6 +90,18 @@
                         <input  id="txtTipoTela" type="text" name="tipotela">
                         <label for="txtTipoTela">TipoTela</label>
                     </div> 
+                        <div class="input-field col l4 s12">   
+                        <jsp:include page="/Views/Marca/select.jsp">                           
+                            <jsp:param name="id" value="0" />  
+                        </jsp:include>                        
+                    </div>
+
+
+                    <div class="input-field col l3 s12">   
+                        <jsp:include page="/Views/Shared/selectTop.jsp">
+                            <jsp:param name="top_aux" value="<%=top_aux%>" />                        
+                        </jsp:include>                        
+                    </div> 
 
                 </div>
                 <div class="row">
@@ -97,6 +110,7 @@
                         <a href="Ropa?accion=create" class="waves-effect waves-light btn blue"><i class="material-icons right">add</i>Crear</a>                          
                     </div>
                 </div>
+
             </form>
 
             <div class="row">
@@ -139,7 +153,7 @@
                                                 estatus = "";
                                         }
                                 %>
-                                <tr data-page="<%= tempNumPage%>">
+                                <tr data-page="<%= tempNumPage%>"> 
                                     <td><%=ropa.getCodigoBarra()%></td> 
                                     <td><%=ropa.getNombre()%></td> 
                                     <td><%=ropa.getPrecioCompra()%></td> 
