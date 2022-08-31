@@ -4,8 +4,6 @@
  */
 package clothingsystem.entidadesdenegocio;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author moise
