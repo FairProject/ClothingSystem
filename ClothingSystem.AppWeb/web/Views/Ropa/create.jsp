@@ -66,22 +66,58 @@
                         <label for="txtTipoTela">TipoTela</label>
                     </div>  
 
-
+                    <div class="input-field col l4 s12">   
+                        <jsp:include page="/Views/Marca/select.jsp">                           
+                            <jsp:param name="id" value="0" />  
+                        </jsp:include>  
+                        <span id="slRol_error" style="color:red" class="helper-text"></span>
+                    </div>
                 </div>
-
-               
 
                 <div class="row">
                     <div class="col l12 s12">
                         <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">save</i>Guardar</button>
-                        <a href="Ropa" class="waves-effect waves-light btn blue"><i class="material-icons right">list</i>Cancelar</a>                          
+                        <a href="Usuario" class="waves-effect waves-light btn blue"><i class="material-icons right">list</i>Cancelar</a>                          
                     </div>
                 </div>
-
             </form>          
         </main>
         <jsp:include page="/Views/Shared/footerBody.jsp" />   
+        <script>
+            function validarFormulario() {
+                var result = true;
+                var txtCodigoBarra = document.getElementById("txtCodigoBarra");
+                var txtNombre = document.getElementById("txtNombre");
+                var txtPrecioCompra = document.getElementById("txtPrecioCompra");
+                 var txtPrecioVenta = document.getElementById("txtPrecioVenta");
+                  var txtExistencia = document.getElementById("txtExistencia");
+                var slEstatus = document.getElementById("slEstatus");
+                var slEstatus_error = document.getElementById("slEstatus_error");
+                var txtTalla = document.getElementById("txtTalla");
+                var txtColor = document.getElementById("txtColor");
+                var txtEstilo = document.getElementById("txtEstilo");
+                var txtDescripcion = document.getElementById("txtDescripcio");
+                var txtTipoTela = document.getElementById("txtTipoTela");
+                
+                var slMarca = document.getElementById("slMarca");
+                var slMarca_error = document.getElementById("slMarca_error");
+                
+                if (slEstatus.value == 0) {
+                    slEstatus_error.innerHTML = "El estatus es obligatorio";
+                    result = false;
+                } else {
+                    slEstatus_error.innerHTML = "";
+                }
+                if (slMarca.value == 0) {
+                    slMarca_error.innerHTML = "La Marca es obligatorio";
+                    result = false;
+                } else {
+                    slMarca_error.innerHTML = "";
+                }
 
+                return result;
+            }
+        </script>
     </body>
 </html>
 

@@ -1,18 +1,20 @@
 
 /*        para el efecto*/
-.hoverable:hover {
+.hoverable a:hover {
     background-color: #fff;
-    color: blue;
+    color: black;
 }
 
-.hoverable1:hover {
+.hoverable1 a:hover {
     background-color: #01579b ;
-    color: blue;
+    color: #fff;
+    
+    
 }
 
-.hoverable2:hover {
+.hoverable2 a:hover {
     background-color: red;
-    color: blue;
+    color : #fff;
 
 
 }

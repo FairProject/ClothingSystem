@@ -10,7 +10,7 @@
         <jsp:include page="/Views/Shared/title.jsp" />
         <title>Clothing</title>
         <link rel="icon" type="image/png" href="images/Logo.png">
-        <link rel="stylesheet" href="css/style.css">
+        
 
 
     </head>
