@@ -18,12 +18,12 @@ public class ComunDB {
             + "user=sa;"
             + "password=12345;"
             + "loginTimeout=30;encrypt=false;trustServerCertificate=false";*/
-    
-     static String connectionUrl = "jdbc:sqlserver://localhost\\SQLEXPRESS02:1433;"
-            + "database=ClothingSystemdb;"
-            + "user=Alexander;"
-            + "password=28102002;"
-            + "loginTimeout=30;encrypt=false;trustServerCertificate=false";
+//    
+//     static String connectionUrl = "jdbc:sqlserver://localhost\\SQLEXPRESS02:1433;"
+//            + "database=ClothingSystemdb;"
+//            + "user=Alexander;"
+//            + "password=28102002;"
+//            + "loginTimeout=30;encrypt=false;trustServerCertificate=false";
     // Documentacion para entender por que se esta utilizando throws SQLException
     // en los siguientes metodos --> http://dis.um.es/~bmoros/Tutorial/parte9/cap9-3.html
     
@@ -37,11 +37,11 @@ public class ComunDB {
     
     
     
-//     static String connectionUrl = "jdbc:sqlserver://localhost\\SQLEXPRESS02:1433;"
-//            + "database=ClothingSystemdb;"
-//            + "user=Adonay1B;"
-//            + "password=12345;"
-//            + "loginTimeout=30;encrypt=false;trustServerCertificate=false";
+     static String connectionUrl = "jdbc:sqlserver://localhost\\SQLEXPRESS02:1433;"
+            + "database=ClothingSystemdb;"
+            + "user=Adonay1B;"
+            + "password=12345;"
+            + "loginTimeout=30;encrypt=false;trustServerCertificate=false";
      
     /* El metodo obtenerConexion() nos va a devolver una conexion abierta al gestor de base de datos que 
      estemos utilizando*/
