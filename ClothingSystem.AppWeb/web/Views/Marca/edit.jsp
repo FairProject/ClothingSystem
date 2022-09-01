@@ -12,7 +12,7 @@
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
             <h5>Editar Marca</h5>
-            <form action="Rol" method="post">
+            <form action="Marca" method="post">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>">   
                 <input type="hidden" name="id" value="<%=marca.getId()%>">   
                 <div class="row">
