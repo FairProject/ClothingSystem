@@ -96,7 +96,7 @@
                 var txtTalla = document.getElementById("txtTalla");
                 var txtColor = document.getElementById("txtColor");
                 var txtEstilo = document.getElementById("txtEstilo");
-                var txtDescripcion = document.getElementById("txtDescripcio");
+                var txtDescripcion = document.getElementById("txtDescripcion");
                 var txtTipoTela = document.getElementById("txtTipoTela");
                 
                 var slMarca = document.getElementById("slMarca");

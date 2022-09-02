@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;  // Importar la clase ArrayList
+import clothingsystem.accesoadatos.MarcaDAL;
 import clothingsystem.accesoadatos.RopaDAL;
 import clothingsystem.entidadesdenegocio.Ropa;
 import clothingsystem.appweb.utils.*;
+import clothingsystem.entidadesdenegocio.Marca;
 
 ; // Importar la clase Usuario de la capa de entidades de negocio
 
@@ -193,15 +195,18 @@ private void doGetRequestIndex(HttpServletRequest request, HttpServletResponse r
      */
     private void requestObtenerPorId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Ropa ropa = obtenerRopa(request); // Llenar la instancia de Rol con los parámetros enviados en el request.
-            // Obtener desde la capa de acceso a datos el rol por Id.
-            Ropa ropa_result = RopaDAL.obtenerPorId(ropa);
+            Ropa ropa = obtenerRopa(request); // Llenar la instancia de Usuario con los parámetros enviados en el request.
+            Ropa ropa_result = RopaDAL.obtenerPorId(ropa); // Obtener desde la capa de acceso a datos el usuario por Id.
             if (ropa_result.getId() > 0) { // Si el Id es mayor a cero.
-                // Enviar el atributo rol con el valor de los datos del rol de nuestra base de datos a un jsp
+                Marca marca = new Marca();
+                marca.setId(ropa_result.getIdMarca());
+                // Obtener desde la capa de acceso a datos el rol por Id y asignarlo al usuario.
+                ropa_result.setMarca(MarcaDAL.obtenerPorId(marca));
+                // Enviar el atributo usuario con el valor de los datos del usuario de nuestra base de datos a un jsp
                 request.setAttribute("ropa", ropa_result);
             } else {
-                // Enviar al jsp de error el siguiente mensaje. El Id: ? no existe en la tabla de Rol
-                Utilidad.enviarError("El Id:" + ropa.getId() + " no existe en la tabla de Ropa", request, response);
+                // Enviar al jsp de error el siguiente mensaje. El Id: ? no existe en la tabla de Usuario
+                Utilidad.enviarError("El Id:" + ropa_result.getId() + " no existe en la tabla de Usuario", request, response);
             }
         } catch (Exception ex) {
             // enviar al jsp de error si hay un Exception

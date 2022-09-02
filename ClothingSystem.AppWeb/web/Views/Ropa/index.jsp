@@ -130,6 +130,7 @@
                                     <th>Estilo</th> 
                                     <th>Descripcion</th> 
                                     <th>TipoTela</th> 
+                                    <th>Marca</th> 
                                     <th>Acciones</th>
                                 </tr>
                             </thead>                       
@@ -165,6 +166,7 @@
                                     <td><%=ropa.getEstilo()%></td>
                                     <td><%=ropa.getDescripcion()%></td>
                                     <td><%=ropa.getTipoTela()%></td>
+                                      <td><%=ropa.getIdMarca()%></td>
                                     <td>
                                         <div style="display:flex">
                                             <a href="Ropa?accion=edit&id=<%=ropa.getId()%>" title="Modificar" class="waves-effect waves-light btn green">
