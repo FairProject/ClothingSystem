@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;  // Importar la clase ArrayList
-import clothingsystem.accesoadatos.RopaFotoDAL; 
+import clothingsystem.accesoadatos.RopaFotoDAL;
 import clothingsystem.entidadesdenegocio.RopaFoto;
+import clothingsystem.entidadesdenegocio.Ropa;
+import clothingsystem.accesoadatos.RopaDAL;
 import clothingsystem.appweb.utils.*;
 
 /**
@@ -43,19 +45,25 @@ public class RopaFotoServlet extends HttpServlet {
         // Obtener el parámetro accion del request
         String accion = Utilidad.getParameter(request, "accion", "index");
         RopaFoto ropafoto = new RopaFoto();
-        if (accion.equals("create") == false) { // Si la accion no es create.
-            // Obtener el parámetro id del request  y asignar ese valor a la propiedad Id de Rol.
-            ropafoto.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
-        }
         // Obtener el parámetro nombre del request   y asignar ese valor a la propiedad Nombre de Rol.
         ropafoto.setUrl(Utilidad.getParameter(request, "url", ""));
+        // Obtener el parámetro nombre del request   y asignar ese valor a la propiedad Nombre de Rol.
+
+        ropafoto.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
+
+        ropafoto.setIdRopa(Integer.parseInt(Utilidad.getParameter(request, "idRopa", "0")));
+
         if (accion.equals("index")) {  // Si accion es index.
             // Obtener el parámetro top_aux del request  y asignar ese valor a la propiedad Top_aux de Rol.
             ropafoto.setTop_aux(Integer.parseInt(Utilidad.getParameter(request, "top_aux", "10")));
+            ropafoto.setTop_aux(ropafoto.getTop_aux() == 0 ? Integer.MAX_VALUE : ropafoto.getTop_aux());
             // Utilizando un operador ternario, colocar en el Top_aux, si  es igual a cero enviar en el Top_aux, el valor maximo de un entero 
             // en java, para obtener todos los registro, en el caso contrario obtener la cantidad de registros
             // que se obtiene en el parámetro top_aux del request.
             ropafoto.setTop_aux(ropafoto.getTop_aux() == 0 ? Integer.MAX_VALUE : ropafoto.getTop_aux());
+        } else {
+            // Obtener el parámetro id del request  y asignar ese valor a la propiedad Id de Usuario.
+            ropafoto.setId(Integer.parseInt(Utilidad.getParameter(request, "id", "0")));
         }
         // Devolver la instancia de la entidad Rol con los valores obtenidos del request.
         return ropafoto;
@@ -103,7 +111,7 @@ public class RopaFotoServlet extends HttpServlet {
     private void doPostRequestIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             RopaFoto ropafoto = obtenerRopaFoto(request); // Llenar la instancia de Rol con los parámetros enviados en el request 
-            ArrayList<RopaFoto> ropafotos = RopaFotoDAL.buscar(ropafoto); // Buscar los roles que cumple con los datos enviados en el request
+            ArrayList<RopaFoto> ropafotos = RopaFotoDAL.buscarIncluirRopa(ropafoto);// Buscar los roles que cumple con los datos enviados en el request
             request.setAttribute("ropafotos", ropafotos); // Enviar los roles al jsp utilizando el request.setAttribute con el nombre del atributo roles
             // Enviar el Top_aux de Rol al jsp utilizando el request.setAttribute con el nombre del atributo top_aux
             request.setAttribute("top_aux", ropafoto.getTop_aux());
@@ -171,15 +179,18 @@ public class RopaFotoServlet extends HttpServlet {
      */
     private void requestObtenerPorId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            RopaFoto ropafoto = obtenerRopaFoto(request); // Llenar la instancia de Rol con los parámetros enviados en el request.
-            // Obtener desde la capa de acceso a datos el rol por Id.
-            RopaFoto ropafoto_result = RopaFotoDAL.obtenerPorId(ropafoto);
+            RopaFoto ropafoto = obtenerRopaFoto(request); // Llenar la instancia de Usuario con los parámetros enviados en el request.
+            RopaFoto ropafoto_result = RopaFotoDAL.obtenerPorId(ropafoto); // Obtener desde la capa de acceso a datos el usuario por Id.
             if (ropafoto_result.getId() > 0) { // Si el Id es mayor a cero.
-                // Enviar el atributo rol con el valor de los datos del rol de nuestra base de datos a un jsp
+                Ropa ropa = new Ropa();
+                ropa.setId(ropafoto_result.getIdRopa());
+                // Obtener desde la capa de acceso a datos el rol por Id y asignarlo al usuario.
+                ropafoto_result.setRopa(RopaDAL.obtenerPorId(ropa));
+                // Enviar el atributo usuario con el valor de los datos del usuario de nuestra base de datos a un jsp
                 request.setAttribute("ropafoto", ropafoto_result);
             } else {
-                // Enviar al jsp de error el siguiente mensaje. El Id: ? no existe en la tabla de Rol
-                Utilidad.enviarError("El Id:" + ropafoto.getId() + " no existe en la tabla de RopaFoto", request, response);
+                // Enviar al jsp de error el siguiente mensaje. El Id: ? no existe en la tabla de Usuario
+                Utilidad.enviarError("El Id:" + ropafoto_result.getId() + " no existe en la tabla de Usuario", request, response);
             }
         } catch (Exception ex) {
             // enviar al jsp de error si hay un Exception

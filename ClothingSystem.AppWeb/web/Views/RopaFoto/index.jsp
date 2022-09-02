@@ -43,7 +43,14 @@
                         </select>       
                         <label for="slEstatus">Estatus</label>
                     </div>
-                    <div class="input-field col l3 s12">   
+                        <div class="input-field col l6 s12">   
+                        <jsp:include page="/Views/Ropa/select.jsp">                           
+                            <jsp:param name="id" value="0" />  
+                        </jsp:include>                        
+                    </div>
+
+
+                    <div class="input-field col l6 s12">   
                         <jsp:include page="/Views/Shared/selectTop.jsp">
                             <jsp:param name="top_aux" value="<%=top_aux%>" />                        
                         </jsp:include>                        
@@ -63,7 +70,9 @@
                         <table class="paginationjs">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>                                          
+                                    <th>Url</th>
+                                    <th>Estatus</th>
+                                    <th>IdRopa</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>                       
@@ -88,7 +97,9 @@
                                         }
                                 %>
                                 <tr data-page="<%= tempNumPage%>">
-                                    <td><%=ropafoto.getUrl()%></td>                                       
+                                    <td><%=ropafoto.getUrl()%></td> 
+                                    <td><%=ropafoto.getEstatus()%></td>
+                                     <td><%=ropafoto.getIdRopa()%></td>
                                     <td>
                                         <div style="display:flex">
                                             <a href="RopaFoto?accion=edit&id=<%=ropafoto.getId()%>" title="Modificar" class="waves-effect waves-light btn green">
