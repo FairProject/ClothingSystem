@@ -10,52 +10,63 @@ package clothingsystem.entidadesdenegocio;
  */
 public class RopaFoto {
 
-    private int Id;
-    private int IdRopa;
-    private String Url;
-    private byte Estatus;
+    private int id;
+    private int idRopa;
+    private String url;
+    private byte estatus;
+    private Ropa ropa;
+
     private int top_aux;
 
     public RopaFoto() {
     }
 
-    public RopaFoto(int Id, int IdRopa, String url, byte Estatus) {
-        this.Id = Id;
-        this.IdRopa = IdRopa;
-        this.Url = url;
-        this.Estatus = Estatus;
+    public RopaFoto(int id, int idRopa, String url, byte estatus, Ropa ropa) {
+        this.id = id;
+        this.idRopa = idRopa;
+        this.url = url;
+        this.estatus = estatus;
+        this.ropa = ropa;
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
-    public void setId(int Id) {
-        this.Id = Id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getIdRopa() {
-        return IdRopa;
+        return idRopa;
     }
 
-    public void setIdRopa(int IdRopa) {
-        this.IdRopa = IdRopa;
+    public void setIdRopa(int idRopa) {
+        this.idRopa = idRopa;
     }
 
     public String getUrl() {
-        return Url;
+        return url;
     }
 
     public void setUrl(String url) {
-        this.Url = url;
+        this.url = url;
     }
 
     public byte getEstatus() {
-        return Estatus;
+        return estatus;
     }
 
-    public void setEstatus(byte Estatus) {
-        this.Estatus = Estatus;
+    public void setEstatus(byte estatus) {
+        this.estatus = estatus;
+    }
+
+    public Ropa getRopa() {
+        return ropa;
+    }
+
+    public void setRopa(Ropa ropa) {
+        this.ropa = ropa;
     }
 
     public int getTop_aux() {
