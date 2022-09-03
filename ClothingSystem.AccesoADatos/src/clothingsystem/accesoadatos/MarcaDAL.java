@@ -195,6 +195,14 @@ public class MarcaDAL { // Clase para poder realizar consulta de Insertar, modif
             }
         }
         
+         if (pMarca.getEstatus() > 0) { // Verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Rol
+            pUtilQuery.AgregarWhereAnd(" m.Estatus=? "); // Agregar el campo Id al filtro de la consulta SELECT y agregar en el WHERE o AND
+            if (statement != null) {
+                // Agregar el parametro del campo Id a la consulta SELECT de la tabla de Rol
+                statement.setByte(pUtilQuery.getNumWhere(), pMarca.getEstatus());
+            }
+         }
+        
         // Verificar si se va incluir el campo Nombre en el filtro de la consulta SELECT de la tabla de Marca
         if (pMarca.getDescripcion() != null && pMarca.getDescripcion().trim().isEmpty() == false) {
             pUtilQuery.AgregarWhereAnd(" m.Descripcion LIKE ? "); // Agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
