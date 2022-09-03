@@ -12,14 +12,15 @@
         <main class="container">   
             <h5>Crear RopaFoto</h5>
             <form action="RopaFoto" method="post" onsubmit="return  validarFormulario()">
-                
+
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>">                
                 <div class="row">
-                    <div class="input-field col l6 s12">
-                        <input  id="labelUrl" type="text" name="url" required class="validate" maxlength="15">
-                        <label for="labelUrl">Url</label>
+                    <div class="input-field col l4 s12">
+                        <label>Url</label>
+                        <input type="file" name="fileUrl">
                     </div>
-                    <<div class="input-field col l3 s12">   
+                    
+                    <div class="input-field col l4 s12">   
                         <select id="slEstatus" name="estatus">
                             <option value="0">SELECCIONAR</option>
                             <option value="<%=RopaFoto.EstatusRopaFoto.ACTIVO%>">ACTIVO</option>
@@ -47,13 +48,13 @@
         <script>
             function validarFormulario() {
                 var result = true;
-                var txtUrl = document.getElementById("txtUrl");
+                var fileUrl = document.getElementById("fileUrl");
                 var slEstatus = document.getElementById("slEstatus");
                 var slEstatus_error = document.getElementById("slEstatus_error");
-                
+
                 var slRopa = document.getElementById("slRopa");
                 var slRopa_error = document.getElementById("slRopa_error");
-                
+
                 if (slEstatus.value == 0) {
                     slEstatus_error.innerHTML = "El estatus es obligatorio";
                     result = false;
