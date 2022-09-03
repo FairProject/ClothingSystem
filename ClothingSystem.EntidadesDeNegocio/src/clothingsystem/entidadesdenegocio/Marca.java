@@ -17,6 +17,7 @@ public class Marca {
     private String descripcion;
     private String paisOrigen;
     private int top_aux;
+    private ArrayList<Marca> marcas;
 
     public Marca() {
         
@@ -77,6 +78,16 @@ public class Marca {
     public void setTop_aux(int top_aux) {
         this.top_aux = top_aux;
     }
+
+    public ArrayList<Marca> getMarcas() {
+        return marcas;
+    }
+
+    public void setMarcas(ArrayList<Marca> marcas) {
+        this.marcas = marcas;
+    }
+
+   
     
     public class EstatusMarca {
 
