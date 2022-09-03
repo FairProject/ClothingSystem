@@ -15,12 +15,38 @@
             <form action="Marca" method="post">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>">   
                 <input type="hidden" name="id" value="<%=marca.getId()%>">   
+
                 <div class="row">
+
                     <div class="input-field col l4 s12">
                         <input  id="txtNombre" type="text" name="nombre" value="<%=marca.getNombre()%>" required class="validate" maxlength="30">
                         <label for="txtNombre">Nombre</label>
                     </div>                                       
-                </div>
+
+
+                    <div class="input-field col l4 s12">   
+                        <select id="slEstatus" name="estatus"  value="<%=marca.getEstatus()%>"class="validate">
+                            <option value="0" <%=(marca.getEstatus() == 10) ? "selected" : ""%>>SELECCIONAR</option>
+                            <option value="<%=Marca.EstatusMarca.ACTIVO%>"  <%=(marca.getEstatus() == Marca.EstatusMarca.ACTIVO) ? "selected" : ""%>>ACTIVO</option>
+                            <option value="<%=Marca.EstatusMarca.INACTIVO%>"  <%=(marca.getEstatus() == Marca.EstatusMarca.INACTIVO) ? "selected" : ""%>>INACTIVO</option>
+                        </select>       
+                        <label for="slEstatus">Estatus</label>
+                        <span id="slEstatus_error" style="color:red" class="helper-text"></span>
+                    </div>
+
+                    <div class="input-field col l4 s12">
+                        <input  id="txtDescripcion" type="text" name="descripcion"  value="<%=marca.getDescripcion()%>" required class="validate" maxlength="30">
+                        <label for="txtDescripcion">Descripcion</label>
+                    </div>  
+
+                    <div class="input-field col l4 s12">
+                        <input  id="txtPaisOrigen" type="text" name="paisorigen" value="<%=marca.getPaisOrigen()%>" required class="validate" maxlength="30">
+                        <label for="txtPaisOrigen">PaisOrigen</label>
+                    </div> 
+                </div> 
+
+
+
                 <div class="row">
                     <div class="col l12 s12">
                         <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">save</i>Guardar</button>

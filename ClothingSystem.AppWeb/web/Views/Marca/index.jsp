@@ -31,36 +31,39 @@
             <form action="Marca" method="post">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
                 <div class="row">
+                    
                     <div class="input-field col l6 s12">
                         <input  id="txtNombre" type="text" name="nombre">
                         <label for="txtNombre">Nombre</label>
                     </div>       
-                    
-                     <div class="input-field col l4 s12">   
+
+                    <div class="input-field col l4 s12">   
                         <select id="slEstatus" name="estatus">
                             <option value="0">SELECCIONAR</option>
                             <option value="<%=Marca.EstatusMarca.ACTIVO%>">ACTIVO</option>
                             <option value="<%=Marca.EstatusMarca.INACTIVO%>">INACTIVO</option>
                         </select>       
-                        <label for="slEstatus">Estatus</label>
-                    </div>
+                        <label for="slEstatus">Estatus</label>                     
+                    </div> 
+
+                    <div class="input-field col l6 s12">
+                        <input  id="txtDescripcion" type="text" name="descripcion">
+                        <label for="txtDescripcion">Descripcion</label>
+                    </div>       
+
+
+                    <div class="input-field col l6 s12">
+                        <input  id="txtPaisOrigen" type="text" name="paisorigen">
+                        <label for="txtPaisOrigen">PaisOrigen</label>
+                    </div>     
+
+
                     <div class="input-field col l3 s12">   
                         <jsp:include page="/Views/Shared/selectTop.jsp">
                             <jsp:param name="top_aux" value="<%=top_aux%>" />                        
                         </jsp:include>                        
                     </div> 
-                    
-                     <div class="input-field col l6 s12">
-                        <input  id="txtDescripcion" type="text" name="descripcion">
-                        <label for="txtDescripcion">Descripcion</label>
-                    </div>       
-                        
-                        
-                     <div class="input-field col l6 s12">
-                        <input  id="txtPaisOrigen" type="text" name="paisorigen">
-                        <label for="txtPaisOrigen">PaisOrigen</label>
-                    </div>     
-                    
+
                 </div>
                 <div class="row">
                     <div class="col l12 s12">
@@ -77,9 +80,9 @@
                             <thead>
                                 <tr>
                                     <th>Nombre</th>   
-                                     <th>Estatus</th>   
-                                      <th>Descripcion</th>   
-                                       <th>PaisOrigen</th>   
+                                    <th>Estatus</th>   
+                                    <th>Descripcion</th>   
+                                    <th>PaisOrigen</th>   
                                     <th>Acciones</th>
                                 </tr>
                             </thead>                       
@@ -105,9 +108,10 @@
                                 %>
                                 <tr data-page="<%= tempNumPage%>">
                                     <td><%=marca.getNombre()%></td>
-                                     <td><%=marca.getDescripcion()%></td>
-                                      <td><%=marca.getPaisOrigen()%></td>
-                                    
+                                    <td><%=estatus%></td>
+                                    <td><%=marca.getDescripcion()%></td>
+                                    <td><%=marca.getPaisOrigen()%></td>
+
                                     <td>
                                         <div style="display:flex">
                                             <a href="Marca?accion=edit&id=<%=marca.getId()%>" title="Modificar" class="waves-effect waves-light btn green">
@@ -136,6 +140,6 @@
                 </div>
             </div>
         </main>
-              
+
     </body>
 </html>

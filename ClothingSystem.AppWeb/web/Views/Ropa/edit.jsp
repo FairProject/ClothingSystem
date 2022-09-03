@@ -74,7 +74,7 @@
                         <jsp:include page="/Views/Marca/select.jsp">                           
                             <jsp:param name="id" value="0" />  
                         </jsp:include>  
-                        <span id="slRopa_error" style="color:red" class="helper-text"></span>
+                        <span id="slMarca_error" style="color:red" class="helper-text"></span>
                     </div>
                 </div>
 

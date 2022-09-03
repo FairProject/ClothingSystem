@@ -7,12 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.util.ArrayList;  // Importar la clase ArrayList
-import clothingsystem.accesoadatos.MarcaDAL;
-import clothingsystem.accesoadatos.RopaDAL;
-import clothingsystem.entidadesdenegocio.Ropa;
-import clothingsystem.appweb.utils.*;
-import clothingsystem.entidadesdenegocio.Marca;
+import java.util.ArrayList; // Importar la clase ArrayList
+import clothingsystem.accesoadatos.MarcaDAL; // Importar la clase RolDAL de la capa de acceso a datos
+import clothingsystem.accesoadatos.RopaDAL; // Importar la clase UsuarioDAL de la capa de acceso a datos
+import clothingsystem.appweb.utils.*; // Importar las clases SessionUser, Utilidad del paquete de utils
+import clothingsystem.entidadesdenegocio.Marca; // Importar la clase Rol de la capa de entidades de negocio
+import clothingsystem.entidadesdenegocio.Ropa; // Importar la clase Usuario de la capa de entidades de negocio
+
 
 ; // Importar la clase Usuario de la capa de entidades de negocio
 
@@ -252,7 +253,7 @@ private void doGetRequestIndex(HttpServletRequest request, HttpServletResponse r
                 doGetRequestIndex(request, response); // Ir al metodo doGetRequestIndex para que nos direcciones al jsp index.
             } else {
                 // Enviar al jsp de error el siguiente mensaje. No se logro actualizar el registro.
-                Utilidad.enviarError("No se logro actualizar el registro", request, response);
+                Utilidad.enviarError("No se logro actualizar la ropa", request, response);
             }
         } catch (Exception ex) {
             // Enviar al jsp de error si hay un Exception
@@ -315,7 +316,7 @@ private void doGetRequestIndex(HttpServletRequest request, HttpServletResponse r
                 doGetRequestIndex(request, response); // Ir al método doGetRequestIndex para que nos direccione al jsp index.
             } else {
                 // Enviar al jsp de error el siguiente mensaje. No se logro eliminar el registro.
-                Utilidad.enviarError("No se logro eliminar el registro", request, response);
+                Utilidad.enviarError("No se logro eliminar la ropa", request, response);
             }
         } catch (Exception ex) {
             // Enviar al jsp de error si hay un Exception.

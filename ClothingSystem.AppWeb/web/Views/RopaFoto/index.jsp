@@ -31,7 +31,7 @@
             <form action="RopaFoto" method="post">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
                 <div class="row">
-                    <div class="input-field col l6 s12">
+                    <div class="input-field col l6 s12">        
                         <input  id="txtUrl" type="text" name="url">
                         <label for="txtUrl">Url</label>
                     </div> 

@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="clothingsystem.entidadesdenegocio.Ropa"%>
+<%@page import="clothingsystem.entidadesdenegocio.Marca"%>
+
 <%@page import="java.util.ArrayList"%>
 <% ArrayList<Ropa> ropas = (ArrayList<Ropa>) request.getAttribute("ropas");
     int numPage = 1;
@@ -43,7 +45,7 @@
                     </div> 
 
                     <div class="input-field col l4 s12">
-                        <input  id="txtPrecioCompra" type="text" name="precioompra">
+                        <input  id="txtPrecioCompra" type="text" name="preciocompra">
                         <label for="txtPrecioCompra">PrecioCompra</label>
                     </div> 
 
@@ -90,11 +92,14 @@
                         <input  id="txtTipoTela" type="text" name="tipotela">
                         <label for="txtTipoTela">TipoTela</label>
                     </div> 
-                        <div class="input-field col l4 s12">   
+
+
+                    <div class="input-field col l4 s12">   
                         <jsp:include page="/Views/Marca/select.jsp">                           
                             <jsp:param name="id" value="0" />  
                         </jsp:include>                        
                     </div>
+
 
 
                     <div class="input-field col l3 s12">   
@@ -132,6 +137,7 @@
                                     <th>TipoTela</th> 
                                     <th>Marca</th> 
                                     <th>Acciones</th>
+
                                 </tr>
                             </thead>                       
                             <tbody>                           
@@ -155,18 +161,22 @@
                                         }
                                 %>
                                 <tr data-page="<%= tempNumPage%>"> 
-                                    <td><%=ropa.getCodigoBarra()%></td> 
+
+
+
                                     <td><%=ropa.getNombre()%></td> 
+                                    <td><%=ropa.getCodigoBarra()%></td> 
                                     <td><%=ropa.getPrecioCompra()%></td> 
                                     <td><%=ropa.getPrecioVenta()%></td> 
                                     <td><%=ropa.getExistencia()%></td>
-                                    <td><%=ropa.getEstatus()%></td>
+                                    <td><%=estatus%></td>
                                     <td><%=ropa.getTalla()%></td>
                                     <td><%=ropa.getColor()%></td>
                                     <td><%=ropa.getEstilo()%></td>
                                     <td><%=ropa.getDescripcion()%></td>
                                     <td><%=ropa.getTipoTela()%></td>
-                                      <td><%=ropa.getIdMarca()%></td>
+                                    <td><%=ropa.getMarca()%></td> 
+                                    
                                     <td>
                                         <div style="display:flex">
                                             <a href="Ropa?accion=edit&id=<%=ropa.getId()%>" title="Modificar" class="waves-effect waves-light btn green">
