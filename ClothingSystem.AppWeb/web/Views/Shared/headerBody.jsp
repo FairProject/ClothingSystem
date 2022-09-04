@@ -11,8 +11,8 @@
         <ul class="right hide-on-med-and-down">  
             <% if (SessionUser.isAuth(request)) {  %>
             <li class="hoverable"><a href="Home">Inicio</a></li>
-            <li class="hoverable"><a href="Usuario">Usuario</a></li>
             <li class="hoverable"><a href="Rol">Rol</a></li>
+             <li class="hoverable"><a href="Usuario">Usuario</a></li>
             <li class="hoverable"><a href="Marca">Marca</a></li>
             <li class="hoverable"><a href="Ropa">Ropa</a></li>
             <li class="hoverable"><a href="RopaFoto">RopaFoto</a></li>
@@ -24,14 +24,15 @@
     </div>
 </nav>
 
-<ul class="sidenav black hoverable" id="mobile-demo">
+<ul class="sidenav blue hoverable" id="mobile-demo">
     <% if (SessionUser.isAuth(request)) {  %>
-    <li><a href="Home">Inicio</a></li>
-    <li><a href="Usuario">Usuario</a></li>
-    <li><a href="Rol">Rol</a></li>
-    <li><a href="Ropa">Ropa</a></li>
-    <li><a href="RopaFoto">RopaFoto</a></li>
-    <li><a href="Usuario?accion=cambiarpass">Cambiar password</a></li>
-    <li><a href="Usuario?accion=login">Cerrar sesión</a></li>
+    <li class="hoverable"><a href="Home">Inicio</a></li>
+    <li class="hoverable"><a href="Rol">Rol</a></li>
+     <li class="hoverable"><a href="Usuario">Usuario</a></li>
+    <li class="hoverable"><a href="Marca">Marca</a></li>
+    <li class="hoverable"><a href="Ropa">Ropa</a></li>
+    <li class="hoverable"><a href="RopaFoto">RopaFoto</a></li>
+    <li class="hoverable1"><a href="Usuario?accion=cambiarpass">Cambiar password</a></li>
+    <li class="hoverable2"><a href="Usuario?accion=login">Cerrar sesión</a></li>
         <%}%>
 </ul>

@@ -6,7 +6,7 @@
         <title>Crear Rol</title>
 
     </head>
-    <body>
+    <body class="#cfd8dc blue-grey lighten-4">
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
             <h5>Crear Rol</h5>

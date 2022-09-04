@@ -24,7 +24,7 @@
         <title>Buscar Rol</title>
 
     </head>
-    <body>
+    <body class="#cfd8dc blue-grey lighten-4">
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
             <h5>Buscar Rol</h5>
@@ -44,7 +44,7 @@
                 <div class="row">
                     <div class="col l12 s12">
                         <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">search</i>Buscar</button>
-                        <a href="Rol?accion=create" class="waves-effect waves-light btn blue"><i class="material-icons right">add</i>Crear</a>                          
+                        <a href="Rol?accion=create" class="waves-effect waves-light btn green accent-3"><i class="material-icons right">add</i>Crear</a>                          
                     </div>
                 </div>
             </form>
