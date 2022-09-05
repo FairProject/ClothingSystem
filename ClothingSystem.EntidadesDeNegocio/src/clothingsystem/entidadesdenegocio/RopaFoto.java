@@ -14,9 +14,8 @@ public class RopaFoto {
     private int idRopa;
     private String url;
     private byte estatus;
-    private Ropa ropa;
-
     private int top_aux;
+    private Ropa ropa;
 
     public RopaFoto() {
     }
@@ -61,20 +60,20 @@ public class RopaFoto {
         this.estatus = estatus;
     }
 
-    public Ropa getRopa() {
-        return ropa;
-    }
-
-    public void setRopa(Ropa ropa) {
-        this.ropa = ropa;
-    }
-
     public int getTop_aux() {
         return top_aux;
     }
 
     public void setTop_aux(int top_aux) {
         this.top_aux = top_aux;
+    }
+
+    public Ropa getRopa() {
+        return ropa;
+    }
+
+    public void setRopa(Ropa ropa) {
+        this.ropa = ropa;
     }
 
     public class EstatusRopaFoto {
