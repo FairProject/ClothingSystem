@@ -44,7 +44,7 @@
                         <% if (request.getAttribute("error") != null) {%>
                         <div class="row">
                             <div class="col l12 s12">
-                                <span style="color:red"><%= request.getAttribute("error")%></span>                                              
+                                <span style="color:yellow"><%= request.getAttribute("error")%></span>                                              
                             </div>
                         </div>
                         <%}%>
