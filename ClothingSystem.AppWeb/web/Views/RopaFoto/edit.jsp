@@ -6,6 +6,7 @@
     <head>        
         <jsp:include page="/Views/Shared/title.jsp" />
         <title>Editar RopaFoto</title>
+         <link rel="icon" type="image/png" href="images/Logo.png">
 
     </head>
     <body>

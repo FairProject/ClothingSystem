@@ -22,6 +22,7 @@
     <head>        
         <jsp:include page="/Views/Shared/title.jsp" />
         <title>Buscar RopaFoto</title>
+         <link rel="icon" type="image/png" href="images/Logo.png">
 
     </head>
     <body>
@@ -99,7 +100,7 @@
                                 <tr data-page="<%= tempNumPage%>">
                                     <td><%=ropafoto.getUrl()%></td> 
                                     <td><%=ropafoto.getEstatus()%></td>
-                                     <td><%=ropafoto.getIdRopa()%></td>
+                                      <td><%=ropafoto.getRopa().getCodigoBarra()%></td> 
                                     <td>
                                         <div style="display:flex">
                                             <a href="RopaFoto?accion=edit&id=<%=ropafoto.getId()%>" title="Modificar" class="waves-effect waves-light btn green">

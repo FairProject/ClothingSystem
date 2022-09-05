@@ -102,7 +102,7 @@ private void doGetRequestIndex(HttpServletRequest request, HttpServletResponse r
         try {
             Ropa ropa = new Ropa(); // Crear una instancia  de la entidad de Rol.
             ropa.setTop_aux(10); // Agregar el Top_aux con el valor de 10 a la propiedad Top_aux de rol.
-            ArrayList<Ropa> ropas = RopaDAL.buscar(ropa); // Ir a la capa de acceso a datos y buscar los registros de Rol.
+            ArrayList<Ropa> ropas = RopaDAL.buscarIncluirMarca(ropa); // Ir a la capa de acceso a datos y buscar los registros de Rol.
             // El request.setAttribute se utiliza para enviar datos desde un servlet a un jsp.
             request.setAttribute("ropas", ropas); // Enviar los roles al jsp utilizando el request.setAttribute con el nombre del atributo roles.
             // Enviar el Top_aux de Rol al jsp utilizando el request.setAttribute con el nombre del atributo top_aux.
@@ -128,7 +128,7 @@ private void doGetRequestIndex(HttpServletRequest request, HttpServletResponse r
     private void doPostRequestIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Ropa ropa = obtenerRopa(request); // Llenar la instancia de Rol con los parámetros enviados en el request 
-            ArrayList<Ropa> ropas = RopaDAL.buscar(ropa); // Buscar los roles que cumple con los datos enviados en el request
+            ArrayList<Ropa> ropas = RopaDAL.buscarIncluirMarca(ropa); // Buscar los roles que cumple con los datos enviados en el request
             request.setAttribute("ropas", ropas); // Enviar los roles al jsp utilizando el request.setAttribute con el nombre del atributo roles
             // Enviar el Top_aux de Rol al jsp utilizando el request.setAttribute con el nombre del atributo top_aux
             request.setAttribute("top_aux", ropa.getTop_aux());

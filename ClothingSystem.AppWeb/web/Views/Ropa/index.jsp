@@ -24,6 +24,7 @@
     <head>        
         <jsp:include page="/Views/Shared/title.jsp" />
         <title>Buscar Ropa</title>
+        
 
     </head>
     <body>
@@ -175,7 +176,7 @@
                                     <td><%=ropa.getEstilo()%></td>
                                     <td><%=ropa.getDescripcion()%></td>
                                     <td><%=ropa.getTipoTela()%></td>
-                                    <td><%=ropa.getIdMarca()%></td> 
+                                    <td><%=ropa.getMarca().getNombre()%></td> 
                                     
                                     <td>
                                         <div style="display:flex">

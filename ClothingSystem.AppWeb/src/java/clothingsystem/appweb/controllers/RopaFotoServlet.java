@@ -85,7 +85,7 @@ public class RopaFotoServlet extends HttpServlet {
         try {
             RopaFoto ropafoto = new RopaFoto(); // Crear una instancia  de la entidad de Rol.
             ropafoto.setTop_aux(10); // Agregar el Top_aux con el valor de 10 a la propiedad Top_aux de rol.
-            ArrayList<RopaFoto> ropafotos = RopaFotoDAL.buscar(ropafoto); // Ir a la capa de acceso a datos y buscar los registros de Rol.
+            ArrayList<RopaFoto> ropafotos = RopaFotoDAL.buscarIncluirRopa(ropafoto); // Ir a la capa de acceso a datos y buscar los registros de Rol.
             // El request.setAttribute se utiliza para enviar datos desde un servlet a un jsp.
             request.setAttribute("ropafotos", ropafotos); // Enviar los roles al jsp utilizando el request.setAttribute con el nombre del atributo roles.
             // Enviar el Top_aux de Rol al jsp utilizando el request.setAttribute con el nombre del atributo top_aux.

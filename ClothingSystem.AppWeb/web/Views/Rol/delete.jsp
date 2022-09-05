@@ -6,6 +6,7 @@
     <head>        
         <jsp:include page="/Views/Shared/title.jsp" />
         <title>Eliminar Rol</title>
+         <link rel="icon" type="image/png" href="images/Logo.png">
     </head>
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
