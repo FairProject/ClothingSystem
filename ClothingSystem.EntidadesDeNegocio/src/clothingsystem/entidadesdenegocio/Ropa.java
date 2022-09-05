@@ -22,10 +22,9 @@ public class Ropa {
     private String color;
     private String estilo;
     private String descripcion;
-    private String tipoTela;
-    private Marca marca;
-    
+    private String tipoTela; 
     private int top_aux;
+    private Marca marca;
 
     public Ropa() {
     }
@@ -151,6 +150,14 @@ public class Ropa {
         this.tipoTela = tipoTela;
     }
 
+    public int getTop_aux() {
+        return top_aux;
+    }
+
+    public void setTop_aux(int top_aux) {
+        this.top_aux = top_aux;
+    }
+
     public Marca getMarca() {
         return marca;
     }
@@ -159,13 +166,7 @@ public class Ropa {
         this.marca = marca;
     }
 
-    public int getTop_aux() {
-        return top_aux;
-    }
-
-    public void setTop_aux(int top_aux) {
-        this.top_aux = top_aux;
-    }
+    
 
 
     public class EstatusRopa {
