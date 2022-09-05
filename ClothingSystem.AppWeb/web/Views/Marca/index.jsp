@@ -31,7 +31,7 @@
             <form action="Marca" method="post">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
                 <div class="row">
-                    
+
                     <div class="input-field col l6 s12">
                         <input  id="txtNombre" type="text" name="nombre">
                         <label for="txtNombre">Nombre</label>
@@ -140,6 +140,7 @@
                 </div>
             </div>
         </main>
+        <jsp:include page="/Views/Shared/footerBody.jsp" />  
 
     </body>
 </html>

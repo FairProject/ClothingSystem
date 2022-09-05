@@ -115,15 +115,15 @@
                                     <td><%=usuario.getFechaRegistro()%></td> 
                                     <td>
                                         <div style="display:flex">
-                                             <a href="Usuario?accion=edit&id=<%=usuario.getId()%>" title="Modificar" class="waves-effect waves-light btn green">
-                                            <i class="material-icons">edit</i>
-                                        </a>
-                                        <a href="Usuario?accion=details&id=<%=usuario.getId()%>" title="Ver" class="waves-effect waves-light btn blue">
-                                            <i class="material-icons">description</i>
-                                        </a>
-                                        <a href="Usuario?accion=delete&id=<%=usuario.getId()%>" title="Eliminar" class="waves-effect waves-light btn red">
-                                            <i class="material-icons">delete</i>
-                                        </a>    
+                                            <a href="Usuario?accion=edit&id=<%=usuario.getId()%>" title="Modificar" class="waves-effect waves-light btn green">
+                                                <i class="material-icons">edit</i>
+                                            </a>
+                                            <a href="Usuario?accion=details&id=<%=usuario.getId()%>" title="Ver" class="waves-effect waves-light btn blue">
+                                                <i class="material-icons">description</i>
+                                            </a>
+                                            <a href="Usuario?accion=delete&id=<%=usuario.getId()%>" title="Eliminar" class="waves-effect waves-light btn red">
+                                                <i class="material-icons">delete</i>
+                                            </a>    
                                         </div>                                                                    
                                     </td>                                   
                                 </tr>
@@ -141,6 +141,6 @@
                 </div>
             </div>
         </main>
-            
+        <jsp:include page="/Views/Shared/footerBody.jsp" />  
     </body>
 </html>

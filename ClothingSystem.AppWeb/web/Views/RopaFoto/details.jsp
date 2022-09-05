@@ -27,7 +27,7 @@
                 </div>
                 </div> 
                 <div class="input-field col l4 s12">
-                    <input  id="txtRopa" type="text" value="<%=ropafoto.getRopa().getNombre() %>" disabled>
+                    <input  id="txtRopa" type="text" value="<%=ropafoto.getRopa().getCodigoBarra() %>" disabled>
                     <label for="txtRopa">Ropa</label>
                 </div> 
             </div>

@@ -15,10 +15,16 @@
 
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>">                
                 <div class="row">
+                    
+                    <div class="input-field col l4 s12">
+                        <input  id="txtUrl" type="text" name="url" required class="validate" maxlength="30">
+                        <label for="txtUrl">Url</label>
+                    </div> 
                     <div class="input-field col l4 s12">
                         <label>Url</label>
                         <input type="file" name="fileUrl">
                     </div>
+                    
                     
                     <div class="input-field col l4 s12">   
                         <select id="slEstatus" name="estatus">
