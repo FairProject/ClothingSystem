@@ -73,7 +73,7 @@
                                 <tr>
                                     <th>Url</th>
                                     <th>Estatus</th>
-                                    <th>IdRopa</th>
+                                    <th>Ropa</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>                       
