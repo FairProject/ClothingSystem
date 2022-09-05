@@ -84,7 +84,7 @@ public class RopaDAL { // Clase para poder realizar consulta de Insertar, modifi
                 ps.setString(10, pRopa.getEstilo());
                 ps.setString(11, pRopa.getDescripcion());
                 ps.setString(12, pRopa.getTipoTela());
-                ps.setInt(13, pRopa.getId());
+                        ps.setInt(13, pRopa.getId());
                 result = ps.executeUpdate(); // Ejecutar la consulta UPDATE en la base de datos
                 ps.close(); // Cerrar el PreparedStatement
             } catch (SQLException ex) {
@@ -385,7 +385,7 @@ public class RopaDAL { // Clase para poder realizar consulta de Insertar, modifi
             sql += ",";
             sql += MarcaDAL.obtenerCampos(); // Obtener los campos de la tabla de Rol que iran en el SELECT
             sql += " FROM Ropa r";
-            sql += " JOIN Marca m on (m.IdMarca=r.Id)"; // agregar el join para unir la tabla de Usuario con Rol
+            sql += " JOIN Marca m on (r.IdMarca=m.Id)"; // agregar el join para unir la tabla de Usuario con Rol
             ComunDB comundb = new ComunDB();
             ComunDB.UtilQuery utilQuery = comundb.new UtilQuery(sql, null, 0);
             querySelect(pRopa, utilQuery); // Asignar el filtro a la consulta SELECT de la tabla de Usuario 

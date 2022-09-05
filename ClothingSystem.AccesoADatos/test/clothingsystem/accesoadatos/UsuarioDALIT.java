@@ -84,8 +84,11 @@ public class UsuarioDALIT {
     }
 
      /**
-     *  Testear el metodo de QuerySelect de la clase UsuarioDAL
+     * Testear el metodo de QuerySelect de la clase UsuarioDAL
+     *
+     * @throws java.lang.Exception
      */
+
     @Test
     public void test2QuerySelect() throws Exception {
         System.out.println("querySelect");

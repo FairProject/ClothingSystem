@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import clothingsystem.entidadesdenegocio.Marca;
+import clothingsystem.entidadesdenegocio.Usuario;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 
@@ -64,13 +65,13 @@ public class RopaDALIT {
         ropa.setNombre("Nombre UNIT TEST");
         ropa.setPrecioCompra(12.5);
         ropa.setPrecioVenta(12.5);
+         ropa.setExistencia(12);
         ropa.setEstatus(Ropa.EstatusRopa.INACTIVO);
         ropa.setTalla("12345");
-        ropa.setEstilo("Estilo UNIT TEST");
         ropa.setColor("12345");
+        ropa.setEstilo("Estilo UNIT TEST");
         ropa.setDescripcion("Estilo UNIT TEST");
         ropa.setTipoTela("Estilo UNIT TEST");
-
         Marca marcaB = new Marca();
         marcaB.setTop_aux(0);
         ropa.setIdMarca(MarcaDAL.buscar(marcaB).get(0).getId());
@@ -78,7 +79,7 @@ public class RopaDALIT {
         int result = RopaDAL.crear(ropa);
         assertNotEquals(expResult, result);
     }
-
+    
     public int testIndividualQuerySelect(Ropa pRopa) throws Exception {
         ComunDB comundb = new ComunDB();
         ComunDB.UtilQuery pUtilQuery = comundb.new UtilQuery("", null, 0);
@@ -99,41 +100,43 @@ public class RopaDALIT {
         ropa.setId(1);
         index++;
         assertTrue(testIndividualQuerySelect(ropa) == index);
-        ropa.setCodigoBarra("TEST");
-        index++;
+        ropa.setCodigoBarra("123");
+         index++;
         assertTrue(testIndividualQuerySelect(ropa) == index);
         ropa.setNombre("TEST");
         index++;
         assertTrue(testIndividualQuerySelect(ropa) == index);
         ropa.setPrecioCompra(12.5);
-        index++;
+         index++;
         assertTrue(testIndividualQuerySelect(ropa) == index);
         ropa.setPrecioCompra(12.5);
+         index++;
+        assertTrue(testIndividualQuerySelect(ropa) == index);
+        ropa.setExistencia(12);
         index++;
-        
+        assertTrue(testIndividualQuerySelect(ropa) == index);
         ropa.setEstatus((byte) 1);
         index++;
-        
-        ropa.setTalla("TEST");
-        index++;
-        
-        ropa.setColor("TEST");
-        index++;
-        
+        assertTrue(testIndividualQuerySelect(ropa) == index);
+        ropa.setTalla("123");
+         index++;
+        assertTrue(testIndividualQuerySelect(ropa) == index);
+        ropa.setColor("123");
+         index++;
+        assertTrue(testIndividualQuerySelect(ropa) == index);
         ropa.setEstilo("TEST");
-        index++;
-        
+       index++;
+        assertTrue(testIndividualQuerySelect(ropa) == index);
         ropa.setDescripcion("TEST");
         index++;
-        
+        assertTrue(testIndividualQuerySelect(ropa) == index);
         ropa.setTipoTela("TEST");
         index++;
-        
-//        assertTrue(testIndividualQuerySelect(ropa) == index);
+        assertTrue(testIndividualQuerySelect(ropa) == index);
         ropa.setIdMarca(1);
-
         index++;
-//        assertTrue(testIndividualQuerySelect(ropa) == index);
+        assertTrue(testIndividualQuerySelect(ropa) == index);
+
     }
 
     /**
@@ -149,6 +152,7 @@ public class RopaDALIT {
         ropa.setNombre("Nombre UNIT TEST");
         ropa.setPrecioCompra(12.5);
         ropa.setPrecioVenta(12.5);
+         ropa.setExistencia(12);
         ropa.setEstatus(Ropa.EstatusRopa.INACTIVO);
         ropa.setTalla("12345");
         ropa.setEstilo("Estilo UNIT TEST");
@@ -183,19 +187,17 @@ public class RopaDALIT {
         System.out.println("modificar");
         Ropa ropa = new Ropa();
         ropa.setId(ropaActual.getId());
-        
         ropa.setCodigoBarra("12345");
         ropa.setNombre("Nombre UNIT TEST");
         ropa.setPrecioCompra(12.5);
         ropa.setPrecioVenta(12.5);
+         ropa.setExistencia(12);
         ropa.setEstatus(Ropa.EstatusRopa.INACTIVO);
         ropa.setTalla("12345");
-        ropa.setEstilo("Estilo UNIT TEST");
         ropa.setColor("12345");
+        ropa.setEstilo("Estilo UNIT TEST");
         ropa.setDescripcion("Estilo UNIT TEST");
         ropa.setTipoTela("Estilo UNIT TEST");
-        
-
         ropa.setEstatus(Ropa.EstatusRopa.ACTIVO);
         Marca marcaB = new Marca();
         marcaB.setTop_aux(2);
@@ -224,13 +226,17 @@ public class RopaDALIT {
      * @throws java.lang.Exception
      */
     @Test
-         public void test7BuscarIncluirMarca() throws Exception {
+    public void test7BuscarIncluirMarca() throws Exception {
         System.out.println("buscarIncluirMarca");
         Ropa ropa = new Ropa();
         ropa.setTop_aux(10);
-       
+        ArrayList<Ropa> result = RopaDAL.buscarIncluirMarca(ropa);
+        assertTrue(result.size() > 0);
+        Ropa ropaConMarca = result.get(0);
+        assertTrue(ropaConMarca.getIdMarca() == ropaConMarca.getMarca().getId());
     }
-/**
+
+    /**
      * Testear el metodo de ObtenerPorId de la clase UsuarioDAL
      *
      * @throws java.lang.Exception
@@ -242,6 +248,38 @@ public class RopaDALIT {
         String result = RopaDAL.obtenerCampos();
         assertNotEquals(expResult, result);
     }
+    
+      /**
+     *  Testear el metodo de AsignarDatosResultSet de la clase UsuarioDAL
+     */
+        @Test
+    public void test92AsignarDatosResultSet() throws Exception {
+        System.out.println("asignarDatosResultSet");
+        Ropa ropa = new Ropa();
+        try (Connection conn = ComunDB.obtenerConexion();) {
+            String sql = "SELECT " + RopaDAL.obtenerCampos() + " FROM Ropa r";
+            sql += " WHERE r.Id=?";
+            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
+                ps.setInt(1, ropaActual.getId());
+                try (ResultSet resultSet = ComunDB.obtenerResultSet(ps);) {
+                    while (resultSet.next()) {
+                        RopaDAL.asignarDatosResultSet(ropa, resultSet, 0);
+                    }
+                    resultSet.close();
+                } catch (SQLException ex) {
+                    throw ex;
+                }
+                ps.close();
+            } catch (SQLException ex) {
+                throw ex;
+            }
+            conn.close();
+        } // Handle any errors that may have occurred.
+        catch (SQLException ex) {
+            throw ex;
+        }
+        assertTrue(ropa.getId() == ropaActual.getId());
+    }
 
     /**
      * Testear el metodo de ObtenerPorId de la clase UsuarioDAL
@@ -249,7 +287,7 @@ public class RopaDALIT {
      * @throws java.lang.Exception
      */
     @Test
-   public void test9Eliminar() throws Exception {
+    public void test93Eliminar() throws Exception {
         System.out.println("eliminar");
         int expResult = 0;
         int result = RopaDAL.eliminar(ropaActual);
