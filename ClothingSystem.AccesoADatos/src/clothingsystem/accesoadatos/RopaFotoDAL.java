@@ -64,12 +64,12 @@ public class RopaFotoDAL {
         int result;
         String sql;
         try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
-            sql = "UPDATE RopaFoto SET IdRopa=?, Url=?, Estatus=?"; // Definir la consulta UPDATE a la tabla de RopaFoto utilizando el simbolo ? para enviar parametros
+            sql = "UPDATE RopaFoto SET IdRopa=?, Url=?, Estatus=? WHERE Id=?"; // Definir la consulta UPDATE a la tabla de RopaFoto utilizando el simbolo ? para enviar parametros
             try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                 ps.setInt(1, pRopaFoto.getIdRopa());
                 ps.setString(2, pRopaFoto.getUrl());
                 ps.setByte(3, pRopaFoto.getEstatus());
-                
+                ps.setInt(4, pRopaFoto.getId());
                 result = ps.executeUpdate(); // Ejecutar la consulta UPDATE en la base de datos
                 ps.close(); // Cerrar el PreparedStatement
             } catch (SQLException ex) {
@@ -104,16 +104,16 @@ public class RopaFotoDAL {
 
     // Metodo para llenar las propiedades de la entidad de RopaFoto con los datos que viene en el ResultSet,
     // el metodo nos ayudara a no preocuparlos por los indices al momento de obtener los valores del ResultSet
-    static int asignarDatosResultSet(RopaFoto pRopaFoto, ResultSet pResultSet, int pIndex) throws Exception {
+    static int asignarDatosResultSet(RopaFoto pRopaFotos, ResultSet pResultSet, int pIndex) throws Exception {
         //  SELECT p.Id(indice 1),p.IdRopa(indice 2),p.Url(indice 2),p.Estatus(indice3) * FROM RopaFoto
         pIndex++;
-        pRopaFoto.setId(pResultSet.getInt(pIndex)); // index 1
+        pRopaFotos.setId(pResultSet.getInt(pIndex)); // index 1
          pIndex++;
-        pRopaFoto.setIdRopa(pResultSet.getInt(pIndex)); // index 2
+        pRopaFotos.setIdRopa(pResultSet.getInt(pIndex)); // index 2
         pIndex++;
-        pRopaFoto.setUrl(pResultSet.getString(pIndex)); // index 3
+        pRopaFotos.setUrl(pResultSet.getString(pIndex)); // index 3
         pIndex++;
-        pRopaFoto.setEstatus(pResultSet.getByte(pIndex)); // index 4
+        pRopaFotos.setEstatus(pResultSet.getByte(pIndex)); // index 4
         return pIndex;
     }
     private static void obtenerDatos(PreparedStatement pPS, ArrayList<RopaFoto> pRopaFotos) throws Exception {
@@ -246,6 +246,7 @@ public class RopaFotoDAL {
                 utilQuery.setStatement(ps);
                 utilQuery.setSQL(null);
                 utilQuery.setNumWhere(0);
+                querySelect(pRopaFoto, utilQuery);
                 obtenerDatos(ps, ropafotos); // Llenar el ArrayList de Rol con las fila que devolvera la consulta SELECT a la tabla de Rol
                 ps.close(); // Cerrar el PreparedStatement
             } catch (SQLException ex) {
@@ -271,7 +272,7 @@ public class RopaFotoDAL {
             sql += ",";
             sql += RopaDAL.obtenerCampos(); // Obtener los campos de la tabla de Rol que iran en el SELECT
             sql += " FROM RopaFoto p";
-            sql += " JOIN Ropa r on (r.IdRopa=p.Id)"; // agregar el join para unir la tabla de Usuario con Rol
+            sql += " JOIN Ropa r on (p.IdRopa=r.Id)"; // agregar el join para unir la tabla de Usuario con Rol
             ComunDB comundb = new ComunDB();
             ComunDB.UtilQuery utilQuery = comundb.new UtilQuery(sql, null, 0);
             querySelect(pRopaFoto, utilQuery); // Asignar el filtro a la consulta SELECT de la tabla de Usuario 
@@ -292,5 +293,9 @@ public class RopaFotoDAL {
             throw ex;// Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
         }
         return ropafotos; // Devolver el ArrayList de Usuario
+    }
+
+    static ArrayList<RopaFoto> eliminar() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

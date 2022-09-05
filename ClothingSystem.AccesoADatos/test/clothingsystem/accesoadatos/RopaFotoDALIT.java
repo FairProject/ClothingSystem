@@ -31,7 +31,7 @@ import org.junit.runners.MethodSorters;
 public class RopaFotoDALIT {
 
     private static RopaFoto ropafotoActual;
-    
+
     public RopaFotoDALIT() {
     }
 
@@ -59,9 +59,9 @@ public class RopaFotoDALIT {
     @Test
     public void test1Crear() throws Exception {
 
-       System.out.println("crear");
+        System.out.println("crear");
         RopaFoto ropafoto = new RopaFoto();
-        ropafoto.setUrl("Url UNIT TEST");
+        ropafoto.setUrl("Url");
         ropafoto.setEstatus(RopaFoto.EstatusRopaFoto.INACTIVO);
         Ropa ropaB = new Ropa();
         ropaB.setTop_aux(1);
@@ -86,11 +86,20 @@ public class RopaFotoDALIT {
     @Test
     public void test2QuerySelect() throws Exception {
         System.out.println("querySelect");
-        RopaFoto pRopaFoto = new RopaFoto();
-        pRopaFoto.setId(1);
-        assertTrue(testIndividualQuerySelect(pRopaFoto) == 1);
-        pRopaFoto.setIdRopa(2);
-        assertTrue(testIndividualQuerySelect(pRopaFoto) == 2);
+        int index = 0;
+        RopaFoto ropafoto = new RopaFoto();
+        ropafoto.setId(1);
+        index++;
+        assertTrue(testIndividualQuerySelect(ropafoto) == index);
+        ropafoto.setUrl("TEST");
+        index++;
+        assertTrue(testIndividualQuerySelect(ropafoto) == index);
+        ropafoto.setIdRopa(1);
+        index++;
+        assertTrue(testIndividualQuerySelect(ropafoto) == index);
+        ropafoto.setEstatus((byte) 1);
+        index++;
+        assertTrue(testIndividualQuerySelect(ropafoto) == index);
     }
 
     /**
@@ -116,7 +125,7 @@ public class RopaFotoDALIT {
     @Test
     public void test4ObtenerPorId() throws Exception {
         System.out.println("obtenerPorId");
-         RopaFoto ropafoto = new RopaFoto();
+        RopaFoto ropafoto = new RopaFoto();
         ArrayList<RopaFoto> ropafotos = new ArrayList();
         ropafoto.getId();
         RopaFoto result = RopaFotoDAL.obtenerPorId(ropafoto);
@@ -129,7 +138,7 @@ public class RopaFotoDALIT {
      */
     @Test
     public void test5Modificar() throws Exception {
-         System.out.println("modificar");
+        System.out.println("modificar");
         RopaFoto ropafoto = new RopaFoto();
         ropafoto.getId();
         ropafoto.setUrl("Url");
@@ -138,8 +147,8 @@ public class RopaFotoDALIT {
         ropaB.setTop_aux(2);
         ropafoto.setIdRopa(RopaDAL.buscar(ropaB).get(0).getId());
         int expResult = 1;
-//        int result = RopaFotoDAL.modificar(ropafoto);
-//        assertNotEquals(expResult, result);
+        int result = RopaFotoDAL.modificar(ropafoto);
+        assertNotEquals(expResult, result);
 
     }
 
@@ -149,7 +158,7 @@ public class RopaFotoDALIT {
      * @throws java.lang.Exception
      */
     @Test
-    public void test6ObtenerTodos() throws Exception {
+    public void test60ObtenerTodos() throws Exception {
         System.out.println("obtenerTodos");
         ArrayList<Ropa> result = RopaDAL.obtenerTodos();
         assertTrue(result.size() > 0);
@@ -166,10 +175,9 @@ public class RopaFotoDALIT {
         RopaFoto ropafoto = new RopaFoto();
         ArrayList<RopaFoto> ropafotos = new ArrayList();
         ropafoto.setTop_aux(10);
-        ropafoto.getIdRopa();
-        ArrayList<RopaFoto> result;
-//        result = RopaFotoDAL.buscarIncluirRopa(ropafoto);
-//        assertTrue(result.size() > 0);
+        ArrayList<RopaFoto> result = RopaFotoDAL.buscarIncluirRopa(ropafoto);
+        RopaFoto ropafotoConRopa = result.get(0);
+        assertTrue(ropafotoConRopa.getIdRopa() == ropafotoConRopa.getRopa().getId());
     }
 
     /**
@@ -177,54 +185,27 @@ public class RopaFotoDALIT {
      *
      */
     @Test
-    public void test8ObtenerCampos() {
+    public void test80ObtenerCampos() {
         System.out.println("obtenerCampos");
         String expResult = "";
         String result = RopaFotoDAL.obtenerCampos();
         assertNotEquals(expResult, result);
     }
-
     /**
      * Testear el metodo de ObtenerPorId de la clase UsuarioDAL
      *
      * @throws java.lang.Exception
      */
     @Test
-    public void test9Eliminar() throws Exception {
+    public void test93Eliminar() throws Exception {
         System.out.println("eliminar");
-        ArrayList<RopaFoto> ropafotos = new ArrayList();
-       // int result = RopaFotoDAL.eliminar(ropafotoActual);
-//       RopaFoto ropafotoDelete = RopaFotoDAL.obtenerPorId(ropafotoActual);
-
-    }
-    
-    public void test10AsignarDatosResultSet() throws Exception {
-        System.out.println("asignarDatosResultSet");
-        RopaFoto usuario = new RopaFoto();
-        try ( Connection conn = ComunDB.obtenerConexion();) {
-            String sql = "SELECT " + RopaFotoDAL.obtenerCampos() + " FROM Usuario u";
-            sql += " WHERE u.Id=?";
-            try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {
-                ps.setInt(1, ropafotoActual.getId());
-                try ( ResultSet resultSet = ComunDB.obtenerResultSet(ps);) {
-                    while (resultSet.next()) {
-                        RopaFoto ropafoto = null;
-                        RopaFotoDAL.asignarDatosResultSet(ropafoto, resultSet, 0);
-                    }
-                    resultSet.close();
-                } catch (SQLException ex) {
-                    throw ex;
-                }
-                ps.close();
-            } catch (SQLException ex) {
-                throw ex;
-            }
-            conn.close();
-        } // Handle any errors that may have occurred.
-        catch (SQLException ex) {
-            throw ex;
-        }
-        assertTrue(usuario.getId() == ropafotoActual.getId());
+        RopaFoto ropafoto = new RopaFoto();
+        ropafoto.getId();
+        int expResult = 0;
+        int result = RopaFotoDAL.eliminar(ropafotoActual);
+        assertNotEquals(expResult, result);
+        RopaFoto ropafotoDelete = RopaFotoDAL.obtenerPorId(ropafotoActual);
+        assertTrue(ropafotoDelete.getId() == 0);
     }
 
 }
