@@ -26,7 +26,7 @@
         <title>Buscar Ropa</title>
 
     </head>
-    <body class="#cfd8dc blue-grey lighten-4">
+    <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
             <h5>Buscar Ropa</h5>

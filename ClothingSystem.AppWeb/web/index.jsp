@@ -1,9 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="clothingsystem.appweb.utils.*"%>
-<% if (SessionUser.isAuth(request) == false) {
-        response.sendRedirect("Usuario?accion=login");
-    }
-%>
+
 <!DOCTYPE html>
 <html>
     <head>        
@@ -14,7 +11,7 @@
 
 
     </head>
-    <body class="#cfd8dc blue-grey lighten-4">
+    <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <jsp:include page="/Views/Shared/bannerBody.jsp" />  
 

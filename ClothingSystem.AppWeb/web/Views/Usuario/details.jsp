@@ -7,7 +7,7 @@
         <jsp:include page="/Views/Shared/title.jsp" />
         <title>Detalle de Usuario</title>
     </head>
-    <body class="#cfd8dc blue-grey lighten-4">
+    <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
             <h5>Detalle de Usuario</h5>

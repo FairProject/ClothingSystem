@@ -6,7 +6,7 @@
         <jsp:include page="/Views/Shared/title.jsp" />
         <title>Crear Usuario</title>
     </head>
-    <body class="#cfd8dc blue-grey lighten-4">
+    <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
             <h5>Crear Usuario</h5>
