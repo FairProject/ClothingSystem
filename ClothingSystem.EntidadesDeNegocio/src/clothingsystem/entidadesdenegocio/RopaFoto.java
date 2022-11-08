@@ -13,6 +13,7 @@ public class RopaFoto {
     private int id;
     private int idRopa;
     private String url;
+    private String Foto;
     private byte estatus;
     private int top_aux;
     private Ropa ropa;
@@ -20,12 +21,12 @@ public class RopaFoto {
     public RopaFoto() {
     }
 
-    public RopaFoto(int id, int idRopa, String url, byte estatus, Ropa ropa) {
+    public RopaFoto(int id, int idRopa, String url, String Foto, byte estatus) {
         this.id = id;
         this.idRopa = idRopa;
         this.url = url;
+        this.Foto = Foto;
         this.estatus = estatus;
-        this.ropa = ropa;
     }
 
     public int getId() {
@@ -52,6 +53,14 @@ public class RopaFoto {
         this.url = url;
     }
 
+    public String getFoto() {
+        return Foto;
+    }
+
+    public void setFoto(String Foto) {
+        this.Foto = Foto;
+    }
+
     public byte getEstatus() {
         return estatus;
     }
@@ -75,6 +84,8 @@ public class RopaFoto {
     public void setRopa(Ropa ropa) {
         this.ropa = ropa;
     }
+
+   
 
     public class EstatusRopaFoto {
 
