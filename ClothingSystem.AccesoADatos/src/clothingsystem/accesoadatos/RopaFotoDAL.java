@@ -8,7 +8,7 @@ public class RopaFotoDAL {
     // Metodo para obtener los campos a utilizar en la consulta SELECT de la tabla de Rol
 
     static String obtenerCampos() {
-        return "p.Id, p.IdRopa, p.Url, p.Estatus";
+        return "p.Id, p.IdRopa, p.Url, p.Estatus, p.Foto";
     }
 
     // Metodo para obtener el SELECT a la tabla RopaFoto y el TOP en el caso que se utilice una base de datos SQL SERVER
@@ -19,7 +19,7 @@ public class RopaFotoDAL {
         if (pRopaFoto.getTop_aux() > 0 && ComunDB.TIPODB == ComunDB.TipoDB.SQLSERVER) {
             // Agregar el TOP a la consulta SELECT si el gestor de base de datos es SQL SERVER y "getTop_aux" es mayor a cero
             sql += "TOP " + pRopaFoto.getTop_aux() + " ";
-            
+
         }
 
         sql += (obtenerCampos() + " FROM RopaFoto p"); // Agregar los campos de la tabla de RopaFoto mas el FROM a la tabla RopaFoto con su alias "r"
@@ -42,11 +42,12 @@ public class RopaFotoDAL {
         int result;
         String sql;
         try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
-            sql = "INSERT INTO RopaFoto(IdRopa,Url,Estatus) VALUES(?,?,?)"; // Definir la consulta INSERT a la tabla de RopaFotoRopaFoto utilizando el simbolo ? para enviar parametros
+            sql = "INSERT INTO RopaFoto(IdRopa,Url,Estatus,Foto) VALUES(?,?,?,?)"; // Definir la consulta INSERT a la tabla de RopaFotoRopaFoto utilizando el simbolo ? para enviar parametros
             try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                 ps.setInt(1, pRopaFoto.getIdRopa());
                 ps.setString(2, pRopaFoto.getUrl());
                 ps.setByte(3, pRopaFoto.getEstatus());// Agregar el  a la consulta donde estan el simbolo ? #1
+                ps.setString(4, pRopaFoto.getFoto());
                 result = ps.executeUpdate(); // Ejecutar la consulta INSERT en la base de datos
                 ps.close(); // Cerrar el PreparedStatement
             } catch (SQLException ex) {
@@ -64,12 +65,13 @@ public class RopaFotoDAL {
         int result;
         String sql;
         try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
-            sql = "UPDATE RopaFoto SET IdRopa=?, Url=?, Estatus=? WHERE Id=?"; // Definir la consulta UPDATE a la tabla de RopaFoto utilizando el simbolo ? para enviar parametros
+            sql = "UPDATE RopaFoto SET IdRopa=?, Url=?, Estatus=?,Foto=? WHERE Id=?"; // Definir la consulta UPDATE a la tabla de RopaFoto utilizando el simbolo ? para enviar parametros
             try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                 ps.setInt(1, pRopaFoto.getIdRopa());
                 ps.setString(2, pRopaFoto.getUrl());
                 ps.setByte(3, pRopaFoto.getEstatus());
-                ps.setInt(4, pRopaFoto.getId());
+                ps.setString(4, pRopaFoto.getFoto());
+                ps.setInt(5, pRopaFoto.getId());
                 result = ps.executeUpdate(); // Ejecutar la consulta UPDATE en la base de datos
                 ps.close(); // Cerrar el PreparedStatement
             } catch (SQLException ex) {
@@ -108,14 +110,17 @@ public class RopaFotoDAL {
         //  SELECT p.Id(indice 1),p.IdRopa(indice 2),p.Url(indice 2),p.Estatus(indice3) * FROM RopaFoto
         pIndex++;
         pRopaFotos.setId(pResultSet.getInt(pIndex)); // index 1
-         pIndex++;
-        pRopaFotos.setIdRopa(pResultSet.getInt(pIndex)); // index 2
         pIndex++;
-        pRopaFotos.setUrl(pResultSet.getString(pIndex)); // index 3
+        pRopaFotos.setIdRopa(pResultSet.getInt(pIndex));
         pIndex++;
-        pRopaFotos.setEstatus(pResultSet.getByte(pIndex)); // index 4
+        pRopaFotos.setUrl(pResultSet.getString(pIndex)); // index 4
+        pIndex++;
+        pRopaFotos.setEstatus(pResultSet.getByte(pIndex)); // index 5
+        pIndex++;
+        pRopaFotos.setFoto(pResultSet.getString(pIndex));
         return pIndex;
     }
+
     private static void obtenerDatos(PreparedStatement pPS, ArrayList<RopaFoto> pRopaFotos) throws Exception {
         try ( ResultSet resultSet = ComunDB.obtenerResultSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
             while (resultSet.next()) { // Recorrer cada una de la fila que regresa la consulta  SELECT de la tabla Rol
@@ -128,13 +133,14 @@ public class RopaFotoDAL {
             throw ex; // Enviar al siguiente metodo el error al obtener ResultSet de la clase ComunDB   en el caso que suceda 
         }
     }
+
     // Metodo para  ejecutar el ResultSet de la consulta SELECT a la tabla de Usuario y JOIN a la tabla de Rol
     private static void obtenerDatosIncluirRopa(PreparedStatement pPS, ArrayList<RopaFoto> pRopaFotos) throws Exception {
-        try (ResultSet resultSet = ComunDB.obtenerResultSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
+        try ( ResultSet resultSet = ComunDB.obtenerResultSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
             HashMap<Integer, Ropa> ropaMap = new HashMap(); //crear un HashMap para automatizar la creacion de instancias de la clase Rol
             while (resultSet.next()) { // Recorrer cada una de la fila que regresa la consulta  SELECT de la tabla Usuario JOIN a la tabla de Rol
                 RopaFoto ropafoto = new RopaFoto();
-                 // Llenar las propiedaddes de la Entidad Usuario con los datos obtenidos de la fila en el ResultSet
+                // Llenar las propiedaddes de la Entidad Usuario con los datos obtenidos de la fila en el ResultSet
                 int index = asignarDatosResultSet(ropafoto, resultSet, 0);
                 if (ropaMap.containsKey(ropafoto.getIdRopa()) == false) { // verificar que el HashMap aun no contenga el Rol actual
                     Ropa ropa = new Ropa();
@@ -144,7 +150,7 @@ public class RopaFotoDAL {
                     ropafoto.setRopa(ropa); // agregar el Rol al Usuario
                 } else {
                     // En el caso que el Rol existe en el HashMap se agregara automaticamente al Usuario
-                   ropafoto.setRopa(ropaMap.get(ropafoto.getIdRopa())); 
+                    ropafoto.setRopa(ropaMap.get(ropafoto.getIdRopa()));
                 }
                 pRopaFotos.add(ropafoto); // Agregar el Usuario de la fila actual al ArrayList de Usuario
             }
@@ -153,6 +159,7 @@ public class RopaFotoDAL {
             throw ex; // enviar al siguiente metodo el error al obtener ResultSet de la clase ComunDB   en el caso que suceda 
         }
     }
+
     // Metodo para obtener por Id un registro de la tabla de RopaFoto 
     public static RopaFoto obtenerPorId(RopaFoto pRopaFoto) throws Exception {
         RopaFoto ropafoto = new RopaFoto();
@@ -171,7 +178,7 @@ public class RopaFotoDAL {
         } catch (SQLException ex) {
             throw ex; // Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
         }
-         if (ropafotos.size() > 0) { // Verificar si el ArrayList de Rol trae mas de un registro en tal caso solo debe de traer uno
+        if (ropafotos.size() > 0) { // Verificar si el ArrayList de Rol trae mas de un registro en tal caso solo debe de traer uno
             ropafoto = ropafotos.get(0); // Si el ArrayList de Rol trae un registro o mas obtenemos solo el primero 
         }
         return ropafoto; // Devolver el ropafoto encontrado por Id 
@@ -227,6 +234,12 @@ public class RopaFotoDAL {
             if (statement != null) {
                 // Agregar el parametro del campo Id a la consulta SELECT de la tabla de RopaFoto
                 statement.setByte(pUtilQuery.getNumWhere(), pRopaFoto.getEstatus());
+            }
+        }
+        if (pRopaFoto.getFoto() != null && pRopaFoto.getFoto().trim().isEmpty() == false){
+            pUtilQuery.AgregarWhereAnd(" p.Foto LIKE ?");
+            if (statement != null){
+               statement.setString(pUtilQuery.getNumWhere(), "%" + pRopaFoto.getFoto() + "%");
             }
         }
     }
@@ -293,9 +306,5 @@ public class RopaFotoDAL {
             throw ex;// Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
         }
         return ropafotos; // Devolver el ArrayList de Usuario
-    }
-
-    static ArrayList<RopaFoto> eliminar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
