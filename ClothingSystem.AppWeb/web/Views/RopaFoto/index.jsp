@@ -71,8 +71,8 @@
                         <table class="paginationjs">
                             <thead>
                                 <tr>
-                                    <th>Url</th>
                                     <th>Estatus</th>
+                                     <th>Foto</th>
                                     <th>Ropa</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -98,9 +98,10 @@
                                         }
                                 %>
                                 <tr data-page="<%= tempNumPage%>">
-                                    <td><%=ropafoto.getUrl()%></td> 
                                     <td><%=ropafoto.getEstatus()%></td>
-                                      <td><%=ropafoto.getRopa().getCodigoBarra()%></td> 
+                                      <td><img width="30%" height="30%" src="<%=ropafoto.getFoto()%>" /></td>
+                                    <%--<td><%=touristPlace.getPhotos()%></td>-->---%>
+                                     <td><%=ropafoto.getRopa().getCodigoBarra()%></td>
                                     <td>
                                         <div style="display:flex">
                                             <a href="RopaFoto?accion=edit&id=<%=ropafoto.getId()%>" title="Modificar" class="waves-effect waves-light btn green">

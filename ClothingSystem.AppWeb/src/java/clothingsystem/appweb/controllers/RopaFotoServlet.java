@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package clothingsystem.appweb.controllers;
 
 import java.io.IOException;
@@ -12,35 +8,54 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;  // Importar la clase ArrayList
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import clothingsystem.accesoadatos.RopaFotoDAL;
 import clothingsystem.entidadesdenegocio.RopaFoto;
 import clothingsystem.entidadesdenegocio.Ropa;
 import clothingsystem.accesoadatos.RopaDAL;
 import clothingsystem.appweb.utils.*;
+import java.io.File;
+import java.io.InputStream;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.Part;
 
-/**
- * En este Servlet, vamos a recibir todas las peticiones get y post que se
- * realice al Servlet Rol. Aprender conceptos básicos de servlets
- * http://www.jtech.ua.es/j2ee/2002-2003/modulos/servlets/apuntes/apuntes1_1.htm
- * Actualizamos la anotación WebServlet para cambiar el atributo urlPatterns
- * para acceder al Servlet Rol utilizando la siguiente Url: la del sitio web mas
- * /RopaFoto
- */
+@MultipartConfig
 @WebServlet(name = "RopaFotoServlet", urlPatterns = {"/RopaFoto"})
 public class RopaFotoServlet extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="Metodos para procesar las solicitudes get o post del Servlet">
-    /**
-     * En este método vamos a obtener la información enviada, en una peticion
-     * get o post, obteniendo los datos de los parámetros enviados de un
-     * formulario o la url del navegador, enviar esa información a una instancia
-     * de la entidad Rol
-     *
-     * @param request en este parámetro vamos a recibir el request de la
-     * peticion get o post enviada al servlet Rol
-     * @return Rol devolver la instancia de la entidad Rol con los valores
-     * obtenidos del request
-     */
+   private String pathFiles = "C:\\Users\\carlos\\Documents\\NetBeansProjects\\ClothingSystem\\ClothingSystem.AppWeb\\web\\wwwroot\\images";
+    private File fileUpload = new File(pathFiles);
+    private String[] typeImage = {".ico", ".png", ".jpg", ".jpeg"};
+    private String fileName = "";
+    private String guardarImagen(Part part, File pathUpload) {
+        String absolutePath = "";
+        try {
+            Path path = Paths.get(part.getSubmittedFileName());
+            fileName = path.getFileName().toString();
+            InputStream input = part.getInputStream();
+            
+            if (input != null) {
+                File file = new File(pathUpload, fileName);
+                absolutePath = file.getAbsolutePath();
+                Files.copy(input, file.toPath()); 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return "wwwroot\\images\\" + fileName;
+    }
+    
+    private boolean isExtension(String fileName, String[] extensions) {
+        for (String ext : extensions) {
+            if (fileName.toLowerCase().endsWith(ext)) {
+                return true;
+            }
+        }
+        return false;
+    }
     private RopaFoto obtenerRopaFoto(HttpServletRequest request) {
         // Obtener el parámetro accion del request
         String accion = Utilidad.getParameter(request, "accion", "index");
@@ -50,6 +65,9 @@ public class RopaFotoServlet extends HttpServlet {
         // Obtener el parámetro nombre del request   y asignar ese valor a la propiedad Nombre de Rol.
 
         ropafoto.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
+        
+        ropafoto.setFoto(Utilidad.getParameter(request, "Foto", ""));
+        
 
         ropafoto.setIdRopa(Integer.parseInt(Utilidad.getParameter(request, "idRopa", "0")));
 
@@ -151,6 +169,16 @@ public class RopaFotoServlet extends HttpServlet {
         try {
             RopaFoto ropafoto = obtenerRopaFoto(request); // Llenar la instancia de Rol con los parámetros enviados en el request.
             // Enviar los datos de Rol a la capa de accesoa a datos para que lo almacene en la base de datos el registro.
+            Part part = request.getPart("foto");
+            if (part == null) {
+                System.out.println("No ha seleccionado ningun archivo");
+                return;
+            }
+            
+            if (isExtension(part.getSubmittedFileName(), typeImage)) {
+                String Ropafoto = guardarImagen(part, fileUpload);
+               ropafoto.setFoto(Ropafoto);
+            }
             int result = RopaFotoDAL.crear(ropafoto);
             if (result != 0) { // Si el result es diferente a cero significa que los datos fueron ingresados correctamente.
                 // Enviar el atributo accion con el valor index al jsp de index
