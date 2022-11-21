@@ -103,7 +103,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
                     ps.setString(5, encriptarMD5(pUsuario.getPassword())); // agregar el parametro a la consulta donde estan el simbolo "?" #5 
                     ps.setByte(6, pUsuario.getEstatus()); // agregar el parametro a la consulta donde estan el simbolo "?" #6 
                     ps.setDate(7, java.sql.Date.valueOf(LocalDate.now())); // agregar el parametro a la consulta donde estan el simbolo "?" #7 
-                    ps.setString(8, pUsuario.getFoto());
+//                    ps.setString(8, pUsuario.getFoto());
                     result = ps.executeUpdate(); // ejecutar la consulta INSERT en la base de datos
                     ps.close(); // cerrar el PreparedStatement
                 } catch (SQLException ex) {
@@ -136,7 +136,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
                     ps.setString(3, pUsuario.getApellido()); // agregar el parametro a la consulta donde estan el simbolo ? #3  
                     ps.setString(4, pUsuario.getLogin()); // agregar el parametro a la consulta donde estan el simbolo ? #4  
                     ps.setByte(5, pUsuario.getEstatus()); // agregar el parametro a la consulta donde estan el simbolo ? #5  
-                    ps.setString(6, pUsuario.getFoto());
+             //       ps.setString(6, pUsuario.getFoto());
                     ps.setInt(7, pUsuario.getId()); // agregar el parametro a la consulta donde estan el simbolo ? #6  
                     result = ps.executeUpdate(); // ejecutar la consulta UPDATE en la base de datos
                     ps.close(); // cerrar el PreparedStatement
@@ -196,7 +196,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         pIndex++;
         pUsuario.setFechaRegistro(pResultSet.getDate(pIndex).toLocalDate()); // index 7
         pIndex++;
-        pUsuario.setFoto(pResultSet.getString(pIndex));
+      //  pUsuario.setFoto(pResultSet.getString(pIndex));
         return pIndex;
     }
 
@@ -337,12 +337,12 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
                 statement.setInt(pUtilQuery.getNumWhere(), pUsuario.getEstatus());
             }
         }
-        if (pUsuario.getFoto() != null && pUsuario.getFoto() .trim() .isEmpty() ==false){
-            pUtilQuery.AgregarWhereAnd("u.Foto=? ");
-            if (statement != null){
-                statement.setString(pUtilQuery.getNumWhere(), pUsuario.getFoto());
-            }
-        }
+//        if (pUsuario.getFoto() != null && pUsuario.getFoto() .trim() .isEmpty() ==false){
+//            pUtilQuery.AgregarWhereAnd("u.Foto=? ");
+//            if (statement != null){
+//                statement.setString(pUtilQuery.getNumWhere(), pUsuario.getFoto());
+//            }
+//        }
     }
 
      // Metodo para obtener todos los registro de la tabla de Usuario que cumplan con los filtros agregados 
