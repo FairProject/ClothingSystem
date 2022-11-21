@@ -26,7 +26,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
     }
     // Metodo para obtener los campos a utilizar en la consulta SELECT de la tabla de Usuario
     static String obtenerCampos() {
-        return "u.Id, u.IdRol, u.Nombre, u.Apellido, u.Login, u.Estatus, u.FechaRegistro";
+        return "u.Id, u.IdRol, u.Nombre, u.Apellido, u.Login, u.Estatus, u.FechaRegistro, u.Foto";
     }
     // Metodo para obtener el SELECT a la tabla Usuario y el top en el caso que se utilice una base de datos SQL SERVER
     private static String obtenerSelect(Usuario pUsuario) {
@@ -94,7 +94,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         if (existe == false) {
             try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
                  //Definir la consulta INSERT a la tabla de Usuario utilizando el simbolo "?" para enviar parametros
-                sql = "INSERT INTO Usuario(IdRol,Nombre,Apellido,Login,Password,Estatus,FechaRegistro) VALUES(?,?,?,?,?,?,?)";
+                sql = "INSERT INTO Usuario(IdRol,Nombre,Apellido,Login,Password,Estatus,FechaRegistro,Foto) VALUES(?,?,?,?,?,?,?,?)";
                 try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                     ps.setInt(1, pUsuario.getIdRol()); // Agregar el parametro a la consulta donde estan el simbolo "?" #1  
                     ps.setString(2, pUsuario.getNombre()); // Agregar el parametro a la consulta donde estan el simbolo "?" #2 
@@ -103,6 +103,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
                     ps.setString(5, encriptarMD5(pUsuario.getPassword())); // agregar el parametro a la consulta donde estan el simbolo "?" #5 
                     ps.setByte(6, pUsuario.getEstatus()); // agregar el parametro a la consulta donde estan el simbolo "?" #6 
                     ps.setDate(7, java.sql.Date.valueOf(LocalDate.now())); // agregar el parametro a la consulta donde estan el simbolo "?" #7 
+                    ps.setString(8, pUsuario.getFoto());
                     result = ps.executeUpdate(); // ejecutar la consulta INSERT en la base de datos
                     ps.close(); // cerrar el PreparedStatement
                 } catch (SQLException ex) {
@@ -128,14 +129,15 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         if (existe == false) {
             try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
                 //Definir la consulta UPDATE a la tabla de Usuario utilizando el simbolo ? para enviar parametros
-                sql = "UPDATE Usuario SET IdRol=?, Nombre=?, Apellido=?, Login=?, Estatus=? WHERE Id=?";
+                sql = "UPDATE Usuario SET IdRol=?, Nombre=?, Apellido=?, Login=?, Estatus=?, Foto=? WHERE Id=?";
                 try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // obtener el PreparedStatement desde la clase ComunDB
                     ps.setInt(1, pUsuario.getIdRol()); // agregar el parametro a la consulta donde estan el simbolo ? #1  
                     ps.setString(2, pUsuario.getNombre()); // agregar el parametro a la consulta donde estan el simbolo ? #2  
                     ps.setString(3, pUsuario.getApellido()); // agregar el parametro a la consulta donde estan el simbolo ? #3  
                     ps.setString(4, pUsuario.getLogin()); // agregar el parametro a la consulta donde estan el simbolo ? #4  
                     ps.setByte(5, pUsuario.getEstatus()); // agregar el parametro a la consulta donde estan el simbolo ? #5  
-                    ps.setInt(6, pUsuario.getId()); // agregar el parametro a la consulta donde estan el simbolo ? #6  
+                    ps.setString(6, pUsuario.getFoto());
+                    ps.setInt(7, pUsuario.getId()); // agregar el parametro a la consulta donde estan el simbolo ? #6  
                     result = ps.executeUpdate(); // ejecutar la consulta UPDATE en la base de datos
                     ps.close(); // cerrar el PreparedStatement
                 } catch (SQLException ex) {
@@ -193,6 +195,8 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         pUsuario.setEstatus(pResultSet.getByte(pIndex)); // index 6
         pIndex++;
         pUsuario.setFechaRegistro(pResultSet.getDate(pIndex).toLocalDate()); // index 7
+        pIndex++;
+        pUsuario.setFoto(pResultSet.getString(pIndex));
         return pIndex;
     }
 
@@ -331,6 +335,12 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
             if (statement != null) {
                  // agregar el parametro del campo Estatus a la consulta SELECT de la tabla de Usuario
                 statement.setInt(pUtilQuery.getNumWhere(), pUsuario.getEstatus());
+            }
+        }
+        if (pUsuario.getFoto() != null && pUsuario.getFoto() .trim() .isEmpty() ==false){
+            pUtilQuery.AgregarWhereAnd("u.Foto=? ");
+            if (statement != null){
+                statement.setString(pUtilQuery.getNumWhere(), pUsuario.getFoto());
             }
         }
     }

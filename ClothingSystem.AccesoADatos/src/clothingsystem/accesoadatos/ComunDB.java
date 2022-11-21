@@ -28,10 +28,10 @@ public class ComunDB {
     // en los siguientes metodos --> http://dis.um.es/~bmoros/Tutorial/parte9/cap9-3.html
     
     
-     static String connectionUrl = "jdbc:sqlserver://localhost\\SQLEXPRESS02:1433;"
+     static String connectionUrl = "jdbc:sqlserver://localhost\\DESKTOP-G647R0I\\SQLEXPRESS:1433;"
             + "database=ClothingSystemdb;"
-            + "user=carlos;"
-            + "password=12345;"
+            + "user=carlos1;"
+            + "password=123456;"
             + "loginTimeout=30;encrypt=false;trustServerCertificate=false";
     
     
