@@ -11,7 +11,8 @@ import java.time.LocalDate;
  *
  * @author Dev3hc01
  */
-public class Usuario {   
+public class Usuario {
+
     private int id;
     private int idRol;
     private String nombre;
@@ -20,6 +21,7 @@ public class Usuario {
     private String password;
     private byte estatus;
     private LocalDate fechaRegistro;
+    private String foto;
     private int top_aux;
     private String confirmPassword_aux;
     private Rol rol;
@@ -27,7 +29,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int id, int idRol, String nombre, String apellido, String login, String password, byte estatus, LocalDate fechaRegistro) {
+    public Usuario(int id, int idRol, String nombre, String apellido, String login, String password, byte estatus, LocalDate fechaRegistro, String foto) {
         this.id = id;
         this.idRol = idRol;
         this.nombre = nombre;
@@ -36,6 +38,7 @@ public class Usuario {
         this.password = password;
         this.estatus = estatus;
         this.fechaRegistro = fechaRegistro;
+        this.foto = foto;
     }
 
     public int getId() {
@@ -102,6 +105,14 @@ public class Usuario {
         this.fechaRegistro = fechaRegistro;
     }
 
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
     public int getTop_aux() {
         return top_aux;
     }
@@ -125,10 +136,11 @@ public class Usuario {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
+
     public class EstatusUsuario {
 
         public static final byte ACTIVO = 1;
         public static final byte INACTIVO = 2;
     }
-    
+
 }
