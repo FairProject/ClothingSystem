@@ -13,30 +13,50 @@ import clothingsystem.accesoadatos.UsuarioDAL; // Importar la clase UsuarioDAL d
 import clothingsystem.appweb.utils.*; // Importar las clases SessionUser, Utilidad del paquete de utils
 import clothingsystem.entidadesdenegocio.Rol; // Importar la clase Rol de la capa de entidades de negocio
 import clothingsystem.entidadesdenegocio.Usuario; // Importar la clase Usuario de la capa de entidades de negocio
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.Part;
 
-/**
- * En este Servlet, vamos a recibir todas las peticiones get y post que se
- * realice al Servlet Usuario. Aprender conceptos básicos de servlets
- * http://www.jtech.ua.es/j2ee/2002-2003/modulos/servlets/apuntes/apuntes1_1.htm
- * Actualizamos la anotación WebServlet para cambiar el atributo urlPatterns
- * para acceder al Servlet Usuario utilizando la siguiente Url: la del sitio web
- * mas /Usuario
- */
+@MultipartConfig
 @WebServlet(name = "UsuarioServlet", urlPatterns = {"/Usuario"})
 public class UsuarioServlet extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="Metodos para procesar las solicitudes get o post del Servlet">
-    /**
-     * En este método vamos a obtener la información enviada, en una peticion
-     * get o post, obteniendo los datos de los parámetros enviados de un
-     * formulario o la url del navegador, enviar esa información a una instancia
-     * de la entidad Usuario
-     *
-     * @param request en este parámetro vamos a recibir el request de la
-     * peticion get o post enviada al servlet Usuario
-     * @return Usuario devolver la instancia de la entidad Usuario con los
-     * valores obtenidos del request
-     */
+   private String pathFiles = "C:\\Users\\carlos\\Documents\\NetBeansProjects\\ClothingSystem\\ClothingSystem.AppWeb\\web\\wwwroot\\img";
+    private File fileUpload = new File(pathFiles);
+    private String[] typeImage = {".ico", ".png", ".jpg", ".jpeg"};
+    private String fileName = "";
+    private String guardarImagen(Part part, File pathUpload) {
+        String absolutePath = "";
+        try {
+            Path path = Paths.get(part.getSubmittedFileName());
+            fileName = path.getFileName().toString();
+            InputStream input = part.getInputStream();
+            
+            if (input != null) {
+                File file = new File(pathUpload, fileName);
+                absolutePath = file.getAbsolutePath();
+                Files.copy(input, file.toPath()); 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return "wwwroot\\imag\\" + fileName;
+    }
+    
+    private boolean isExtension(String fileName, String[] extensions) {
+        for (String ext : extensions) {
+            if (fileName.toLowerCase().endsWith(ext)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     private Usuario obtenerUsuario(HttpServletRequest request) {
         // Obtener el parámetro accion del request
         String accion = Utilidad.getParameter(request, "accion", "index");
@@ -51,6 +71,8 @@ public class UsuarioServlet extends HttpServlet {
         usuario.setIdRol(Integer.parseInt(Utilidad.getParameter(request, "idRol", "0")));
         // Obtener el parámetro estatus del request  y asignar ese valor a la propiedad Estatus de Usuario.
         usuario.setEstatus(Byte.parseByte(Utilidad.getParameter(request, "estatus", "0")));
+        
+        usuario.setFoto(Utilidad.getParameter(request, "Foto", ""));
         
         if (accion.equals("index")) {
             // Obtener el parámetro top_aux del request  y asignar ese valor a la propiedad Top_aux de Usuario.
@@ -158,6 +180,16 @@ public class UsuarioServlet extends HttpServlet {
         try {
             Usuario usuario = obtenerUsuario(request); // Llenar la instancia de Usuario con los parámetros enviados en el request
             // Enviar los datos de Usuario a la capa de accesoa a datos para que lo almacene en la base de datos el registro.
+             Part part = request.getPart("foto");
+            if (part == null) {
+                System.out.println("No ha seleccionado ningun archivo");
+                return;
+            }
+            
+            if (isExtension(part.getSubmittedFileName(), typeImage)) {
+                String Usuario = guardarImagen(part, fileUpload);
+               usuario.setFoto(Usuario);
+            }
             int result = UsuarioDAL.crear(usuario);
             if (result != 0) { // Si el result es diferente a cero significa que los datos fueron ingresados correctamente.
                 // Enviar el atributo accion con el valor index al jsp de index

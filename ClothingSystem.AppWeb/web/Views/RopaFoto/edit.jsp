@@ -20,9 +20,10 @@
                  <div class="row">
 
                     <div class="input-field col l4 s12">
-                        <input  id="txtUrl" type="text" name="url" value="<%=ropafoto.getUrl()%>" required class="validate" maxlength="30">
-                        <label for="txtUrl">Url</label>
-                    </div>     
+                        <!--<label for="myfile">Selecciona un archivo: </label>--> 
+                        <input type="file" id="myfile" name="foto"><br><br>
+                        <!--<input type="button" value="Selecciona un archivo" id="btnArchivo">-->
+                    </div>    
                     <div class="input-field col l4 s12">   
                         <select id="slEstatus" name="estatus"  value="<%=ropafoto.getEstatus()%>"class="validate">
                            <option value="0" <%=(ropafoto.getEstatus() == 10) ? "selected" : ""%>>SELECCIONAR</option>

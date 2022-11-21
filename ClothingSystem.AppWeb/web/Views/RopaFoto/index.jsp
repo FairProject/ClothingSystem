@@ -31,11 +31,7 @@
             <h5>Buscar RopaFoto</h5>
             <form action="RopaFoto" method="post">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
-                <div class="row">
-                    <div class="input-field col l6 s12">        
-                        <input  id="txtUrl" type="text" name="url">
-                        <label for="txtUrl">Url</label>
-                    </div> 
+                <div class="row"> 
                     <div class="input-field col l4 s12">   
                         <select id="slEstatus" name="estatus">
                             <option value="0">SELECCIONAR</option>
@@ -99,7 +95,7 @@
                                 %>
                                 <tr data-page="<%= tempNumPage%>">
                                     <td><%=ropafoto.getEstatus()%></td>
-                                      <td><img width="30%" height="30%" src="<%=ropafoto.getFoto()%>" /></td>
+                                      <td><img width="19%" height="29%" src="<%=ropafoto.getFoto()%>" /></td>
                                     <%--<td><%=touristPlace.getPhotos()%></td>-->---%>
                                      <td><%=ropafoto.getRopa().getCodigoBarra()%></td>
                                     <td>
@@ -112,7 +108,7 @@
                                             </a>
                                             <a href="RopaFoto?accion=delete&id=<%=ropafoto.getId()%>" title="Eliminar" class="waves-effect waves-light btn red">
                                                 <i class="material-icons">delete</i>
-                                            </a>     
+                                            </a>    
                                         </div>
                                     </td>                                   
                                 </tr>

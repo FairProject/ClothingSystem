@@ -17,8 +17,7 @@
                 <input type="hidden" name="id" value="<%=ropafoto.getId()%>">   
                 <div class="row">
                    <div class="input-field col l4 s12">
-                    <input  id="txtUrl" type="text" value="<%=ropafoto.getUrl()%>" disabled>
-                    <label for="txtUrl">Url</label>
+                    <td><img width="30%" height="29%" src="<%=ropafoto.getFoto()%>" /></td>
                 </div>                       
                 <div class="input-field col l4 s12">   
                     <select id="slEstatus" name="estatus" disabled>

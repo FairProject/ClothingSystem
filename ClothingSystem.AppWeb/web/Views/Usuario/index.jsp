@@ -77,7 +77,8 @@
                     <div style="overflow: auto">
                         <table class="paginationjs">
                             <thead>
-                                <tr>                                     
+                                <tr> 
+                                    <th>Foto</th>                                    
                                     <th>Nombre</th>  
                                     <th>Apellido</th> 
                                     <th>Login</th>  
@@ -107,7 +108,9 @@
                                                 estatus = "";
                                         }
                                 %>
-                                <tr data-page="<%= tempNumPage%>">                                    
+                                <tr data-page="<%= tempNumPage%>">  
+                                    <td><img width="30%" height="29%" src="<%=usuario.getFoto()%>" /></td>
+                                    <%--<td><%=usuarios.getFotos()%></td>-->---%>
                                     <td><%=usuario.getNombre()%></td>  
                                     <td><%=usuario.getApellido()%></td>
                                     <td><%=usuario.getLogin()%></td>  

@@ -6,7 +6,7 @@
     <head>        
         <jsp:include page="/Views/Shared/title.jsp" />
         <title>Detalle de RopaFoto</title>
-         <link rel="icon" type="image/png" href="images/Logo.png">
+        <link rel="icon" type="image/png" href="images/Logo.png" href="imagenes/chaqueta.">
     </head>
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
@@ -14,9 +14,8 @@
             <h5>Detalle de RopaFoto</h5>
             <div class="row">     
                 <div class="input-field col l4 s12">
-                    <input  id="txtUrl" type="text" value="<%=ropafoto.getUrl()%>" disabled>
-                    <label for="txtUrl">Url</label>
-                </div>                       
+                    <td><img width="30%" height="29%" src="<%=ropafoto.getFoto()%>" /></td>
+                    </div>                      
                 <div class="input-field col l4 s12">   
                     <select id="slEstatus" name="estatus" disabled>
                         <option value="0" <%=(ropafoto.getEstatus() == 10) ? "selected" : ""%>>SELECCIONAR</option>
