@@ -24,21 +24,24 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
             throw ex;
         }
     }
+
     // Metodo para obtener los campos a utilizar en la consulta SELECT de la tabla de Usuario
     static String obtenerCampos() {
         return "u.Id, u.IdRol, u.Nombre, u.Apellido, u.Login, u.Estatus, u.FechaRegistro, u.Foto";
     }
+
     // Metodo para obtener el SELECT a la tabla Usuario y el top en el caso que se utilice una base de datos SQL SERVER
     private static String obtenerSelect(Usuario pUsuario) {
         String sql;
         sql = "SELECT ";
         if (pUsuario.getTop_aux() > 0 && ComunDB.TIPODB == ComunDB.TipoDB.SQLSERVER) {
-             // Agregar el TOP a la consulta SELECT si el gestor de base de datos es SQL SERVER y getTop_aux es mayor a cero
+            // Agregar el TOP a la consulta SELECT si el gestor de base de datos es SQL SERVER y getTop_aux es mayor a cero
             sql += "TOP " + pUsuario.getTop_aux() + " ";
         }
         sql += (obtenerCampos() + " FROM Usuario u");
         return sql;
-    }   
+    }
+
     // Metodo para obtener Order by a la consulta SELECT de la tabla Usuario y ordene los registros de mayor a menor 
     private static String agregarOrderBy(Usuario pUsuario) {
         String sql = " ORDER BY u.Id DESC";
@@ -55,11 +58,11 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
     private static boolean existeLogin(Usuario pUsuario) throws Exception {
         boolean existe = false;
         ArrayList<Usuario> usuarios = new ArrayList();
-        try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+        try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
             String sql = obtenerSelect(pUsuario);  // Obtener la consulta SELECT de la tabla Usuario
             // Concatenar a la consulta SELECT de la tabla Usuario el WHERE y el filtro para saber si existe el login
             sql += " WHERE u.Id<>? AND u.Login=?";
-            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
+            try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                 ps.setInt(1, pUsuario.getId());  // Agregar el parametros a la consulta donde estan el simbolo ? #1 
                 ps.setString(2, pUsuario.getLogin());  // Agregar el parametros a la consulta donde estan el simbolo ? #2 
                 obtenerDatos(ps, usuarios); // Llenar el ArrayList de USuario con las fila que devolvera la consulta SELECT a la tabla de Usuario
@@ -68,13 +71,12 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
                 throw ex;  // Enviar al siguiente metodo el error al ejecutar PreparedStatement el en el caso que suceda
             }
             conn.close(); // Cerrar la conexion a la base de datos
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw ex; // Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
         }
         if (usuarios.size() > 0) { // Verificar si el ArrayList de Usuario trae mas de un registro en tal caso solo debe de traer uno
             Usuario usuario;
-             // Se solucciono tenia valor de 1 cuando debe de ser cero
+            // Se solucciono tenia valor de 1 cuando debe de ser cero
             usuario = usuarios.get(0); // Si el ArrayList de Usuario trae un registro o mas obtenemos solo el primero 
             if (usuario.getId() > 0 && usuario.getLogin().equals(pUsuario.getLogin())) {
                 // Si el Id de Usuario es mayor a cero y el Login que se busco en la tabla de Usuario es igual al que solicitamos
@@ -85,17 +87,17 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         return existe; //Devolver la variable "existe" con el valor true o false si existe o no el Login en la tabla de Usuario de la base de datos
 
     }
-    
+
     // Metodo para poder insertar un nuevo registro en la tabla de Usuario
     public static int crear(Usuario pUsuario) throws Exception {
         int result;
         String sql;
         boolean existe = existeLogin(pUsuario); // verificar si el usuario que se va a crear ya existe en nuestra base de datos
         if (existe == false) {
-            try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
-                 //Definir la consulta INSERT a la tabla de Usuario utilizando el simbolo "?" para enviar parametros
+            try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+                //Definir la consulta INSERT a la tabla de Usuario utilizando el simbolo "?" para enviar parametros
                 sql = "INSERT INTO Usuario(IdRol,Nombre,Apellido,Login,Password,Estatus,FechaRegistro,Foto) VALUES(?,?,?,?,?,?,?,?)";
-                try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
+                try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                     ps.setInt(1, pUsuario.getIdRol()); // Agregar el parametro a la consulta donde estan el simbolo "?" #1  
                     ps.setString(2, pUsuario.getNombre()); // Agregar el parametro a la consulta donde estan el simbolo "?" #2 
                     ps.setString(3, pUsuario.getApellido()); // agregar el parametro a la consulta donde estan el simbolo "?" #3 
@@ -103,7 +105,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
                     ps.setString(5, encriptarMD5(pUsuario.getPassword())); // agregar el parametro a la consulta donde estan el simbolo "?" #5 
                     ps.setByte(6, pUsuario.getEstatus()); // agregar el parametro a la consulta donde estan el simbolo "?" #6 
                     ps.setDate(7, java.sql.Date.valueOf(LocalDate.now())); // agregar el parametro a la consulta donde estan el simbolo "?" #7 
-//                    ps.setString(8, pUsuario.getFoto());
+                    ps.setString(8, pUsuario.getFoto());
                     result = ps.executeUpdate(); // ejecutar la consulta INSERT en la base de datos
                     ps.close(); // cerrar el PreparedStatement
                 } catch (SQLException ex) {
@@ -121,22 +123,22 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         return result; // Retornar el numero de fila afectadas en el INSERT en la base de datos 
     }
 
-     // Metodo para poder actualizar un registro en la tabla de Usuario
+    // Metodo para poder actualizar un registro en la tabla de Usuario
     public static int modificar(Usuario pUsuario) throws Exception {
         int result;
         String sql;
         boolean existe = existeLogin(pUsuario); // verificar si el usuario que se va a modificar ya existe en nuestra base de datos
         if (existe == false) {
-            try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+            try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
                 //Definir la consulta UPDATE a la tabla de Usuario utilizando el simbolo ? para enviar parametros
                 sql = "UPDATE Usuario SET IdRol=?, Nombre=?, Apellido=?, Login=?, Estatus=?, Foto=? WHERE Id=?";
-                try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // obtener el PreparedStatement desde la clase ComunDB
+                try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // obtener el PreparedStatement desde la clase ComunDB
                     ps.setInt(1, pUsuario.getIdRol()); // agregar el parametro a la consulta donde estan el simbolo ? #1  
                     ps.setString(2, pUsuario.getNombre()); // agregar el parametro a la consulta donde estan el simbolo ? #2  
                     ps.setString(3, pUsuario.getApellido()); // agregar el parametro a la consulta donde estan el simbolo ? #3  
                     ps.setString(4, pUsuario.getLogin()); // agregar el parametro a la consulta donde estan el simbolo ? #4  
                     ps.setByte(5, pUsuario.getEstatus()); // agregar el parametro a la consulta donde estan el simbolo ? #5  
-             //       ps.setString(6, pUsuario.getFoto());
+                    ps.setString(6, pUsuario.getFoto());
                     ps.setInt(7, pUsuario.getId()); // agregar el parametro a la consulta donde estan el simbolo ? #6  
                     result = ps.executeUpdate(); // ejecutar la consulta UPDATE en la base de datos
                     ps.close(); // cerrar el PreparedStatement
@@ -144,8 +146,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
                     throw ex; // enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda 
                 }
                 conn.close(); // cerrar la conexion a la base de datos
-            } 
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 throw ex; // enviar al siguiente metodo el error al obtener la conexion en el caso que suceda 
             }
         } else {
@@ -159,9 +160,9 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
     public static int eliminar(Usuario pUsuario) throws Exception {
         int result;
         String sql;
-        try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+        try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
             sql = "DELETE FROM Usuario WHERE Id=?"; //definir la consulta DELETE a la tabla de Usuario utilizando el simbolo ? para enviar parametros
-            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {  // obtener el PreparedStatement desde la clase ComunDB
+            try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) {  // obtener el PreparedStatement desde la clase ComunDB
                 ps.setInt(1, pUsuario.getId()); // agregar el parametro a la consulta donde estan el simbolo ? #1 
                 result = ps.executeUpdate(); // ejecutar la consulta DELETE en la base de datos
                 ps.close(); // cerrar el PreparedStatement
@@ -169,8 +170,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
                 throw ex; // enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda
             }
             conn.close(); // cerrar la conexion a la base de datos
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw ex;  // enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda 
         }
         return result; // Retornar el numero de fila afectadas en el DELETE en la base de datos 
@@ -196,13 +196,13 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         pIndex++;
         pUsuario.setFechaRegistro(pResultSet.getDate(pIndex).toLocalDate()); // index 7
         pIndex++;
-      //  pUsuario.setFoto(pResultSet.getString(pIndex));
+        pUsuario.setFoto(pResultSet.getString(pIndex));
         return pIndex;
     }
 
     // Metodo para  ejecutar el ResultSet de la consulta SELECT a la tabla de Usuario
     private static void obtenerDatos(PreparedStatement pPS, ArrayList<Usuario> pUsuarios) throws Exception {
-        try (ResultSet resultSet = ComunDB.obtenerResultSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
+        try ( ResultSet resultSet = ComunDB.obtenerResultSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
             while (resultSet.next()) { // Recorrer cada una de la fila que regresa la consulta  SELECT de la tabla Usuario
                 Usuario usuario = new Usuario();
                 // Llenar las propiedaddes de la Entidad Usuario con los datos obtenidos de la fila en el ResultSet
@@ -214,13 +214,14 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
             throw ex;// enviar al siguiente metodo el error al obtener ResultSet de la clase ComunDB   en el caso que suceda 
         }
     }
- // Metodo para  ejecutar el ResultSet de la consulta SELECT a la tabla de Usuario y JOIN a la tabla de Rol
+    // Metodo para  ejecutar el ResultSet de la consulta SELECT a la tabla de Usuario y JOIN a la tabla de Rol
+
     private static void obtenerDatosIncluirRol(PreparedStatement pPS, ArrayList<Usuario> pUsuarios) throws Exception {
-        try (ResultSet resultSet = ComunDB.obtenerResultSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
+        try ( ResultSet resultSet = ComunDB.obtenerResultSet(pPS);) { // obtener el ResultSet desde la clase ComunDB
             HashMap<Integer, Rol> rolMap = new HashMap(); //crear un HashMap para automatizar la creacion de instancias de la clase Rol
             while (resultSet.next()) { // Recorrer cada una de la fila que regresa la consulta  SELECT de la tabla Usuario JOIN a la tabla de Rol
                 Usuario usuario = new Usuario();
-                 // Llenar las propiedaddes de la Entidad Usuario con los datos obtenidos de la fila en el ResultSet
+                // Llenar las propiedaddes de la Entidad Usuario con los datos obtenidos de la fila en el ResultSet
                 int index = asignarDatosResultSet(usuario, resultSet, 0);
                 if (rolMap.containsKey(usuario.getIdRol()) == false) { // verificar que el HashMap aun no contenga el Rol actual
                     Rol rol = new Rol();
@@ -230,7 +231,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
                     usuario.setRol(rol); // agregar el Rol al Usuario
                 } else {
                     // En el caso que el Rol existe en el HashMap se agregara automaticamente al Usuario
-                    usuario.setRol(rolMap.get(usuario.getIdRol())); 
+                    usuario.setRol(rolMap.get(usuario.getIdRol()));
                 }
                 pUsuarios.add(usuario); // Agregar el Usuario de la fila actual al ArrayList de Usuario
             }
@@ -244,11 +245,11 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
     public static Usuario obtenerPorId(Usuario pUsuario) throws Exception {
         Usuario usuario = new Usuario();
         ArrayList<Usuario> usuarios = new ArrayList();
-        try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+        try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
             String sql = obtenerSelect(pUsuario); // obtener la consulta SELECT de la tabla Usuario
-             // Concatenar a la consulta SELECT de la tabla Usuario el WHERE  para comparar el campo Id
+            // Concatenar a la consulta SELECT de la tabla Usuario el WHERE  para comparar el campo Id
             sql += " WHERE u.Id=?";
-            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // obtener el PreparedStatement desde la clase ComunDB
+            try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // obtener el PreparedStatement desde la clase ComunDB
                 ps.setInt(1, pUsuario.getId()); // agregar el parametro a la consulta donde estan el simbolo ? #1 
                 obtenerDatos(ps, usuarios); // Llenar el ArrayList de Usuario con las fila que devolvera la consulta SELECT a la tabla de Usuario
                 ps.close(); // cerrar el PreparedStatement
@@ -256,8 +257,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
                 throw ex; // enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda
             }
             conn.close(); // cerrar la conexion a la base de datos
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw ex; // enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
         }
         if (usuarios.size() > 0) { // verificar si el ArrayList de Usuario trae mas de un registro en tal caso solo debe de traer uno
@@ -266,22 +266,21 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         return usuario; // devolver el Usuario encontrado por Id 
     }
 
-     // Metodo para obtener todos los registro de la tabla de Usuario
+    // Metodo para obtener todos los registro de la tabla de Usuario
     public static ArrayList<Usuario> obtenerTodos() throws Exception {
         ArrayList<Usuario> usuarios;
         usuarios = new ArrayList<>();
-        try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+        try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
             String sql = obtenerSelect(new Usuario()); // obtener la consulta SELECT de la tabla Usuario
             sql += agregarOrderBy(new Usuario()); // concatenar a la consulta SELECT de la tabla Usuario el ORDER BY por Id 
-            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // obtener el PreparedStatement desde la clase ComunDB
+            try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // obtener el PreparedStatement desde la clase ComunDB
                 obtenerDatos(ps, usuarios); // Llenar el ArrayList de Usuario con las fila que devolvera la consulta SELECT a la tabla de Usuario
                 ps.close(); // cerrar el PreparedStatement
             } catch (SQLException ex) {
                 throw ex; // enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda
             }
             conn.close(); // cerrar la conexion a la base de datos
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw ex; // Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
         }
         return usuarios; // devolver el ArrayList de Usuario
@@ -293,7 +292,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         if (pUsuario.getId() > 0) { // verificar si se va incluir el campo Id en el filtro de la consulta SELECT de la tabla de Usuario
             pUtilQuery.AgregarWhereAnd(" u.Id=? "); // agregar el campo Id al filtro de la consulta SELECT y agregar el WHERE o AND
             if (statement != null) {
-                 // agregar el parametro del campo Id a la consulta SELECT de la tabla de Usuario
+                // agregar el parametro del campo Id a la consulta SELECT de la tabla de Usuario
                 statement.setInt(pUtilQuery.getNumWhere(), pUsuario.getId());
             }
         }
@@ -301,7 +300,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         if (pUsuario.getIdRol() > 0) {
             pUtilQuery.AgregarWhereAnd(" u.IdRol=? "); // agregar el campo IdRol al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
-                 // agregar el parametro del campo IdRol a la consulta SELECT de la tabla de Usuario
+                // agregar el parametro del campo IdRol a la consulta SELECT de la tabla de Usuario
                 statement.setInt(pUtilQuery.getNumWhere(), pUsuario.getIdRol());
             }
         }
@@ -309,7 +308,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         if (pUsuario.getNombre() != null && pUsuario.getNombre().trim().isEmpty() == false) {
             pUtilQuery.AgregarWhereAnd(" u.Nombre LIKE ? "); // agregar el campo Nombre al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
-                 // agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Usuario
+                // agregar el parametro del campo Nombre a la consulta SELECT de la tabla de Usuario
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pUsuario.getNombre() + "%");
             }
         }
@@ -317,7 +316,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         if (pUsuario.getApellido() != null && pUsuario.getApellido().trim().isEmpty() == false) {
             pUtilQuery.AgregarWhereAnd(" u.Apellido LIKE ? "); // agregar el campo Apellido al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
-                 // agregar el parametro del campo Apellido a la consulta SELECT de la tabla de Usuario
+                // agregar el parametro del campo Apellido a la consulta SELECT de la tabla de Usuario
                 statement.setString(pUtilQuery.getNumWhere(), "%" + pUsuario.getApellido() + "%");
             }
         }
@@ -325,7 +324,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         if (pUsuario.getLogin() != null && pUsuario.getLogin().trim().isEmpty() == false) {
             pUtilQuery.AgregarWhereAnd(" u.Login=? "); // agregar el campo Login al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
-                 // agregar el parametro del campo Login a la consulta SELECT de la tabla de Usuario
+                // agregar el parametro del campo Login a la consulta SELECT de la tabla de Usuario
                 statement.setString(pUtilQuery.getNumWhere(), pUsuario.getLogin());
             }
         }
@@ -333,30 +332,30 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         if (pUsuario.getEstatus() > 0) {
             pUtilQuery.AgregarWhereAnd(" u.Estatus=? "); // agregar el campo Estatus al filtro de la consulta SELECT y agregar en el WHERE o AND
             if (statement != null) {
-                 // agregar el parametro del campo Estatus a la consulta SELECT de la tabla de Usuario
+                // agregar el parametro del campo Estatus a la consulta SELECT de la tabla de Usuario
                 statement.setInt(pUtilQuery.getNumWhere(), pUsuario.getEstatus());
             }
         }
-//        if (pUsuario.getFoto() != null && pUsuario.getFoto() .trim() .isEmpty() ==false){
-//            pUtilQuery.AgregarWhereAnd("u.Foto=? ");
-//            if (statement != null){
-//                statement.setString(pUtilQuery.getNumWhere(), pUsuario.getFoto());
-//            }
-//        }
+        if (pUsuario.getFoto() != null && pUsuario.getFoto().trim().isEmpty() == false) {
+            pUtilQuery.AgregarWhereAnd("u.Foto=? ");
+            if (statement != null) {
+                statement.setString(pUtilQuery.getNumWhere(), pUsuario.getFoto() + "%");
+            }
+        }
     }
 
-     // Metodo para obtener todos los registro de la tabla de Usuario que cumplan con los filtros agregados 
-     // a la consulta SELECT de la tabla de Usuario 
+    // Metodo para obtener todos los registro de la tabla de Usuario que cumplan con los filtros agregados 
+    // a la consulta SELECT de la tabla de Usuario 
     public static ArrayList<Usuario> buscar(Usuario pUsuario) throws Exception {
         ArrayList<Usuario> usuarios = new ArrayList();
-        try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+        try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
             String sql = obtenerSelect(pUsuario); // obtener la consulta SELECT de la tabla Usuario
             ComunDB comundb = new ComunDB();
             ComunDB.UtilQuery utilQuery = comundb.new UtilQuery(sql, null, 0);
             querySelect(pUsuario, utilQuery); // Asignar el filtro a la consulta SELECT de la tabla de Usuario 
             sql = utilQuery.getSQL();
             sql += agregarOrderBy(pUsuario); // Concatenar a la consulta SELECT de la tabla Usuario el ORDER BY por Id
-            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // obtener el PreparedStatement desde la clase ComunDB
+            try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // obtener el PreparedStatement desde la clase ComunDB
                 utilQuery.setStatement(ps);
                 utilQuery.setSQL(null);
                 utilQuery.setNumWhere(0);
@@ -367,24 +366,23 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
                 throw ex; // Enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda
             }
             conn.close(); // Cerrar la conexion a la base de datos
-        } 
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw ex; // Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
         }
         return usuarios; // Devolver el ArrayList de Usuario
     }
-    
+
     // Metodo para verificar si el Usuario puede ser autorizado en el sistema
     // comparando el Login, Password, Estatus en la base de datos
     public static Usuario login(Usuario pUsuario) throws Exception {
         Usuario usuario = new Usuario();
         ArrayList<Usuario> usuarios = new ArrayList();
         String password = encriptarMD5(pUsuario.getPassword()); // Encriptar el password en MD5
-        try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+        try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
             String sql = obtenerSelect(pUsuario); // Obtener la consulta SELECT de la tabla Usuario
-             // Concatenar a la consulta SELECT de la tabla Usuario el WHERE  para comparar los campos de Login, Password, Estatus
+            // Concatenar a la consulta SELECT de la tabla Usuario el WHERE  para comparar los campos de Login, Password, Estatus
             sql += " WHERE u.Login=? AND u.Password=? AND u.Estatus=?";
-            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
+            try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                 ps.setString(1, pUsuario.getLogin()); // Agregar el parametro a la consulta donde estan el simbolo ? #1 
                 ps.setString(2, password); // Agregar el parametro a la consulta donde estan el simbolo ? #2 
                 ps.setByte(3, Usuario.EstatusUsuario.ACTIVO); // Agregar el parametro a la consulta donde estan el simbolo ? #3 
@@ -394,8 +392,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
                 throw ex; // Enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda
             }
             conn.close(); // Cerrar la conexion a la base de datos
-        } 
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw ex; // Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
         }
         if (usuarios.size() > 0) { // Verificar si el ArrayList de Usuario trae mas de un registro en tal caso solo debe de traer uno
@@ -415,9 +412,9 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
         // Si el usuario que retorno el metodo de login tiene el Id mayor a cero y el Login es igual que el Login del Usuario que viene
         // en el parametro es un Usuario Autorizado
         if (usuarioAut.getId() > 0 && usuarioAut.getLogin().equals(pUsuario.getLogin())) {
-            try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+            try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
                 sql = "UPDATE Usuario SET Password=? WHERE Id=?"; // Crear la consulta Update a la tabla de Usuario para poder modificar el Password
-                try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
+                try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                     // Agregar el parametro a la consulta donde estan el simbolo ? #1 pero antes encriptar el password para enviarlo encriptado
                     ps.setString(1, encriptarMD5(pUsuario.getPassword())); //
                     ps.setInt(2, pUsuario.getId()); // Agregar el parametro a la consulta donde estan el simbolo ? #2 
@@ -427,8 +424,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
                     throw ex; // Enviar al siguiente metodo el error al ejecutar PreparedStatement en el caso que suceda
                 }
                 conn.close(); // Cerrar la conexion a la base de datos
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 throw ex;// Enviar al siguiente metodo el error al obtener la conexion  de la clase ComunDB en el caso que suceda
             }
         } else {
@@ -440,10 +436,10 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
     }
 
     // Metodo para obtener todos los registro de la tabla de Usuario que cumplan con los filtros agregados 
-     // a la consulta SELECT de la tabla de Usuario 
+    // a la consulta SELECT de la tabla de Usuario 
     public static ArrayList<Usuario> buscarIncluirRol(Usuario pUsuario) throws Exception {
         ArrayList<Usuario> usuarios = new ArrayList();
-        try (Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
+        try ( Connection conn = ComunDB.obtenerConexion();) { // Obtener la conexion desde la clase ComunDB y encerrarla en try para cierre automatico
             String sql = "SELECT "; // Iniciar la variables para el String de la consulta SELECT
             if (pUsuario.getTop_aux() > 0 && ComunDB.TIPODB == ComunDB.TipoDB.SQLSERVER) {
                 sql += "TOP " + pUsuario.getTop_aux() + " "; // Agregar el TOP en el caso que se este utilizando SQL SERVER
@@ -458,7 +454,7 @@ public class UsuarioDAL { // Clase para poder realizar consulta de Insertar, mod
             querySelect(pUsuario, utilQuery); // Asignar el filtro a la consulta SELECT de la tabla de Usuario 
             sql = utilQuery.getSQL();
             sql += agregarOrderBy(pUsuario); // Concatenar a la consulta SELECT de la tabla Usuario el ORDER BY por Id
-            try (PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
+            try ( PreparedStatement ps = ComunDB.createPreparedStatement(conn, sql);) { // Obtener el PreparedStatement desde la clase ComunDB
                 utilQuery.setStatement(ps);
                 utilQuery.setSQL(null);
                 utilQuery.setNumWhere(0);
