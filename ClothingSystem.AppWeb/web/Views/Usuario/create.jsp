@@ -5,7 +5,7 @@
     <head>        
         <jsp:include page="/Views/Shared/title.jsp" />
         <title>Crear Usuario</title>
-         <link rel="icon" type="image/png" href="images/Logo.png">
+        <link rel="icon" type="image/png" href="images/Logo.png">
     </head>
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
@@ -14,11 +14,6 @@
             <form action="Usuario" method="post" onsubmit="return  validarFormulario()"enctype="multipart/form-data">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>">                
                 <div class="row">
-                    <div class="input-field col l4 s12">
-                        <!--<label for="myfile">Selecciona un archivo: </label>--> 
-                        <input type="file" id="myfile" name="foto"><br><br>
-                        <!--<input type="button" value="Selecciona un archivo" id="btnArchivo">-->
-                    </div>
                     <div class="input-field col l4 s12">
                         <input  id="txtNombre" type="text" name="nombre" required class="validate" maxlength="30">
                         <label for="txtNombre">Nombre</label>
@@ -54,6 +49,11 @@
                             <jsp:param name="id" value="0" />  
                         </jsp:include>  
                         <span id="slRol_error" style="color:red" class="helper-text"></span>
+                    </div>
+                    <div class="input-field col l4 s12">
+                        <!--<label for="myfile">Selecciona un archivo: </label>--> 
+                        <input type="file" id="myfile" name="foto"><br><br>
+                        <!--<input type="button" value="Selecciona un archivo" id="btnArchivo">-->
                     </div>
                 </div>
 

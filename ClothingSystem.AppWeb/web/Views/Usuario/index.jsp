@@ -77,14 +77,14 @@
                     <div style="overflow: auto">
                         <table class="paginationjs">
                             <thead>
-                                <tr> 
-                                    <th>Foto</th>                                    
+                                <tr>                                    
                                     <th>Nombre</th>  
                                     <th>Apellido</th> 
                                     <th>Login</th>  
                                     <th>Estatus</th>  
                                     <th>Rol</th>   
                                     <th>Fecha registro</th>   
+                                    <th>Foto</th> 
                                     <th>Acciones</th>
                                 </tr>
                             </thead>                       
@@ -109,14 +109,14 @@
                                         }
                                 %>
                                 <tr data-page="<%= tempNumPage%>">  
-                                    <td><img width="30%" height="29%" src="<%=usuario.getFoto()%>" /></td>
-                                    <%--<td><%=usuarios.getFotos()%></td>-->---%>
                                     <td><%=usuario.getNombre()%></td>  
                                     <td><%=usuario.getApellido()%></td>
                                     <td><%=usuario.getLogin()%></td>  
                                     <td><%=estatus%></td>
                                     <td><%=usuario.getRol().getNombre()%></td> 
                                     <td><%=usuario.getFechaRegistro()%></td> 
+                                     <td><img width="30%" height="29%" src="<%=usuario.getFoto()%>" /></td>
+                                    <%--<td><%=usuarios.getFotos()%></td>-->---%>
                                     <td>
                                         <div style="display:flex">
                                             <a href="Usuario?accion=edit&id=<%=usuario.getId()%>" title="Modificar" class="waves-effect waves-light btn green">
