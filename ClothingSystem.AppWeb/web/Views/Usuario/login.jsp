@@ -6,7 +6,7 @@
         <title>Login</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="wwwroot/css/login.css">
-         <link rel="icon" type="image/png" href="images/Logo.png">
+        <link rel="icon" type="image/png" href="images/Logo.png">
 
     </head>
     <body>
@@ -40,7 +40,13 @@
                             <div class="form-group text-center">
                                 <button  type="sutmit"  class="btn btn-block ingresar" >Iniciar sesión</button>
                             </div> 
+                        </div>
+                        <div class="from-group text-center">
 
+                            <div class="from-group text-center">
+                                <a href="Usuario?accion=create" class="btn btn-block waves-light btn danger"><i class=""></i>Crear Usuario</a>
+
+                            </div>
                         </div>
                         <% if (request.getAttribute("error") != null) {%>
                         <div class="row">

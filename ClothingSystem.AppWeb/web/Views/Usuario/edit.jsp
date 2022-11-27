@@ -43,6 +43,11 @@
                         </jsp:include>  
                         <span id="slRol_error" style="color:red" class="helper-text"></span>
                     </div>
+                         <div class="input-field col l4 s12">
+                        <!--<label for="myfile">Selecciona un archivo: </label>--> 
+                        <input type="file" id="myfile" name="foto"><br><br>
+                        <!--<input type="button" value="Selecciona un archivo" id="btnArchivo">-->
+                    </div> 
                 </div>
 
                 <div class="row">

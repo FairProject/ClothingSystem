@@ -39,6 +39,9 @@
                     <div class="input-field col l4 s12">
                         <input id="txtRol" type="text" value="<%=usuario.getRol().getNombre()%>" disabled>
                         <label for="txtRol">Rol</label>
+                    </div>
+                         <div class="input-field col l4 s12">
+                    <td><img width="30%" height="29%" src="<%=usuario.getFoto()%>" /></td>
                     </div> 
                 </div>
                 <div class="row">

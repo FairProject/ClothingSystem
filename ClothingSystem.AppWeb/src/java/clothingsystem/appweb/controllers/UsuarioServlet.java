@@ -45,7 +45,7 @@ public class UsuarioServlet extends HttpServlet {
             e.printStackTrace();
         }
         
-        return "wwwroot\\imag\\" + fileName;
+        return "wwwroot\\img\\" + fileName;
     }
     
     private boolean isExtension(String fileName, String[] extensions) {
@@ -193,8 +193,8 @@ public class UsuarioServlet extends HttpServlet {
             int result = UsuarioDAL.crear(usuario);
             if (result != 0) { // Si el result es diferente a cero significa que los datos fueron ingresados correctamente.
                 // Enviar el atributo accion con el valor index al jsp de index
-                request.setAttribute("accion", "index");
-                doGetRequestIndex(request, response); // Ir al metodo doGetRequestIndex para que nos direcciones al jsp index
+                request.setAttribute("accion", "login");
+                doGetRequestLogin(request, response); // Ir al metodo doGetRequestIndex para que nos direcciones al jsp index
             } else {
                 // Enviar al jsp de error el siguiente mensaje. No se logro registrar un nuevo registro
                 Utilidad.enviarError("No se logro registrar un nuevo registro", request, response);
@@ -484,23 +484,30 @@ public class UsuarioServlet extends HttpServlet {
             // Enviar el atributo accion al jsp de login.
             request.setAttribute("accion", accion);
             doGetRequestLogin(request, response); // Ir al método doGetRequestLogin.
-        } else {
+        } else if(accion.equals("create")) {
+            request.setAttribute("accion", accion);
+            doGetRequestCreate(request, response);
+        } else if(accion.equals("index")) {
+            request.setAttribute("accion", accion);
+            doGetRequestIndex(request, response);
+        }
+        else {
             // Utilizar el método authorize de la clase SessionUser para validar que solo usuario con permiso
             // puedan acceder al servlet de Usuario. Todo el codigo que este dentro  expresion Lambda, se ejecutara si el usuario tiene permitido
             // acceder a este Servlet 
             SessionUser.authorize(request, response, () -> {
                 // Hacer un switch para decidir a cual metodo ir segun el valor que venga en el parámetro de accion.
                 switch (accion) {
-                    case "index":
-                        // Enviar el atributo accion al jsp de index.
-                        request.setAttribute("accion", accion);
-                        doGetRequestIndex(request, response); // Ir al método doGetRequestIndex.
-                        break;
-                    case "create":
-                        // Enviar el atributo accion al jsp de create.
-                        request.setAttribute("accion", accion);
-                        doGetRequestCreate(request, response); // Ir al método doGetRequestCreate.
-                        break;
+//                    case "index":
+//                        // Enviar el atributo accion al jsp de index.
+//                        request.setAttribute("accion", accion);
+//                        doGetRequestIndex(request, response); // Ir al método doGetRequestIndex.
+//                        break;
+//                    case "create":
+//                        // Enviar el atributo accion al jsp de create.
+//                        request.setAttribute("accion", accion);
+//                        doGetRequestCreate(request, response); // Ir al método doGetRequestCreate.
+//                        break;
                     case "edit":
                         // Enviar el atributo accion al jsp de edit.
                         request.setAttribute("accion", accion);
@@ -551,7 +558,15 @@ public class UsuarioServlet extends HttpServlet {
             // Enviar el atributo accion al jsp de login.
             request.setAttribute("accion", accion);
             doPostRequestLogin(request, response);  // Ir al método doGetRequestLogin.
-        } else {
+        } else if(accion.equals("create")) {
+            request.setAttribute("accion", accion);
+            doPostRequestCreate(request, response);
+        } else if(accion.equals("index")) {
+            request.setAttribute("accion", accion);
+            doPostRequestIndex(request, response);
+        }
+        
+        else {
             // Utilizar el método authorize de la clase SessionUser para validar que solo usuario con permiso
             // puedan acceder al servlet de Usuario. Todo el codigo que este dentro  expresion Lambda, se ejecutara si el usuario tiene permitido
             // acceder a este Servlet 
