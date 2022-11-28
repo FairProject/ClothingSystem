@@ -27,7 +27,7 @@ public class UsuarioServlet extends HttpServlet {
 
    private String pathFiles = "C:\\Users\\carlos\\Documents\\NetBeansProjects\\ClothingSystem\\ClothingSystem.AppWeb\\web\\wwwroot\\img";
     private File fileUpload = new File(pathFiles);
-    private String[] typeImage = {".ico", ".png", ".jpg", ".jpeg"};
+    private String[] typeImage = {".ico", ".png", ".jpg", ".jpeg", ".jfif"};
     private String fileName = "";
     private String guardarImagen(Part part, File pathUpload) {
         String absolutePath = "";
@@ -267,6 +267,16 @@ public class UsuarioServlet extends HttpServlet {
     private void doPostRequestEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Usuario usuario = obtenerUsuario(request); // Llenar la instancia de Usuario con los parámetros enviados en el request.
+            Part part = request.getPart("foto");
+            if (part == null) {
+                System.out.println("No ha seleccionado ningun archivo por lo que no se puede modificar");
+                return;
+            }
+            
+            if (isExtension(part.getSubmittedFileName(), typeImage)) {
+                String Usuario = guardarImagen(part, fileUpload);
+               usuario.setFoto(Usuario);
+            }
             // Enviar los datos de Usuario a la capa de accesoa a datos para modificar el registro.
             int result = UsuarioDAL.modificar(usuario);
             if (result != 0) { // Si el result es diferente a cero significa que los datos fueron modificado correctamente.

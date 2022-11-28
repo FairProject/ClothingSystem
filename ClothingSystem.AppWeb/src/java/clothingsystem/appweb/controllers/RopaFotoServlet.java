@@ -27,7 +27,7 @@ public class RopaFotoServlet extends HttpServlet {
 
    private String pathFiles = "C:\\Users\\carlos\\Documents\\NetBeansProjects\\ClothingSystem\\ClothingSystem.AppWeb\\web\\wwwroot\\images";
     private File fileUpload = new File(pathFiles);
-    private String[] typeImage = {".ico", ".png", ".jpg", ".jpeg"};
+    private String[] typeImage = {".ico", ".png", ".jpg", ".jpeg", "jfif"};
     private String fileName = "";
     private String guardarImagen(Part part, File pathUpload) {
         String absolutePath = "";
@@ -255,9 +255,19 @@ public class RopaFotoServlet extends HttpServlet {
      */
     private void doPostRequestEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            RopaFoto ropafoto = obtenerRopaFoto(request); // Llenar la instancia de Rol con los parámetros enviados en el request.
+            RopaFoto ropaFoto=obtenerRopaFoto(request);
+             Part part = request.getPart("foto");
+            if (part == null) {
+                System.out.println("No ha seleccionado ningun archivo por lo que no se puede modificar");
+                return;
+            }
+            
+            if (isExtension(part.getSubmittedFileName(), typeImage)) {
+                String FotoRopa = guardarImagen(part, fileUpload);
+               ropaFoto.setFoto(FotoRopa);
+            }
             // Enviar los datos de Rol a la capa de accesoa a datos para modificar el registro.
-            int result = RopaFotoDAL.modificar(ropafoto);
+            int result = RopaFotoDAL.modificar(ropaFoto);
             if (result != 0) { // Si el result es diferente a cero significa que los datos fueron modificado correctamente.
                 // Enviar el atributo accion con el valor index al jsp de index.
                 request.setAttribute("accion", "index");

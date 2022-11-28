@@ -12,7 +12,7 @@
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
             <h5>Editar Usuario</h5>
-            <form action="Usuario" method="post" onsubmit="return  validarFormulario()">
+            <form action="Usuario" method="post" onsubmit="return  validarFormulario()" enctype="multipart/form-data">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
                 <input type="hidden" name="id" value="<%=usuario.getId()%>">  
                 <div class="row">

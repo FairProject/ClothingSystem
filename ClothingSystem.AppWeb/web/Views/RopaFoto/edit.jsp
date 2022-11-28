@@ -13,7 +13,7 @@
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
             <h5>Editar RopaFoto</h5>
-            <form action="RopaFoto" method="post" onsubmit="return  validarFormulario()">
+            <form action="RopaFoto" method="post" onsubmit="return  validarFormulario()" enctype="multipart/form-data">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>">   
                 <input type="hidden" name="id" value="<%=ropafoto.getId()%>">   
                
