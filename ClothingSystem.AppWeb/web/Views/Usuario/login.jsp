@@ -44,7 +44,7 @@
                         <div class="from-group text-center">
 
                             <div class="from-group text-center">
-                                <a href="Usuario?accion=create" class="btn btn-block waves-light btn danger"><i class=""></i>Crear Usuario</a>
+                                <a href="Usuario?accion=create" class="btn btn-block ingresar"><i class=""></i>Crear Usuario</a>
 
                             </div>
                         </div>
