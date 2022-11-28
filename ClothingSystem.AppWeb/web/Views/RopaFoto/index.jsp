@@ -96,7 +96,6 @@
                                 <tr data-page="<%= tempNumPage%>">
                                     <td><%=ropafoto.getEstatus()%></td>
                                       <td><img width="19%" height="29%" src="<%=ropafoto.getFoto()%>" /></td>
-                                    <%--<td><%=touristPlace.getPhotos()%></td>-->---%>
                                      <td><%=ropafoto.getRopa().getCodigoBarra()%></td>
                                     <td>
                                         <div style="display:flex">
