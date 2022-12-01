@@ -13,10 +13,10 @@ public class ComunDB {
     }
     static int TIPODB = TipoDB.SQLSERVER; //Propiedad para el tipo de gestor de base de datos que estamos utilizando
   
-     static String connectionUrl = "jdbc:sqlserver://ClothingSystemdb.mssql.somee.com;"
-            + "database=ClothingSystemdb;"
-            + "user=carlos1_SQLLogin_1;"
-            + "password= gniotvqytu;"
+     static String connectionUrl = "jdbc:sqlserver://ClothingSystemFeriadb.mssql.somee.com;"
+            + "database=ClothingSystemFeriadb;"
+            + "user=SysAdmin10;"
+            + "password= Admin2022;"
             + "loginTimeout=30;encrypt=false;trustServerCertificate=false";
     public static Connection obtenerConexion() throws SQLException {
         // Registrar el Driver de la conexion a la base de datos SQL server
