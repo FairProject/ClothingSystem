@@ -16,6 +16,8 @@
             <li class="hoverable"><a href="Marca">Marca</a></li>
             <li class="hoverable"><a href="Ropa">Ropa</a></li>
             <li class="hoverable"><a href="RopaFoto">RopaFoto</a></li>
+             <li class="hoverable"><a href="Categoria">Categoria</a></li>
+            <li class="hoverable"><a href="Producto">Producto</a></li>
             <li class="hoverable1"><a href="Usuario?accion=cambiarpass">Cambiar password</a></li>
             <li class="hoverable2"><a href="Usuario?accion=login">Cerrar sesión</a></li>
 
@@ -32,6 +34,8 @@
     <li class="hoverable"><a href="Marca">Marca</a></li>
     <li class="hoverable"><a href="Ropa">Ropa</a></li>
     <li class="hoverable"><a href="RopaFoto">RopaFoto</a></li>
+      <li class="hoverable"><a href="Categoria">Categoria</a></li>
+    <li class="hoverable"><a href="Producto">Producto</a></li>
     <li class="hoverable1"><a href="Usuario?accion=cambiarpass">Cambiar password</a></li>
     <li class="hoverable2"><a href="Usuario?accion=login">Cerrar sesión</a></li>
         <%}%>
