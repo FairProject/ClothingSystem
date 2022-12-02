@@ -1,18 +1,16 @@
-
 package clothingsystem.entidadesdenegocio;
 
 import java.time.LocalDate;
 
-
 public class Categoria {
-    
+
     private int id;
     private String nombre;
     private String descripcion;
     private LocalDate fechaCreacion;
-         private String comentario;
-         private byte estatus;
-             private int top_aux;
+    private String comentario;
+    private byte estatus;
+    private int top_aux;
 
     public Categoria() {
     }
@@ -25,7 +23,7 @@ public class Categoria {
         this.comentario = comentario;
         this.estatus = estatus;
     }
-    
+
     /**
      * @return the id
      */
@@ -123,11 +121,11 @@ public class Categoria {
     public void setTop_aux(int top_aux) {
         this.top_aux = top_aux;
     }
- 
-                 public class EstatusCategoria{
+
+    public class EstatusCategoria {
 
         public static final byte ENEXISTENCIA = 1;
         public static final byte NOHAYEXISTENCIAS = 2;
     }
-             
+
 }
