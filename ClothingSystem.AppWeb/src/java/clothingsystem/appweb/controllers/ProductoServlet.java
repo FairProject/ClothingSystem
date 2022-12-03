@@ -15,27 +15,50 @@ import clothingsystem.accesoadatos.ProductoDAL; // Importar la clase productoDAL
 import clothingsystem.appweb.utils.*; // Importar las clases SessionUser, Utilidad del paquete de utils
 import clothingsystem.entidadesdenegocio.Categoria; // Importar la clase categoria de la capa de entidades de negocio
 import clothingsystem.entidadesdenegocio.Producto; // Importar la clase producto de la capa de entidades de negocio
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.Part;
 
-/**
- *
- * @author Cristopher
- */
+@MultipartConfig
 @WebServlet(name = "ProductoServlet", urlPatterns = {"/Producto"})
 public class ProductoServlet extends HttpServlet {
     
-
-     // <editor-fold defaultstate="collapsed" desc="Metodos para procesar las solicitudes get o post del Servlet">
-    /**
-     * En este método vamos a obtener la información enviada, en una peticion
-     * get o post, obteniendo los datos de los parámetros enviados de un
-     * formulario o la url del navegador, enviar esa información a una instancia
-     * de la entidad Producto
-     *
-     * @param request en este parámetro vamos a recibir el request de la
-     * peticion get o post enviada al servlet Producto
-     * @return Producto devolver la instancia de la entidad Producto con los
-     * valores obtenidos del request
-     */
+       private String pathFiles = "C:\\Users\\carlos\\Documents\\proyecto2\\ClothingSystem\\ClothingSystem.AppWeb\\web\\wwwroot\\imag";
+    private File fileUpload = new File(pathFiles);
+    private String[] typeImage = {".ico", ".png", ".jpg", ".jpeg", ".jfif"};
+    private String fileName = "";
+    private String guardarImagen(Part part, File pathUpload) {
+        String absolutePath = "";
+        try {
+            Path path = Paths.get(part.getSubmittedFileName());
+            fileName = path.getFileName().toString();
+            InputStream input = part.getInputStream();
+            
+            if (input != null) {
+                File file = new File(pathUpload, fileName);
+                absolutePath = file.getAbsolutePath();
+                Files.copy(input, file.toPath()); 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return "wwwroot\\imag\\" + fileName;
+    }
+    
+    private boolean isExtension(String fileName, String[] extensions) {
+        for (String ext : extensions) {
+            if (fileName.toLowerCase().endsWith(ext)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
         private Producto obtenerProducto(HttpServletRequest request) {
         // Obtener el parámetro accion del request
         String accion = Utilidad.getParameter(request, "accion", "index");
@@ -46,6 +69,8 @@ public class ProductoServlet extends HttpServlet {
         producto.setDescripcion(Utilidad.getParameter(request, "descripcion", ""));
         // Obtener el parámetro comentario del request  y asignar ese valor a la propiedad Comentario de producto.
         producto.setComentario(Utilidad.getParameter(request, "comentario", ""));
+        
+        producto.setFoto(Utilidad.getParameter(request, "Foto", ""));
         
         producto.setPrecioCompra(Double.parseDouble(Utilidad.getParameter(request, "precioCompra", "0")));
         
@@ -152,8 +177,17 @@ public class ProductoServlet extends HttpServlet {
     
     private void doPostRequestCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        try {
-            Producto producto = obtenerProducto(request); // Llenar la instancia de Usuario con los parámetros enviados en el request
-            // Enviar los datos de Producto a la capa de accesoa a datos para que lo almacene en la base de datos el registro.
+            Producto producto = obtenerProducto(request); 
+             Part part = request.getPart("foto");
+            if (part == null) {
+                System.out.println("No ha seleccionado ningun archivo");
+                return;
+            }
+            
+            if (isExtension(part.getSubmittedFileName(), typeImage)) {
+                String Producto = guardarImagen(part, fileUpload);
+               producto.setFoto(Producto);
+            }
             int result = ProductoDAL.crear(producto);
             if (result != 0) { // Si el result es diferente a cero significa que los datos fueron ingresados correctamente.
                 // Enviar el atributo accion con el valor index al jsp de index
@@ -189,7 +223,7 @@ public class ProductoServlet extends HttpServlet {
                 Categoria categoria = new Categoria();
                 categoria.setId(producto_result.getIdCategoria());
                 // Obtener desde la capa de acceso a datos el categoria por Id y asignarlo al producto.
-                producto_result.setCategoría(CategoriaDAL.obtenerPorId(categoria));
+                producto_result.setCategoria(CategoriaDAL.obtenerPorId(categoria));
                 // Enviar el atributo producto con el valor de los datos del producto de nuestra base de datos a un jsp
                 request.setAttribute("producto", producto_result);
             } else {
@@ -233,6 +267,16 @@ public class ProductoServlet extends HttpServlet {
         try {
             Producto producto = obtenerProducto(request); // Llenar la instancia de producto con los parámetros enviados en el request.
             // Enviar los datos de Usuario a la capa de accesoa a datos para modificar el registro.
+             Part part = request.getPart("foto");
+            if (part == null) {
+                System.out.println("No ha seleccionado ningun archivo");
+                return;
+            }
+            
+            if (isExtension(part.getSubmittedFileName(), typeImage)) {
+                String Producto = guardarImagen(part, fileUpload);
+               producto.setFoto(Producto);
+            }
             int result = ProductoDAL.modificar(producto);
             if (result != 0) { // Si el result es diferente a cero significa que los datos fueron modificado correctamente.
                 // Enviar el atributo accion con el valor index al jsp de index.

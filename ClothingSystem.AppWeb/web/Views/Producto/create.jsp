@@ -11,13 +11,14 @@
     <head>
         <jsp:include page="/Views/Shared/title.jsp" />
         <title>Crear Producto</title>
+        <link rel="icon" type="image/png" href="images/Logo.png">
     </head>
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
             <h5>Crear Producto</h5>
-       
-            <form action="Producto" method="post">
+
+            <form action="Producto" method="post" onsubmit="return  validarFormulario()" enctype="multipart/form-data">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>">                
                 <div class="row">
                     <div class="input-field col l4 s12">
@@ -49,7 +50,7 @@
                         <label for="slEstatus">Estatus</label>
                         <span id="slEstatus_error" style="color:red" class="helper-text"></span>
                     </div>
-                   
+
                     <div class="input-field col l4 s12">
                         <input  id="txtFechaVencimiento" type="text" name="fechaVencimiento" required class="validate">
                         <label for="txtFechaVencimiento">Fecha Vencimiento</label>
@@ -65,6 +66,18 @@
                         </jsp:include>  
                         <span id="slCategoria_error" style="color:red" class="helper-text"></span>
                     </div>
+                    <div class="input-field col l8 s12">
+                        <img id="imgPreview" width="30%" height="30%"/>
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Selecciona una imagen</span>
+                                <input type="file" name="Foto" onchange="previewImage(event, '#imgPreview')"">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -73,7 +86,30 @@
                         <a href="Producto" class="waves-effect waves-light btn blue"><i class="material-icons right">list</i>Cancelar</a>                          
                     </div>
                 </div>
-            </form>          
+            </form> 
+            <script>
+               function previewImage(event, querySelector){
+
+	//Recuperamos el input que desencadeno la acción
+	const input = event.target;
+	
+	//Recuperamos la etiqueta img donde cargaremos la imagen
+	$imgPreview = document.querySelector(querySelector);
+
+	// Verificamos si existe una imagen seleccionada
+	if(!input.files.length) return
+	
+	//Recuperamos el archivo subido
+	file = input.files[0];
+
+	//Creamos la url
+	objectURL = URL.createObjectURL(file);
+	
+	//Modificamos el atributo src de la etiqueta img
+	$imgPreview.src = objectURL;
+                
+}
+            </script>
         </main>
         <jsp:include page="/Views/Shared/footerBody.jsp" />   
     </body>

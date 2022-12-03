@@ -1,17 +1,12 @@
-<%-- 
-    Document   : delete
-    Created on : 28 ago 2022, 08:55:52
-    Author     : Cristopher
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="clothingsystem.entidadesdenegocio.Producto"%>
 <% Producto producto = (Producto) request.getAttribute("producto");%>
 <!DOCTYPE html>
 <html>
-       <head>        
+    <head>        
         <jsp:include page="/Views/Shared/title.jsp" />
         <title>Eliminar Producto</title>
+         <link rel="icon" type="image/png" href="images/Logo.png">
     </head>
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
@@ -29,15 +24,15 @@
                         <input  id="txtDescripcion" type="text" value="<%=producto.getDescripcion()%>" disabled>
                         <label for="txtDescripcion">Descripcion</label>
                     </div> 
-                        <div class="input-field col l4 s12">
+                    <div class="input-field col l4 s12">
                         <input  id="txtPrecioCompra" type="text" value="<%=producto.getPrecioCompra()%>" disabled>
                         <label for="txtPrecioCompra">Precio Compra</label>
                     </div> 
-                        <div class="input-field col l4 s12">
+                    <div class="input-field col l4 s12">
                         <input  id="txtPrecioVenta" type="text" value="<%=producto.getPrecioVenta()%>" disabled>
                         <label for="txtPrecioVenta">Precio Venta</label>
                     </div> 
-                        <div class="input-field col l4 s12">
+                    <div class="input-field col l4 s12">
                         <input  id="txt" type="text" value="<%=producto.getExistencia()%>" disabled>
                         <label for="txtExistencia">Existencia</label>
                     </div>                    
@@ -49,7 +44,7 @@
                         </select>       
                         <label for="slEstatus">Estatus</label>                       
                     </div>
-                        <div class="input-field col l4 s12">
+                    <div class="input-field col l4 s12">
                         <input  id="txtComentario" type="text" value="<%=producto.getComentario()%>" disabled>
                         <label for="txtComentario">Comentario</label>
                     </div>  
@@ -57,6 +52,9 @@
                         <input id="txtCategoria" type="text" value="<%=producto.getCategoria().getNombre()%>" disabled>
                         <label for="txtCategoria">Categoria</label>
                     </div> 
+                    <div class="input-field col l4 s12">
+                        <td><img width="90%" height="90%" src="<%=producto.getFoto()%>" /></td>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col l12 s12">
@@ -69,4 +67,3 @@
         <jsp:include page="/Views/Shared/footerBody.jsp" />   
     </body>
 </html>
-    

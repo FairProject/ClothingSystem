@@ -21,14 +21,14 @@
 <html>
     <head>        
         <jsp:include page="/Views/Shared/title.jsp" />
-        <title>Buscar RopaFoto</title>
-         <link rel="icon" type="image/png" href="images/Logo.png">
+        <title>Buscar Foto</title>
+        <link rel="icon" type="image/png" href="images/Logo.png">
 
     </head>
     <body>
         <jsp:include page="/Views/Shared/headerBody.jsp" />  
         <main class="container">   
-            <h5>Buscar RopaFoto</h5>
+            <h5>Buscar Foto</h5>
             <form action="RopaFoto" method="post">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
                 <div class="row"> 
@@ -40,7 +40,7 @@
                         </select>       
                         <label for="slEstatus">Estatus</label>
                     </div>
-                        <div class="input-field col l6 s12">   
+                    <div class="input-field col l6 s12">   
                         <jsp:include page="/Views/Ropa/select.jsp">                           
                             <jsp:param name="id" value="0" />  
                         </jsp:include>                        
@@ -68,13 +68,13 @@
                             <thead>
                                 <tr>
                                     <th>Estatus</th>
-                                     <th>Foto</th>
+                                    <th>Foto</th>
                                     <th>Ropa</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>                       
                             <tbody>                           
-                                 <% for (RopaFoto ropafoto : ropafotos) {
+                                <% for (RopaFoto ropafoto : ropafotos) {
                                         int tempNumPage = numPage;
                                         if (numPage > 1) {
                                             countReg++;
@@ -94,9 +94,9 @@
                                         }
                                 %>
                                 <tr data-page="<%= tempNumPage%>">
-                                    <td><%=ropafoto.getEstatus()%></td>
-                                      <td><img width="19%" height="29%" src="<%=ropafoto.getFoto()%>" /></td>
-                                     <td><%=ropafoto.getRopa().getCodigoBarra()%></td>
+                                    <td><%=estatus%></td>
+                                    <td><img width="19%" height="29%" src="<%=ropafoto.getFoto()%>" /></td>
+                                    <td><%=ropafoto.getRopa().getCodigoBarra()%></td>
                                     <td>
                                         <div style="display:flex">
                                             <a href="RopaFoto?accion=edit&id=<%=ropafoto.getId()%>" title="Modificar" class="waves-effect waves-light btn green">
