@@ -25,7 +25,7 @@ import javax.servlet.http.Part;
 @WebServlet(name = "UsuarioServlet", urlPatterns = {"/Usuario"})
 public class UsuarioServlet extends HttpServlet {
 
-   private String pathFiles = "C:\\Users\\carlos\\Documents\\NetBeansProjects\\ClothingSystem\\ClothingSystem.AppWeb\\web\\wwwroot\\img";
+   private String pathFiles = "C:\\Users\\moise\\Escritorio\\ClothingSystem\\ClothingSystem.AppWeb\\web\\wwwroot\\images";
     private File fileUpload = new File(pathFiles);
     private String[] typeImage = {".ico", ".png", ".jpg", ".jpeg", ".jfif"};
     private String fileName = "";

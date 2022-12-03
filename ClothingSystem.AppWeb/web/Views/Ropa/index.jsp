@@ -35,63 +35,23 @@
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
                 <div class="row">
 
-                    <div class="input-field col l6 s12">
-                        <input  id="txtCodigoBarra" type="text" name="codigobarra">
-                        <label for="txtCodigoBarra">CodigoBarra</label>
-                    </div> 
 
                     <div class="input-field col l4 s12">
                         <input  id="txtNombre" type="text" name="nombre">
                         <label for="txtNombre">Nombre</label>
                     </div> 
 
-                    <div class="input-field col l4 s12">
-                        <input  id="txtPrecioCompra" type="text" name="preciocompra">
-                        <label for="txtPrecioCompra">PrecioCompra</label>
-                    </div> 
+                   
 
                     <div class="input-field col l4 s12">
                         <input  id="txtPrecioVenta" type="text" name="precioventa">
                         <label for="txtPrecioVenta">PrecioVenta</label>
                     </div> 
 
-                    <div class="input-field col l4 s12">
-                        <input  id="txtExistencia" type="text" name="existencia">
-                        <label for="txtExistencia">Existencia</label>
-                    </div> 
-
-                    <div class="input-field col l4 s12">   
-                        <select id="slEstatus" name="estatus">
-                            <option value="0">SELECCIONAR</option>
-                            <option value="<%=Ropa.EstatusRopa.ACTIVO%>">ACTIVO</option>
-                            <option value="<%=Ropa.EstatusRopa.INACTIVO%>">INACTIVO</option>
-                        </select>       
-                        <label for="slEstatus">Estatus</label>                     
-                    </div> 
-
-                    <div class="input-field col l4 s12">
-                        <input  id="txtTalla" type="text" name="talla">
-                        <label for="txtTalla">Talla</label>
-                    </div> 
-
-                    <div class="input-field col l4 s12">
-                        <input  id="txtColor" type="text" name="color">
-                        <label for="txxColor">Color</label>
-                    </div> 
-
-                    <div class="input-field col l4 s12">
-                        <input  id="txtEstilo" type="text" name="estilo">
-                        <label for="txtEstilo">Estilo</label>
-                    </div> 
 
                     <div class="input-field col l4 s12">
                         <input  id="txtDescripcion" type="text" name="descripcion">
                         <label for="txtDescripcion">Descripcion</label>
-                    </div> 
-
-                    <div class="input-field col l4 s12">
-                        <input  id="txtTipoTela" type="text" name="tipotela">
-                        <label for="txtTipoTela">TipoTela</label>
                     </div> 
 
 
@@ -125,17 +85,13 @@
                         <table class="paginationjs">
                             <thead>
                                 <tr>
-                                    <th>CodigoBarra</th>  
+                                    
                                     <th>Nombre</th>  
-                                    <th>PrecioCompra</th> 
+                                   
                                     <th>PrecioVenta</th> 
-                                    <th>Existencia</th> 
-                                    <th>Estatus</th> 
-                                    <th>Talla</th> 
-                                    <th>Color</th> 
-                                    <th>Estilo</th> 
+                                    
                                     <th>Descripcion</th> 
-                                    <th>TipoTela</th> 
+                                    
                                     <th>Marca</th> 
                                     <th>Acciones</th>
 
@@ -165,17 +121,12 @@
 
 
 
-                                    <td><%=ropa.getNombre()%></td> 
                                     <td><%=ropa.getCodigoBarra()%></td> 
-                                    <td><%=ropa.getPrecioCompra()%></td> 
+                                  
                                     <td><%=ropa.getPrecioVenta()%></td> 
-                                    <td><%=ropa.getExistencia()%></td>
-                                    <td><%=estatus%></td>
-                                    <td><%=ropa.getTalla()%></td>
-                                    <td><%=ropa.getColor()%></td>
-                                    <td><%=ropa.getEstilo()%></td>
+                                    
                                     <td><%=ropa.getDescripcion()%></td>
-                                    <td><%=ropa.getTipoTela()%></td>
+                                  
                                     <td><%=ropa.getMarca().getNombre()%></td> 
                                     
                                     <td>
