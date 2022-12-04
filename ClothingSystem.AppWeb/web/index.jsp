@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="clothingsystem.appweb.utils.*"%>
+
 <% if (SessionUser.isAuth(request) == false) {
-         response.sendRedirect("Usuario?accion=login");
         response.sendRedirect("Usuario?accion=login");
     }
 %>
@@ -12,6 +12,10 @@
         <jsp:include page="/Views/Shared/title.jsp" />
         <title>Clothing</title>
         <link rel="icon" type="image/png" href="images/Logo.png">
+        <!-- Swiper CSS -->
+        <link rel="stylesheet" href="wwwroot/css/swiper-bundle.min.css">
+
+
 
     </head>
     <body>
@@ -34,49 +38,170 @@
             <jsp:include page="/Views/Shared/buscador.jsp" />  
             <br>
             <div class="row">
-                <!-- Card 1 -->
-                <div class="col s4">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="images/image 1.png">
-                            <span class="card-title">Card Title</span>
-                            <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-                        </div>
-                        <div class="card-content">
-                            <p>I am a very simple card.</p>
+
+                <div class="slide-container swiper">
+                    <div class="slide-content">
+                        <div class="card-wrapper swiper-wrapper">
+                            <div class="card swiper-slide">
+                                <div class="image-content">
+                                    <span class="overlay"></span>
+
+                                    <div class="card-image">
+                                        <img src="images/image 1.png" alt="" class="card-img">
+                                    </div>
+                                </div>
+
+                                <div class="card-content">
+                                    <h2 class="name">David Dell</h2>
+                                    <p class="description">The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.</p>
+
+                                    <button class="button">View More</button>
+                                </div>
+                            </div>
+                            <div class="card swiper-slide">
+                                <div class="image-content">
+                                    <span class="overlay"></span>
+
+                                    <div class="card-image">
+                                        <img src="images/image 2.png" alt="" class="card-img">
+                                    </div>
+                                </div>
+
+                                <div class="card-content">
+                                    <h2 class="name">David Dell</h2>
+                                    <p class="description">The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.</p>
+
+                                    <button class="button">View More</button>
+                                </div>
+                            </div>
+                            <div class="card swiper-slide">
+                                <div class="image-content">
+                                    <span class="overlay"></span>
+
+                                    <div class="card-image">
+                                        <img src="images/image 3.png" alt="" class="card-img">
+                                    </div>
+                                </div>
+
+                                <div class="card-content">
+                                    <h2 class="name">David Dell</h2>
+                                    <p class="description">The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.</p>
+
+                                    <button class="button">View More</button>
+                                </div>
+                            </div>
+                            <div class="card swiper-slide">
+                                <div class="image-content">
+                                    <span class="overlay"></span>
+
+                                    <div class="card-image">
+                                        <img src="images/profile4.jpg" alt="" class="card-img">
+                                    </div>
+                                </div>
+
+                                <div class="card-content">
+                                    <h2 class="name">David Dell</h2>
+                                    <p class="description">The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.</p>
+
+                                    <button class="button">View More</button>
+                                </div>
+                            </div>
+                            <div class="card swiper-slide">
+                                <div class="image-content">
+                                    <span class="overlay"></span>
+
+                                    <div class="card-image">
+                                        <img src="images/profile5.jpg" alt="" class="card-img">
+                                    </div>
+                                </div>
+
+                                <div class="card-content">
+                                    <h2 class="name">David Dell</h2>
+                                    <p class="description">The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.</p>
+
+                                    <button class="button">View More</button>
+                                </div>
+                            </div>
+                            <div class="card swiper-slide">
+                                <div class="image-content">
+                                    <span class="overlay"></span>
+
+                                    <div class="card-image">
+                                        <img src="images/profile6.jpg" alt="" class="card-img">
+                                    </div>
+                                </div>
+
+                                <div class="card-content">
+                                    <h2 class="name">David Dell</h2>
+                                    <p class="description">The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.</p>
+
+                                    <button class="button">View More</button>
+                                </div>
+                            </div>
+                            <div class="card swiper-slide">
+                                <div class="image-content">
+                                    <span class="overlay"></span>
+
+                                    <div class="card-image">
+                                        <img src="images/profile7.jpg" alt="" class="card-img">
+                                    </div>
+                                </div>
+
+                                <div class="card-content">
+                                    <h2 class="name">David Dell</h2>
+                                    <p class="description">The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.</p>
+
+                                    <button class="button">View More</button>
+                                </div>
+                            </div>
+                            <div class="card swiper-slide">
+                                <div class="image-content">
+                                    <span class="overlay"></span>
+
+                                    <div class="card-image">
+                                        <img src="images/profile8.jpg" alt="" class="card-img">
+                                    </div>
+                                </div>
+
+                                <div class="card-content">
+                                    <h2 class="name">David Dell</h2>
+                                    <p class="description">The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.</p>
+
+                                    <button class="button">View More</button>
+                                </div>
+                            </div>
+                            <div class="card swiper-slide">
+                                <div class="image-content">
+                                    <span class="overlay"></span>
+
+                                    <div class="card-image">
+                                        <img src="images/profile9.jpg" alt="" class="card-img">
+                                    </div>
+                                </div>
+
+                                <div class="card-content">
+                                    <h2 class="name">David Dell</h2>
+                                    <p class="description">The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.</p>
+
+                                    <button class="button">View More</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="swiper-button-next swiper-navBtn"></div>
+                    <div class="swiper-button-prev swiper-navBtn"></div>
+                    <div class="swiper-pagination"></div>
                 </div>
 
 
-                <!-- Card 2 -->
-                <div class="col s4">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="images/image 2.png">
-                            <span class="card-title">Card Title</span>
-                            <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-                        </div>
-                        <div class="card-content">
-                            <p>I am a very simple card.</p>
-                        </div>
-                    </div>
-                </div>
+                <!-- Swiper JS -->
+                <script src="wwwroot/js/swiper-bundle.min.js"></script>
 
-                <!-- Card 3 -->
 
-                <div class="col s4">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="images/image 3.png">
-                            <span class="card-title">Card Title</span>
-                            <a class="btn-floating halfway-fab waves-effect waves-light red"  <a href="RopaFoto?accion=create"><i class="material-icons">add</i></a>
-                        </div>
-                        <div class="card-content">
-                            <p>I am a very simple card.</p>
-                        </div>
-                    </div>
-                </div>
+
+                <!-- JavaScript -->
+                <script src="wwwroot/js/script.js"></script>
 
         </main>  
         <br>
