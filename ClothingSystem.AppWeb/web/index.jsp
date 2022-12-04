@@ -1,5 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="clothingsystem.appweb.utils.*"%>
+<% if (SessionUser.isAuth(request) == false) {
+         response.sendRedirect("Usuario?accion=login");
+        response.sendRedirect("Usuario?accion=login");
+    }
+%>
 
 <!DOCTYPE html>
 <html>
