@@ -30,10 +30,6 @@
                                <div class="input-field col l4 s12">
                         <input  id="txtDescripcion" type="text" name="descripcion" value="<%=categoria.getDescripcion()%>" required class="validate" maxlength="30">
                         <label for="txtDescripcion">Descripcion</label>
-                    </div> 
-                    <div class="input-field col l4 s12">
-                        <input  id="txtComentario" type="text" name="comentario" value="<%=categoria.getComentario()%>" required  class="validate" maxlength="25">
-                        <label for="txtComentario">Comentario</label>
                     </div>                     
                     <div class="input-field col l4 s12">   
                         <select id="slEstatus" name="estatus" class="validate">
@@ -48,8 +44,8 @@
                 </div>
                 <div class="row">
                     <div class="col l12 s12">
-                        <button type="sutmit" class="waves-effect waves-light btn green"><i class="material-icons right">save</i>Guardar</button>
-                        <a href="Categoria" class="waves-effect waves-light btn red"><i class="material-icons right">list</i>Cancelar</a>                          
+                        <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">save</i>Guardar</button>
+                        <a href="Categoria" class="waves-effect waves-light btn black"><i class="material-icons right">list</i>Cancelar</a>                          
                     </div>
                     </div>
             </form>          

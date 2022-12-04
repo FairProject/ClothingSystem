@@ -22,17 +22,15 @@
                 <input type="hidden" name="id" value="<%=categoria.getId()%>">   
                 <div class="row">
                     <div class="input-field col l4 s12">
-                    <input disabled  id="txtNombre" type="text" value="<%=categoria.getNombre()%>">
-                    <label for="txtNombre">Nombre</label>
-                </div>                                        
-                </div>
-                    
-                    
-                     <div class="input-field col l4 s12">
+                        <input disabled  id="txtNombre" type="text" value="<%=categoria.getNombre()%>">
+                        <label for="txtNombre">Nombre</label>
+                    </div>                                        
+
+                    <div class="input-field col l4 s12">
                         <input  id="txtDescripcion" type="text" value="<%=categoria.getDescripcion()%>" disabled>
                         <label for="txtDescripcion">Descripcion</label>
                     </div> 
-                                    
+
                     <div class="input-field col l4 s12">   
                         <select id="slEstatus" name="estatus" disabled>
                             <option value="0" <%=(categoria.getEstatus() == 10) ? "selected" : ""%>>SELECCIONAR</option>
@@ -41,16 +39,12 @@
                         </select>       
                         <label for="slEstatus">Estatus</label>                       
                     </div>
-                         <div class="input-field col l4 s12">
-                        <input  id="txtComentario" type="text" value="<%=categoria.getComentario()%>" disabled>
-                        <label for="txtComentario">Comentario</label>
-                    </div>   
-                        
-                        
+
+                </div>
                 <div class="row">
                     <div class="col l12 s12">
-                        <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">delete</i>Eliminar</button>
-                        <a href="Categoria" class="waves-effect waves-light btn blue"><i class="material-icons right">list</i>Cancelar</a>                          
+                        <button type="sutmit" class="waves-effect waves-light btn red"><i class="material-icons right">delete</i>Eliminar</button>
+                        <a href="Categoria" class="waves-effect waves-light btn black"><i class="material-icons right">list</i>Cancelar</a>                          
                     </div>
                 </div>
             </form>          

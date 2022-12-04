@@ -32,17 +32,9 @@
             <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
             <div class="row">
                 <div class="input-field col l4 s12">
-                    <input  id="txtCodigo" type="text" name="codigo">
-                    <label for="txtCodigo">Codigo</label>
-                </div> 
-                <div class="input-field col l4 s12">
                     <input  id="txtDescripcion" type="text" name="descripcion">
                     <label for="txtDescripcion">Descripcion</label>
-                </div> 
-                <div class="input-field col l4 s12">
-                    <input  id="txtPrecioCompra" type="text" name="precioCompra">
-                    <label for="txtPrecioCompra">Precio Compra</label>
-                </div> 
+                </div>  
                 <div class="input-field col l4 s12">
                     <input  id="txtPrecioVenta" type="text" name="precioVenta">
                     <label for="txtPrecioVenta">Precio Venta</label>
@@ -74,7 +66,7 @@
             <div class="row">
                 <div class="col l12 s12">
                     <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">search</i>Buscar</button>
-                    <a href="Producto?accion=create" class="waves-effect waves-light btn blue"><i class="material-icons right">add</i>Crear</a>                          
+                    <a href="Producto?accion=create" class="waves-effect waves-light btn green"><i class="material-icons right">add</i>Crear</a>                          
                 </div>
             </div>
         </form>
@@ -86,15 +78,10 @@
                         <thead>
                             <tr>     
                                 <th>Categoria</th>                                 
-                                <th>Codigo</th>  
-                                <th>Fecha creacion</th> 
-                                <th>Fecha vencimiento</th>
                                 <th>Descripcion</th> 
-                                <th>Precio compra</th>
                                 <th>Precio venta</th> 
                                 <th>Existencia</th>  
                                 <th>Estatus</th>  
-                                <th>Comentario</th>
                                 <th>Foto</th>
                                 <th>Acciones</th>
                             </tr>
@@ -121,16 +108,11 @@
                             %> 
                             <tr data-page="<%= tempNumPage%>">                                          
                                 <td><%=producto.getCategoria().getNombre()%></td> 
-                                <td><%=producto.getCodigo()%></td> 
-                                <td><%=producto.getFechaCreacion()%></td>
-                                <td><%=producto.getFechaVencimiento()%></td> 
                                 <td><%=producto.getDescripcion()%></td>
-                                <td><%=producto.getPrecioCompra()%></td>
                                 <td><%=producto.getPrecioVenta()%></td> 
                                 <td><%=producto.getExistencia()%></td>  
                                 <td><%=estatus%></td>
-                                <td><%=producto.getComentario()%></td> 
-                                <td><img width="100%" height="100%" src="<%=producto.getFoto()%>" /></td>
+                                <td><img width="40%" height="40%" src="<%=producto.getFoto()%>" /></td>
                                 <td>
                                     <div style="display:flex">
                                         <a href="Producto?accion=edit&id=<%=producto.getId()%>" title="Modificar" class="waves-effect waves-light btn green">

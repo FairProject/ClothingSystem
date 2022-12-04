@@ -15,18 +15,10 @@
             <form action="Producto" method="post">  
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>"> 
                 <input type="hidden" name="id" value="<%=producto.getId()%>">  
-                <div class="row">
-                    <div class="input-field col l4 s12">
-                        <input  id="txtCodigo" type="text" value="<%=producto.getCodigo()%>" disabled>
-                        <label for="txtCodigo">Codigo</label>
-                    </div>                       
+                <div class="row">                       
                     <div class="input-field col l4 s12">
                         <input  id="txtDescripcion" type="text" value="<%=producto.getDescripcion()%>" disabled>
                         <label for="txtDescripcion">Descripcion</label>
-                    </div> 
-                    <div class="input-field col l4 s12">
-                        <input  id="txtPrecioCompra" type="text" value="<%=producto.getPrecioCompra()%>" disabled>
-                        <label for="txtPrecioCompra">Precio Compra</label>
                     </div> 
                     <div class="input-field col l4 s12">
                         <input  id="txtPrecioVenta" type="text" value="<%=producto.getPrecioVenta()%>" disabled>
@@ -43,23 +35,19 @@
                             <option value="<%=Producto.EstatusProducto.NOHAYEXISTENCIAS%>"  <%=(producto.getEstatus() == Producto.EstatusProducto.NOHAYEXISTENCIAS) ? "selected" : ""%>>NO HAY EXISTENCIAS</option>
                         </select>       
                         <label for="slEstatus">Estatus</label>                       
-                    </div>
-                    <div class="input-field col l4 s12">
-                        <input  id="txtComentario" type="text" value="<%=producto.getComentario()%>" disabled>
-                        <label for="txtComentario">Comentario</label>
-                    </div>  
+                    </div> 
                     <div class="input-field col l4 s12">
                         <input id="txtCategoria" type="text" value="<%=producto.getCategoria().getNombre()%>" disabled>
                         <label for="txtCategoria">Categoria</label>
                     </div> 
                     <div class="input-field col l4 s12">
-                        <td><img width="90%" height="90%" src="<%=producto.getFoto()%>" /></td>
+                        <td><img width="60%" height="60%" src="<%=producto.getFoto()%>" /></td>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col l12 s12">
-                        <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">delete</i>Eliminar</button>
-                        <a href="Producto" class="waves-effect waves-light btn blue"><i class="material-icons right">list</i>Cancelar</a>                          
+                        <button type="sutmit" class="waves-effect waves-light btn red"><i class="material-icons right">delete</i>Eliminar</button>
+                        <a href="Producto" class="waves-effect waves-light btn black"><i class="material-icons right">list</i>Cancelar</a>                          
                     </div>
                 </div>
             </form>          

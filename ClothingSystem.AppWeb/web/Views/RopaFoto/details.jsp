@@ -34,7 +34,7 @@
             <div class="row">
                 <div class="col l12 s12">
                     <a href="RopaFoto?accion=edit&id=<%=ropafoto.getId()%>" class="waves-effect waves-light btn blue"><i class="material-icons right">edit</i>Ir modificar</a>                        
-                    <a href="RopaFoto" class="waves-effect waves-light btn blue"><i class="material-icons right">list</i>Cancelar</a>                          
+                    <a href="RopaFoto" class="waves-effect waves-light btn black"><i class="material-icons right">list</i>Cancelar</a>                          
                 </div>
             </div>         
         </main>

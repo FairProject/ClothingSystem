@@ -20,18 +20,10 @@
 
             <form action="Producto" method="post" onsubmit="return  validarFormulario()" enctype="multipart/form-data">
                 <input type="hidden" name="accion" value="<%=request.getAttribute("accion")%>">                
-                <div class="row">
-                    <div class="input-field col l4 s12">
-                        <input  id="txtCodigo" type="text" name="codigo" required class="validate" maxlength="25">
-                        <label for="txtCodigo">Codigo</label>
-                    </div>                       
+                <div class="row">                     
                     <div class="input-field col l4 s12">
                         <input  id="txtDescripcion" type="text" name="descripcion" required class="validate" maxlength="75">
                         <label for="txtDescripcion">Descripcion</label>
-                    </div> 
-                    <div class="input-field col l4 s12">
-                        <input  id="txtPrecioCompra" type="text" name="precioCompra" required class="validate" maxlength="4,2">
-                        <label for="txtPrecioCompra">Precio Compra</label>
                     </div> 
                     <div class="input-field col l4 s12">
                         <input  id="txtPrecioVenta" type="text" name="precioVenta" required class="validate" maxlength="4,2">
@@ -52,11 +44,6 @@
                     </div>
 
                     <div class="input-field col l4 s12">
-                        <input  id="txtFechaVencimiento" type="text" name="fechaVencimiento" required class="validate">
-                        <label for="txtFechaVencimiento">Fecha Vencimiento</label>
-                    </div>
-
-                    <div class="input-field col l4 s12">
                         <input  id="txtComentario" type="text" name="comentario" required class="validate" maxlength="200">
                         <label for="txtComentario">Comentario</label>
                     </div> 
@@ -74,7 +61,7 @@
                 <div class="row">
                     <div class="col l12 s12">
                         <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">save</i>Guardar</button>
-                        <a href="Producto" class="waves-effect waves-light btn blue"><i class="material-icons right">list</i>Cancelar</a>                          
+                        <a href="Producto" class="waves-effect waves-light btn black"><i class="material-icons right">list</i>Cancelar</a>                          
                     </div>
                 </div>
             </form> 

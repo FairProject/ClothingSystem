@@ -27,28 +27,25 @@
                         <input  id="txtDescripcion" type="text" name="descripcion" required class="validate" maxlength="30">
                         <label for="txtDescripcion">Descripción</label>
                     </div> 
+
+
                     <div class="input-field col l4 s12">
-                        <input  id="txtComentario" type="text" name="comentario" required class="validate" maxlength="25">
-                        <label for="txtCometario">Comentario</label>
-
-
-                    <div class="input-field col l0 s8">
-                            <select id="slEstatus" name="estatus" class="validate">
-                                <option value="0">SELECCIONAR</option>
-                                <option value="<%=Categoria.EstatusCategoria.ENEXISTENCIA%>">EN EXISTENCIA</option>
-                                <option value="<%=Categoria.EstatusCategoria.NOHAYEXISTENCIAS%>">NO HAY EXISTENCIAS</option>
-                            </select>       
-                            <label for="slEstatus">Estatus</label>
-                            <span id="slEstatus_error" style="color:red" class="helper-text"></span>
-                        </div>
-                     
+                        <select id="slEstatus" name="estatus" class="validate">
+                            <option value="0">SELECCIONAR</option>
+                            <option value="<%=Categoria.EstatusCategoria.ENEXISTENCIA%>">EN EXISTENCIA</option>
+                            <option value="<%=Categoria.EstatusCategoria.NOHAYEXISTENCIAS%>">NO HAY EXISTENCIAS</option>
+                        </select>       
+                        <label for="slEstatus">Estatus</label>
+                        <span id="slEstatus_error" style="color:red" class="helper-text"></span>
                     </div>
+
                     <div class="row">
                         <div class="col l12 s12">
-                            <button type="sutmit" class="waves-effect waves-light btn green"><i class="material-icons right">save</i>Guardar</button>
-                            <a href="Categoria" class="waves-effect waves-light btn red"><i class="material-icons right">list</i>Cancelar</a>                          
+                            <button type="sutmit" class="waves-effect waves-light btn blue"><i class="material-icons right">save</i>Guardar</button>
+                            <a href="Categoria" class="waves-effect waves-light btn black"><i class="material-icons right">list</i>Cancelar</a>                          
                         </div>
-                    </div>                           
+                    </div>  
+                </div>            
             </form>          
         </main>
         <jsp:include page="/Views/Shared/footerBody.jsp" />      
