@@ -1,6 +1,14 @@
 package clothingsystem.appweb.controllers;
 
+import clothingsystem.accesoadatos.RopaDAL;
+import clothingsystem.accesoadatos.RopaFotoDAL;
+import clothingsystem.appweb.utils.Utilidad;
+import clothingsystem.entidadesdenegocio.Ropa;
+import clothingsystem.entidadesdenegocio.RopaFoto;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,9 +36,41 @@ public class HomeServlet extends HttpServlet {
      * peticion get enviada al servlet Home que utlizaremos para enviar el jsp
      * al navegador web
      */
-    private void doGetRequestIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void doGetRequestIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
         // El request.getRequestDispatcher nos permite direccionar a un jsp desde un servlet. 
         // Enviaremos index.jsp que se encuentra en la carpeta raiz de la aplicacion web
+         Ropa ropa = new Ropa(); // Crear una instancia  de la entidad de Rol.
+            ropa.setTop_aux(10); // Agregar el Top_aux con el valor de 10 a la propiedad Top_aux de rol.
+            ArrayList<Ropa> ropas = RopaDAL.buscarIncluirMarca(ropa); // Ir a la capa de acceso a datos y buscar los registros de Rol.
+        for (Ropa ropa1 : ropas) {
+            RopaFoto ropaFoto=new RopaFoto();
+            ropaFoto.setIdRopa(ropa1.getId());
+             ArrayList<RopaFoto> list=RopaFotoDAL.buscar(ropaFoto);
+             ropa1.setRopaFoto(list);
+                     
+        }
+// El request.setAttribute se utiliza para enviar datos desde un servlet a un jsp.
+            request.setAttribute("ropas", ropas); 
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
+     private void doPostRequestIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
+        // El request.getRequestDispatcher nos permite direccionar a un jsp desde un servlet. 
+        // Enviaremos index.jsp que se encuentra en la carpeta raiz de la aplicacion web
+      
+        Ropa ropa = new Ropa(); // Crear una instancia  de la entidad de Rol.
+            ropa.setTop_aux(10); // Agregar el Top_aux con el valor de 10 a la propiedad Top_aux de rol.
+             ropa.setDescripcion(Utilidad.getParameter(request, "descripcion", ""));
+            ArrayList<Ropa> ropas = RopaDAL.buscarIncluirMarca(ropa); // Ir a la capa de acceso a datos y buscar los registros de Rol.
+        for (Ropa ropa1 : ropas) {
+            RopaFoto ropaFoto=new RopaFoto
+        ();
+            ropaFoto.setIdRopa(ropa1.getId());
+             ArrayList<RopaFoto> list=RopaFotoDAL.buscar(ropaFoto);
+             ropa1.setRopaFoto(list);
+                     
+        }
+// El request.setAttribute se utiliza para enviar datos desde un servlet a un jsp.
+            request.setAttribute("ropas", ropas); 
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
@@ -50,7 +90,20 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGetRequestIndex(request, response); // Ir al método doGetRequestIndex
+        try {
+            doGetRequestIndex(request, response); // Ir al método doGetRequestIndex
+        } catch (Exception ex) {
+            Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            doPostRequestIndex(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     // </editor-fold>
 

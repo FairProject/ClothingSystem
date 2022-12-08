@@ -25,7 +25,7 @@ import javax.servlet.http.Part;
 @WebServlet(name = "RopaFotoServlet", urlPatterns = {"/RopaFoto"})
 public class RopaFotoServlet extends HttpServlet {
 
-   private String pathFiles = "C:\\Users\\moise\\Escritorio\\ClothingSystem\\ClothingSystem.AppWeb\\web\\wwwroot\\images";
+   private String pathFiles = "C:\\ClothingSystem\\ClothingSystem.AppWeb\\web\\wwwroot\\images";
     private File fileUpload = new File(pathFiles);
     private String[] typeImage = {".ico", ".png", ".jpg", ".jpeg", "jfif"};
     private String fileName = "";
